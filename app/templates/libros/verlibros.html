@@ -21,6 +21,15 @@
 </head>
 <body>
     <h1>Lista de Libros</h1>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
     <table>
         <thead>
             <tr>
@@ -36,7 +45,6 @@
         </thead>
         <tbody>
             {% for libro in libros %}
-            {{libro}}
             <tr>
                 <td>{{ libro.titulo }}</td>
                 <td>{{ libro.autor }}</td>
@@ -48,6 +56,7 @@
                 <td>
                     <a href="{{ url_for('libros.eliminarlibro', id=libro.id) }}">Eliminar</a>
                     <a href="{{ url_for('libros.editarlibro', id=libro.id) }}">Editar</a>
+
                 </td>
             </tr>
             {% endfor %}

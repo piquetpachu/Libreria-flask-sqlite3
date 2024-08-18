@@ -3,7 +3,7 @@
 {% block content %}
 <form action="/editarlibro/{{libros.id}}" method="POST">
     <label for="nombre_libro">Nombre del Libro:</label>
-    <input type="text" id="nombre_libro" name="nombre_libro" value="{{ libros.nombre_s }}" ><br>
+    <input type="text" id="nombre_libro" name="nombre_libro" value="{{ libros.titulo }}" ><br>
     
     <label for="autor">Autor:</label>
     <input type="text" id="autor" name="autor" value="{{ libros.autor }}" ><br>

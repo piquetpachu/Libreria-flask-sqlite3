@@ -2,7 +2,15 @@
 
 {% block content %}
 <h1>añadir libro</h1>
-
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 
     <form action="/agregarlibro" method="post">
         <input type="text" name="nombre_libro" placeholder="nombre del libro"><br><br>
@@ -14,5 +22,6 @@
         <input type="file" name="imagen" placeholder="imagen"><br><br>
         <button type="submit">enviar</button>
     </form>
+    <a href="/verlibro">VER LIBROS</a>
 
 {% endblock %}

@@ -6,7 +6,7 @@ libros = Blueprint('libros',__name__)
 
 @libros.route('/')
 def index():
-    return render_template('agregarlibro.html')
+    return render_template('libros/agregarlibro.html')
 
 @libros.route('/agregarlibro', methods=['POST'])
 def agregarlibro():
@@ -27,7 +27,7 @@ def agregarlibro():
     
     print(nuevolibro)
     return 'Libro añadido'
-
+@libros.route('/eliminarlibro/<int:id>')
 def eliminarlibro(id):
     libro = Libros.query.get(id)
     if libro:
@@ -38,8 +38,28 @@ def eliminarlibro(id):
         flash('Libro no encontrado', 'error')
     return redirect(url_for('libros.verlibro'))
 
+@libros.route('/editarlibro/<int:id>', methods=['POST','GET'])
+def editarlibro(id):
+    libros = Libros.query.get(id)
+
+    if request.method == "POST":
+
+        libros.titulo = request.form['nombre_libro']
+        libros.autor = request.form['autor']
+        libros.descripcion = request.form['descripcion']
+        libros.fecha_emision = request.form['fecha_creacion']
+        libros.stock = request.form['stock']
+        libros.precio = request.form['precio']
+        libros.img = request.form['imagen']
+
+        db.session.add(libros)
+        db.session.commit()
+        return redirect(url_for('libros.verlibro'))
+
+    return render_template('libros/editarlibro.html',libros=libros)
+
 @libros.route('/verlibro')
 def verlibro():
-    libros = Libros.query.all()  # Consulta todos los libros en la base de datos
-    return render_template('verlibros.html', libros=libros)
+    libros = Libros.query.all()  
+    return render_template('libros/verlibros.html', libros=libros)
 
