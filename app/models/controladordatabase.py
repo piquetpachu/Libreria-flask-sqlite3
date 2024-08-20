@@ -1,4 +1,5 @@
 from datetime import date
+from werkzeug.security import generate_password_hash, check_password_hash
 from utils.db import db
 
 class Libros(db.Model):
@@ -38,9 +39,15 @@ class Usuario(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
-    correo = db.Column(db.String(100), unique=True, nullable=False)
-    contrasena = db.Column(db.String(100), nullable=False)
-    tel_cel = db.Column(db.String(20), nullable=True)
-    rol = db.Column(db.Enum('admin', 'comun'), nullable=False, default='comun')
+    correo = db.Column(db.String(100), unique=True, nullable=True)
+    contrasena = db.Column(db.String(100), nullable=False)  # Asegúrate de que es 'contrasena'
+    tel_cel = db.Column(db.String(20), nullable=True, default='12345678')
+    rol = db.Column(db.Enum('admin', 'comun'), nullable=True, default='comun')
 
     prestamos = db.relationship('Prestamo', backref='usuario', lazy=True)
+
+    def set_password(self, contrasena):
+        self.contrasena = generate_password_hash(contrasena)
+    
+    def check_password(self, contrasena):
+        return check_password_hash(self.contrasena, contrasena)
