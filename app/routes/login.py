@@ -1,5 +1,26 @@
 from flask import Blueprint,render_template,request,redirect,flash,jsonify,url_for,session
 from models.controladordatabase import db,Usuario
+from functools import wraps
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "nombre" not in session:
+            flash("Por favor, inicia sesión para acceder a esta página.")
+            return redirect(url_for('user.index_login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "nombre" not in session or session.get('rol') != 'admin':
+            flash("Acceso denegado: Se requiere rol de administrador.")
+            return redirect(url_for('user.index_login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
 
 user = Blueprint('user',__name__)
 
@@ -18,7 +39,8 @@ def login():
     user = Usuario.query.filter_by(nombre=nombre).first()
     if user and user.check_password(contrasena):
         session['nombre'] = nombre
-        return redirect(url_for('libros.index'))
+        session['rol'] = user.rol
+        return redirect(url_for('libros.bienvenida'))
     else:
         return render_template("usuarios/login.html")
     
@@ -39,12 +61,11 @@ def register():
             db.session.add(nuevo_usuario)
             db.session.commit()
             session['nombre'] = nombre 
-            return redirect(url_for('index'))
+            return redirect(url_for('libros.index'))
     return render_template("usuarios/register.html")
 
 @user.route("/logout")
 def logout():
-    session.pop('nombre',None)
+    session.pop('nombre', None)
+    session.pop('rol', None)
     return redirect(url_for('user.index_login'))
-
-    

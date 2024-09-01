@@ -1,36 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Libros</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+{% extends 'layout.html' %}
+
+{% block content %}
+
+    
 </head>
 <body>
-    <h1>Lista de Libros</h1>
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-    <table>
+    <main id="main" class="flexbox-col">
+        <h1>Lista de Libros</h1>
+        
+        <table>
         <thead>
             <tr>
                 <th>Título</th>
@@ -52,16 +30,18 @@
                 <td>{{ libro.fecha_emision }}</td>
                 <td>{{ libro.stock }}</td>
                 <td>${{ libro.precio }}</td>
-                <td><img src="{{ libro.img }}" alt="Imagen del libro" width="100"></td>
+                <td> <img style="height: 300px; width: 200px;" src=".\static\img\{{ libro.img }}" alt=""><br></td>
                 <td>
                     <a href="{{ url_for('libros.eliminarlibro', id=libro.id) }}">Eliminar</a>
                     <a href="{{ url_for('libros.editarlibro', id=libro.id) }}">Editar</a>
-
+                    
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     <a href="{{url_for('user.logout')}}">cerrar sesion</a>
+    {% endblock %}
+</main>
 </body>
 </html>

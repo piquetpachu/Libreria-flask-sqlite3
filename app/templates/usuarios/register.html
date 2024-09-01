@@ -1,12 +1,14 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h2>Registro de Usuario</h2>
-<form action="{{ url_for('user.register') }}" method="post">
-    <input type="text" name="nombre" placeholder="Nombre de usuario" class="input_field" required>
-    <input type="password" name="contrasena" placeholder="Contraseña" class="input_field" required>
-    <input type="email" name="correo" placeholder="Correo electrónico" class="input_field" required>
-    <input type="text" name="tel_cel" placeholder="Teléfono celular" class="input_field" required>
-    <input type="submit" value="Registrar" class="btm_log">
-</form>
+<main class="register-container flexbox-col">
+    <h2>Registro de Usuario</h2>
+    <form action="{{ url_for('user.register') }}" method="post">
+        <input type="text" name="nombre" placeholder="Nombre de usuario" class="input_field" required>
+        <input type="password" name="contrasena" placeholder="Contraseña" class="input_field" required>
+        <input type="email" name="correo" placeholder="Correo electrónico" class="input_field" required>
+        <input type="text" name="tel_cel" placeholder="Teléfono celular" class="input_field" required>
+        <input type="submit" value="Registrar" class="btm_log">
+    </form>
+</main>
 {% endblock %}

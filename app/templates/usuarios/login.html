@@ -1,14 +1,15 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h2>Iniciar Sesión</h2>
-<form action="{{ url_for('user.login') }}" method="post">
-    <input type="text" name="nombre" placeholder="Nombre de usuario" class="input_field" required>
-    <input type="password" name="contrasena" placeholder="Contraseña" class="input_field" required>
-    <input type="submit" value="Iniciar Sesión" class="btm_log">
-</form>
+<main  class="login-container flexbox-col">
+    <h2>Iniciar Sesión</h2>
+    <form action="{{ url_for('user.login') }}" method="post">
+        <input type="text" name="nombre" placeholder="Nombre de usuario" class="input_field" required>
+        <input type="password" name="contrasena" placeholder="Contraseña" class="input_field" required>
+        <input type="submit" value="Iniciar Sesión" class="btm_log">
+    </form>
 
-<!-- Enlace para ir a la página de registro -->
-<p>¿No tienes cuenta? <a href="{{ url_for('user.register') }}">Regístrate aquí</a></p>
-
+    <!-- Enlace para ir a la página de registro -->
+    <p>¿No tienes cuenta? <a href="{{ url_for('user.register') }}">Regístrate aquí</a></p>
+</main>
 {% endblock %}

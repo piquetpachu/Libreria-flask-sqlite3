@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<main id="main" class="flexbox-col">
+    <h1>Libros</h1>
+    <ul class="ul">
+        {% for libro in pagination.items %}
+        <li class="li">
+            <a href="{{ url_for('libros.detalle', libro_id=libro.id) }}" class="libro-link">
+                <img src="{{ url_for('static', filename='img/' ~ libro.img) }}" alt="{{ libro.titulo }}" class="libro-img">
+                <h2>{{ libro.titulo }}</h2>
+                <p>Precio: ${{ libro.precio }}</p>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Navegación de la paginación -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if pagination.has_prev %}
+            <li><a href="{{ url_for('libros.libross', page=pagination.prev_num) }}">Anterior</a></li>
+            {% endif %}
+            
+            {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                {% if page_num %}
+                    {% if page_num == pagination.page %}
+                        <li class="active"><strong>{{ page_num }}</strong></li>
+                    {% else %}
+                        <li><a href="{{ url_for('libros.libross', page=page_num) }}">{{ page_num }}</a></li>
+                    {% endif %}
+                {% else %}
+                    <li>…</li>
+                {% endif %}
+            {% endfor %}
+
+            {% if pagination.has_next %}
+            <li><a href="{{ url_for('libros.libross', page=pagination.next_num) }}">Siguiente</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</main>
+{% endblock %}

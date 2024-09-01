@@ -1,28 +1,30 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<form action="/editarlibro/{{libros.id}}" method="POST">
-    <label for="nombre_libro">Nombre del Libro:</label>
-    <input type="text" id="nombre_libro" name="nombre_libro" value="{{ libros.titulo }}" ><br>
+<main id="main" class="flexbox-col">
+    <form action="/editarlibro/{{libros.id}}" method="POST">
+        <label for="nombre_libro">Nombre del Libro:</label>
+    <input type="text" id="nombre_libro" name="nombre_libro" value="{{ libros.titulo }}" ><br><br>
     
     <label for="autor">Autor:</label>
-    <input type="text" id="autor" name="autor" value="{{ libros.autor }}" ><br>
+    <input type="text" id="autor" name="autor" value="{{ libros.autor }}" ><br><br>
     
     <label for="fecha_creacion">Fecha de Creación:</label>
-    <input type="date" id="fecha_creacion" name="fecha_creacion" value="{{ libros.fecha_creacion }}" ><br>
+    <input type="date" id="fecha_creacion" name="fecha_creacion" value="{{ libros.fecha_creacion }}" ><br><br>
     
     <label for="stock">Stock:</label>
-    <input type="number" id="stock" name="stock" value="{{ libros.stock }}" ><br>
+    <input type="number" id="stock" name="stock" value="{{ libros.stock }}" ><br><br>
     
     <label for="precio">Precio:</label>
-    <input type="number" id="precio" name="precio" value="{{ libros.precio }}" ><br>
-
+    <input type="number" id="precio" name="precio" value="{{ libros.precio }}" ><br><br>
+    
     <label for="descripcion">descripcion:</label>
-    <input type="text" id="precio" name="descripcion" value="{{ libros.descripcion }}" ><br>
+    <input type="text" id="precio" name="descripcion" value="{{ libros.descripcion }}" ><br><br>
 
     <label for="imagen">imagen:</label>
-    <input type="text" id="precio" name="imagen" value="{{ libros.imagen }}" ><br>
+    <input type="text" id="precio" name="imagen" value="{{ libros.imagen }}" ><br><br>
     
     <button type="submit">Guardar Cambios</button>
 </form>
+</main>
     {% endblock %}
