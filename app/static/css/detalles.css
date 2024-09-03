@@ -1,0 +1,75 @@
+/*DETALLE.HTML*/
+/* Estilos para el contenedor principal */
+label{
+    color: #ffffff;
+    font-size: var(--heading-small);
+}
+main#main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+    max-width: 1350px;
+    margin: 0 auto;
+    
+}
+
+/* Título del libro */
+main#main h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #ffffff;
+    text-align: center;
+}
+
+/* Imagen del libro */
+main#main .detalle-img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Estilos para los detalles del libro */
+main#main p {
+    font-size: 1.1em;
+    color: #ffffff;
+    line-height: 1.6;
+    text-align: left;
+    width: 100%;
+}
+
+main#main p strong {
+    color: #4a90e2; /* Color para los títulos */
+    margin-right: 5px;
+}
+
+/* Estilo para el precio para que destaque */
+
+main#main p:last-child {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #e63946;
+}
+
+/* Adaptabilidad para pantallas más pequeñas */
+@media (max-width: 600px) {
+    main#main {
+        padding: 10px;
+    }
+
+    main#main h1 {
+        font-size: 1.8em;
+    }
+
+    main#main .detalle-img {
+        max-width: 300px;
+    }
+
+    main#main p {
+        font-size: 1em;
+    }
+}

@@ -3,17 +3,17 @@
 {% block content %}
 <main id="main" class="flexbox-col">
     <h1>Libros</h1>
-    <ul class="ul">
+    <div class="flex-container">
         {% for libro in pagination.items %}
-        <li class="li">
+        <div class="card">
             <a href="{{ url_for('libros.detalle', libro_id=libro.id) }}" class="libro-link">
                 <img src="{{ url_for('static', filename='img/' ~ libro.img) }}" alt="{{ libro.titulo }}" class="libro-img">
                 <h2>{{ libro.titulo }}</h2>
                 <p>Precio: ${{ libro.precio }}</p>
             </a>
-        </li>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 
     <!-- Navegación de la paginación -->
     <nav aria-label="Page navigation">
@@ -30,7 +30,7 @@
                         <li><a href="{{ url_for('libros.libross', page=page_num) }}">{{ page_num }}</a></li>
                     {% endif %}
                 {% else %}
-                    <li>…</li>
+                    <li class="li">…</li>
                 {% endif %}
             {% endfor %}
 

@@ -79,7 +79,7 @@ def libross():
     page = request.args.get('page', 1, type=int)
 
     # Define el número de elementos por página
-    per_page = 6
+    per_page = 8
 
     # Usa SQLAlchemy para paginar los resultados
     pagination = Libros.query.paginate(page=page, per_page=per_page)

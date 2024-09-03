@@ -1,0 +1,37 @@
+/*PAGINACION*/
+/* Estilos generales para la paginación */
+.pagination {
+    display: flex;
+    justify-content: center; /* Centra la paginación horizontalmente */
+    padding: 10px 0;
+    list-style: none; /* Elimina los puntos de la lista */
+}
+
+.pagination li {
+    margin: 0 5px; /* Espacio entre los elementos de la paginación */
+}
+
+.pagination a {
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+    color: #007bff; /* Color azul para los enlaces */
+    padding: 8px 12px; /* Espacio interno para los enlaces */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s, color 0.3s; /* Transiciones suaves */
+}
+
+.pagination a:hover {
+    background-color: #007bff; /* Fondo azul al pasar el mouse */
+    color: white; /* Texto blanco al pasar el mouse */
+}
+
+.pagination li.disabled a {
+    color: #6c757d; /* Color gris para elementos deshabilitados */
+    pointer-events: none; /* Deshabilita clics en elementos deshabilitados */
+}
+
+.pagination li.active a {
+    background-color: #007bff; /* Fondo azul para el elemento activo */
+    color: white; /* Texto blanco para el elemento activo */
+    border: 1px solid #007bff; /* Borde azul para el elemento activo */
+}

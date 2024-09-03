@@ -1,0 +1,146 @@
+/*LOGIN*/
+/* Estilos específicos para la página de inicio de sesión */
+.login-container {
+    width: 100%;
+    max-width: 360px;
+    margin: 2rem auto; /* Centramos el contenedor verticalmente y horizontalmente */
+    padding: 2rem;
+    background-color: hsl(var(--background-secondary));
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Encabezado */
+.login-container h2 {
+    font-size: var(--heading-medium);
+    margin-bottom: 1.5rem;
+    color: hsl(var(--white));
+}
+
+/* Formulario */
+.login-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Campos de Entrada */
+.login-container .input_field {
+    padding: 0.75em 1em;
+    border: 1px solid hsl(var(--quite-gray));
+    border-radius: 8px;
+    font-size: var(--paragraph);
+    color: hsl(var(--text-primary));
+    background-color: hsl(var(--white));
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-container .input_field:focus {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 5px hsla(var(--primary), 0.3);
+}
+
+/* Botón de Inicio de Sesión */
+.login-container .btm_log {
+    padding: 0.75em;
+    border: none;
+    border-radius: 8px;
+    background-color: hsl(var(--primary));
+    color: hsl(var(--white));
+    font-size: var(--paragraph);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-container .btm_log:hover {
+    background-color: hsl(var(--primary-dark));
+    transform: scale(1.05);
+}
+
+/* Enlace de Registro */
+.login-container p {
+    margin-top: 1rem;
+    font-size: var(--paragraph);
+    color: hsl(var(--white));
+}
+
+.login-container p a {
+    color: hsl(var(--primary));
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.login-container p a:hover {
+    color: hsl(var(--primary-dark));
+}
+
+/*REGISTRO*/
+/* Estilos específicos para la página de registro de usuario */
+.register-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 2rem auto; /* Centramos el contenedor verticalmente y horizontalmente */
+    padding: 2rem;
+    background-color: hsl(var(--background-secondary));
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Encabezado */
+.register-container h2 {
+    font-size: var(--heading-medium);
+    margin-bottom: 1.5rem;
+    color: hsl(var(--white));
+}
+
+/* Formulario */
+.register-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Campos de Entrada */
+.register-container .input_field {
+    padding: 0.75em 1em;
+    border: 1px solid hsl(var(--quite-gray));
+    border-radius: 8px;
+    font-size: var(--paragraph);
+    color: hsl(var(--text-primary));
+    background-color: hsl(var(--white));
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-container .input_field:focus {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 5px hsla(var(--primary), 0.3);
+}
+
+/* Botón de Registro */
+.register-container .btm_log {
+    padding: 0.75em;
+    border: none;
+    border-radius: 8px;
+    background-color: hsl(var(--primary));
+    color: hsl(var(--white));
+    font-size: var(--paragraph);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.register-container .btm_log:hover {
+    background-color: hsl(var(--primary-dark));
+    transform: scale(1.05);
+}
+
+/* Estilo opcional para la descripción o mensaje adicional */
+.register-container p {
+    margin-top: 1rem;
+    font-size: var(--paragraph);
+    color: hsl(var(--text-primary));
+}

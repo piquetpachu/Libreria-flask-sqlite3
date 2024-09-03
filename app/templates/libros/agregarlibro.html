@@ -1,18 +1,18 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<main id="main" class="flexbox-col">
+<main  class="login-container flexbox-col">
     <h1>añadir libro</h1>
     
     
     <form action="/agregarlibro" method="post">
-        <input type="text" name="nombre_libro" placeholder="nombre del libro"><br><br>
-        <input type="text" name="autor" placeholder="nombre del autor"><br><br>
-        <input type="date" name="fecha_creacion" placeholder="fecha de salida"><br><br>
-        <input type="number" name="stock" placeholder="stock"><br><br>
-        <input type="number" name="precio" placeholder="precio"><br><br>
-        <textarea name="descripcion" placeholder="descripcion"></textarea><br><br>
-        <input type="file" name="imagen" placeholder="imagen"><br><br>
+        <input type="text" name="nombre_libro" placeholder="nombre del libro"><br>
+        <input type="text" name="autor" placeholder="nombre del autor"><br>
+        <input type="date" name="fecha_creacion" placeholder="fecha de salida"><br>
+        <input type="number" name="stock" placeholder="stock"><br>
+        <input type="number" name="precio" placeholder="precio"><br>
+        <textarea name="descripcion" placeholder="descripcion"></textarea><br>
+        <input type="file" name="imagen" placeholder="imagen"><br>
         <button type="submit">enviar</button>
     </form>
     <a href="/verlibro">VER LIBROS</a>
