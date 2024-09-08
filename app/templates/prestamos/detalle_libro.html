@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Libro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>{{ libro.titulo }}</h1>
+    <img src="{{ url_for('static', filename='images/' + libro.img) }}" alt="{{ libro.titulo }}" width="150">
+    <p><strong>Autor:</strong> {{ libro.autor }}</p>
+    <p><strong>Descripción:</strong> {{ libro.descripcion }}</p>
+    <p><strong>Fecha de Emisión:</strong> {{ libro.fecha_emision }}</p>
+    <p><strong>Precio:</strong> ${{ libro.precio }}</p>
+    <p><strong>Stock Disponible:</strong> {{ libro.stock }}</p>
+
+    {% if libro.stock > 0 %}
+    <form action="{{ url_for('prestamos.solicitar_prestamo', libro_id=libro.id) }}" method="POST">
+        <button type="submit">Solicitar Préstamo</button>
+    </form>
+    {% else %}
+    <p>No hay stock disponible para este libro.</p>
+    {% endif %}
+    
+    <a href="{{ url_for('libros.listar') }}">Volver a la lista de libros</a>
+</body>
+</html>

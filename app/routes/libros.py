@@ -32,6 +32,7 @@ def agregarlibro():
     
     print(nuevolibro)
     return 'Libro añadido'
+
 @libros.route('/eliminarlibro/<int:id>')
 @admin_required
 def eliminarlibro(id):
@@ -66,28 +67,25 @@ def editarlibro(id):
     return render_template('libros/editarlibro.html',libros=libros)
 
 @libros.route('/verlibro')
-@admin_required
 def verlibro():
-    libros = Libros.query.all()  
-    return render_template('libros/verlibros.html', libros=libros)
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+    pagination = Libros.query.paginate(page=page, per_page=per_page)    
+    return render_template('libros/verlibros.html', pagination=pagination)
 
 
 @libros.route('/libros')
 @login_required
 def libross():
-    # Obtén el número de la página actual de los parámetros de la URL, por defecto es 1
     page = request.args.get('page', 1, type=int)
-
-    # Define el número de elementos por página
     per_page = 8
-
-    # Usa SQLAlchemy para paginar los resultados
     pagination = Libros.query.paginate(page=page, per_page=per_page)
-
-    # Devuelve la plantilla con la lista de libros y la paginación
     return render_template('libros/libros.html', pagination=pagination)
 
 @libros.route('/libros/<int:libro_id>')
+@login_required
 def detalle(libro_id):
     libro = Libros.query.get_or_404(libro_id)
     return render_template('libros/detalle.html', libro=libro)
+
+

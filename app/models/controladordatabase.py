@@ -12,7 +12,7 @@ class Libros(db.Model):
     fecha_emision = db.Column(db.Text, nullable=False, default=date.today)
     stock = db.Column(db.Integer, nullable=False)
     precio = db.Column(db.Float, nullable=False)
-    img = db.Column(db.String(200), nullable=True)
+    img = db.Column(db.String(200), nullable=True, default="sinimagen.jpg")
 
     prestamos = db.relationship('Prestamo', backref='libro', lazy=True)
 

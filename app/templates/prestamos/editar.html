@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Préstamo</title>
+</head>
+<body>
+    <h1>Editar Préstamo</h1>
+    <form action="{{ url_for('prestamos.editar_prestamo', id=prestamo.id) }}" method="post">
+        <label for="fecha_devolucion">Fecha de Devolución:</label>
+        <input type="date" id="fecha_devolucion" name="fecha_devolucion" value="{{ prestamo.fecha_devolucion }}">
+        <button type="submit">Actualizar Préstamo</button>
+    </form>
+    <a href="{{ url_for('prestamos.ver_todos_prestamos') }}">Volver a la lista de préstamos</a>
+</body>
+</html>

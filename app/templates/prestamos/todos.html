@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Todos los Préstamos</title>
+</head>
+<body>
+    <h1>Todos los Préstamos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Libro</th>
+                <th>Usuario</th>
+                <th>Fecha Préstamo</th>
+                <th>Fecha Devolución</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prestamo, libro, usuario in prestamos %}
+            <tr>
+                <td>{{ prestamo.id }}</td>
+                <td>{{ libro.titulo }}</td>
+                <td>{{ usuario.nombre }}</td>
+                <td>{{ prestamo.fecha_prestamo }}</td>
+                <td>{{ prestamo.fecha_devolucion if prestamo.fecha_devolucion else 'No devuelto' }}</td>
+                <td>
+                    <a href="{{ url_for('prestamos.editar_prestamo', id=prestamo.id) }}">Editar</a>
+                    <form action="{{ url_for('prestamos.eliminar_prestamo', id=prestamo.id) }}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este préstamo?');">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('libros.bienvenida') }}">Volver a la página principal</a>
+</body>
+</html>
