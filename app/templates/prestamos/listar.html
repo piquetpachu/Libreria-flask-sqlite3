@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Mis Préstamos</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+
+{% block content %}<body>
+    <main id="main" class="flexbox-col">
+
     <h1>Mis Préstamos</h1>
     <table>
         <thead>
@@ -12,17 +10,26 @@
                 <th>Libro</th>
                 <th>Fecha de Préstamo</th>
                 <th>Fecha de Devolución</th>
+                <th>Precio</th>
             </tr>
         </thead>
         <tbody>
-            {% for prestamo in prestamos %}
+            {% for prestamo, libro in prestamos %}
             <tr>
                 <td>{{ prestamo.libro.titulo }}</td>
                 <td>{{ prestamo.fecha_prestamo }}</td>
                 <td>{{ prestamo.fecha_devolucion if prestamo.fecha_devolucion else 'Pendiente' }}</td>
+                <td>{{ libro.precio }}</td>
+                <td><form action="{{ url_for('prestamos.eliminar_prestamo', id=prestamo.id) }}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este préstamo?');">Eliminar</button>
+                </form></td>
             </tr>
             {% endfor %}
+            
         </tbody>
     </table>
+    <p><strong>Total de precios de los préstamos: ${{ total_precios }}</strong></p>
+    </main>
+    {% endblock %}
 </body>
 </html>

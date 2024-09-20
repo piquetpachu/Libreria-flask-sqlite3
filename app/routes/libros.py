@@ -31,7 +31,7 @@ def agregarlibro():
         return jsonify({'error': str(e)}), 400
     
     print(nuevolibro)
-    return 'Libro añadido'
+    return render_template('bienvenida.html')
 
 @libros.route('/eliminarlibro/<int:id>')
 @admin_required
@@ -75,7 +75,6 @@ def verlibro():
 
 
 @libros.route('/libros')
-@login_required
 def libross():
     page = request.args.get('page', 1, type=int)
     per_page = 8
@@ -83,7 +82,6 @@ def libross():
     return render_template('libros/libros.html', pagination=pagination)
 
 @libros.route('/libros/<int:libro_id>')
-@login_required
 def detalle(libro_id):
     libro = Libros.query.get_or_404(libro_id)
     return render_template('libros/detalle.html', libro=libro)

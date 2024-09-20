@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/detalles.css' ) }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/paginacion.css' ) }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cards.css' ) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/carousel.css' ) }}">
     <title>Libreria Flask</title>
 </head>
 <body>
@@ -24,22 +25,30 @@
       </a>
     </li>
     <li class="navbar-item flexbox-left">
-      <a class="navbar-item-inner flexbox-left">
-        <div class="navbar-item-inner-icon-wrapper flexbox">
-          <ion-icon name="search-outline"></ion-icon>
-        </div>
-        <span class="link-text">Search</span>
-      </a>
-    </li>
-    <li class="navbar-item flexbox-left">
-      <a href="{{url_for('libros.libross')}}" class="navbar-item-inner flexbox-left">
+      <a href="{{url_for('libros.bienvenida')}}" class="navbar-item-inner flexbox-left">
         <div class="navbar-item-inner-icon-wrapper flexbox">
           <ion-icon name="home-outline"></ion-icon>
         </div>
         <span class="link-text">inicio</span>
       </a>
-    </li>
+      <li class="navbar-item flexbox-left">
+        <a href="{{url_for('libros.libross')}}" class="navbar-item-inner flexbox-left">
+          <div class="navbar-item-inner-icon-wrapper flexbox">
+            <ion-icon name="pie-chart-outline"></ion-icon>
+          </div>
+          <span class="link-text">ver libros</span>
+        </a>
+      </li>
     <li class="navbar-item flexbox-left">
+      <a href="{{url_for('prestamos.listar_prestamos')}}" class="navbar-item-inner flexbox-left">
+        <div class="navbar-item-inner-icon-wrapper flexbox">
+          <ion-icon name="search-outline"></ion-icon>
+        </div>
+        <span class="link-text">Carrito</span>
+      </a>
+    </li>
+    </li>
+    <li class="navbar-item flexbox-left"></li>
       <a href="{{url_for('libros.index')}}" class="navbar-item-inner flexbox-left">
         <div class="navbar-item-inner-icon-wrapper flexbox">
           <ion-icon name="folder-open-outline"></ion-icon>
@@ -48,27 +57,19 @@
       </a>
     </li>
     <li class="navbar-item flexbox-left">
-      <a class="navbar-item-inner flexbox-left">
-        <div class="navbar-item-inner-icon-wrapper flexbox">
-          <ion-icon name="pie-chart-outline"></ion-icon>
-        </div>
-        <span class="link-text">Dashboard</span>
-      </a>
-    </li>
-    <li class="navbar-item flexbox-left">
-      <a class="navbar-item-inner flexbox-left">
+      <a href="{{url_for('libros.verlibro')}}" class="navbar-item-inner flexbox-left">
         <div class="navbar-item-inner-icon-wrapper flexbox">
           <ion-icon name="people-outline"></ion-icon>
         </div>
-        <span class="link-text">Team</span>
+        <span class="link-text">admin libros</span>
       </a>
     </li>
     <li class="navbar-item flexbox-left">
-      <a class="navbar-item-inner flexbox-left">
+      <a href="{{url_for('prestamos.ver_todos_prestamos')}}" class="navbar-item-inner flexbox-left">
         <div class="navbar-item-inner-icon-wrapper flexbox">
           <ion-icon name="chatbubbles-outline"></ion-icon>
         </div>
-        <span class="link-text">Support</span>
+        <span class="link-text">admin ventas</span>
       </a>
     </li>
     <li class="navbar-item flexbox-left">

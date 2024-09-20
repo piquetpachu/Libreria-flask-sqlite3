@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Préstamo</title>
-</head>
+{% extends 'layout.html' %}
+
+{% block content %}
 <body>
     <h1>Editar Préstamo</h1>
     <form action="{{ url_for('prestamos.editar_prestamo', id=prestamo.id) }}" method="post">
@@ -12,5 +9,6 @@
         <button type="submit">Actualizar Préstamo</button>
     </form>
     <a href="{{ url_for('prestamos.ver_todos_prestamos') }}">Volver a la lista de préstamos</a>
+    {% endblock %}
 </body>
 </html>
