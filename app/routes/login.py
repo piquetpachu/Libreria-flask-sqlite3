@@ -15,9 +15,14 @@ def login_required(f):
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if "nombre" not in session or session.get('rol') != 'admin':
+        if "nombre" not in session:  # Si el usuario no ha iniciado sesión
+            flash("Acceso denegado: Debes iniciar sesión.")
+            return redirect(url_for('user.index_login'))  # Redirigir al login
+        
+        if session.get('rol') != 'admin':  # Si el usuario no tiene rol de admin
             flash("Acceso denegado: Se requiere rol de administrador.")
-            return redirect(url_for('user.index_login'))
+            return redirect(url_for('libros.bienvenida'))  # Redirigir a una página sin restricciones
+            
         return f(*args, **kwargs)
     return decorated_function
 

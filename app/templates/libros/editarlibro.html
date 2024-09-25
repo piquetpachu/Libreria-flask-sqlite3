@@ -1,30 +1,24 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<main id="main" class="flexbox-col">
-    <form action="/editarlibro/{{libros.id}}" method="POST">
-    <label for="nombre_libro">Nombre del Libro:</label><br>
-    <input type="text" id="nombre_libro" name="nombre_libro" value="{{ libros.titulo }}" ><br><br>
+<main  class="login-container flexbox-col">
+    <form action="{{ url_for('libros.editarlibro', id=libro.id) }}" method="post" enctype="multipart/form-data">
+        <input type="text" name="nombre_libro" value="{{ libro.titulo }}" placeholder="Nombre del libro"><br>
+        <input type="text" name="autor" value="{{ libro.autor }}" placeholder="Autor"><br>
+        <input type="date" name="fecha_creacion" value="{{ libro.fecha_emision }}"><br>
+        <input type="number" name="stock" value="{{ libro.stock }}" placeholder="Stock"><br>
+        <input type="number" name="precio" value="{{ libro.precio }}" placeholder="Precio"><br>
+        <textarea name="descripcion">{{ libro.descripcion }}</textarea><br>
+        
+        <!-- Mostrar la imagen actual -->
+        <p>Imagen actual:</p>
+        <img src="{{ url_for('static', filename='img/' ~ libro.img) }}" alt="{{ libro.titulo }}" width="150px"><br>
     
-    <label for="autor">Autor:</label><br>
-    <input type="text" id="autor" name="autor" value="{{ libros.autor }}" ><br><br>
+        <!-- Input para cargar nueva imagen -->
+        <input type="file" name="imagen"><br>
+        
+        <button type="submit">Actualizar Libro</button>
+    </form>
     
-    <label for="fecha_creacion">Fecha de Creación:</label><br>
-    <input type="date" id="fecha_creacion" name="fecha_creacion" value="{{ libros.fecha_creacion }}" ><br><br>
-    
-    <label for="stock">Stock:</label><br>
-    <input type="number" id="stock" name="stock" value="{{ libros.stock }}" ><br><br>
-    
-    <label for="precio">Precio:</label><br>
-    <input type="number" id="precio" name="precio" value="{{ libros.precio }}" ><br><br>
-    
-    <label for="descripcion">descripcion:</label><br>
-    <input type="text" id="precio" name="descripcion" value="{{ libros.descripcion }}" ><br><br>
-
-    <label for="imagen">imagen:</label><br>
-    <input type="text" id="precio" name="imagen" value="{{ libros.imagen }}" ><br><br>
-    
-    <button type="submit">Guardar Cambios</button>
-</form>
 </main>
-    {% endblock %}
+{% endblock %}

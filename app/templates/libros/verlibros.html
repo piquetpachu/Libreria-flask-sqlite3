@@ -30,7 +30,8 @@
                 <td>{{ libro.fecha_emision }}</td>
                 <td>{{ libro.stock }}</td>
                 <td>${{ libro.precio }}</td>
-                <td> <img style="height: 300px; width: 200px;" src=".\static\img\{{ libro.img }}" alt=""><br></td>
+                <td><img style="height: 300px; width: 200px;" src="{{ url_for('static', filename='img/' ~ libro.img) }}" alt="{{ libro.titulo }}">
+                </td>
                 <td>
                     <a href="{{ url_for('libros.eliminarlibro', id=libro.id) }}">Eliminar</a>
                     <a href="{{ url_for('libros.editarlibro', id=libro.id) }}">Editar</a>
