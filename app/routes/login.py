@@ -32,7 +32,7 @@ user = Blueprint('user',__name__)
 @user.route("/index_login")
 def index_login():
     if "nombre" in session:
-        return redirect(url_for('libros.index'))
+        return redirect(url_for('libros.bienvenida'))
     return render_template("usuarios/login.html")
 
 

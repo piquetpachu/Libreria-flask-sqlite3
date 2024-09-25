@@ -39,7 +39,7 @@ def editar_prestamo(id):
     return render_template('prestamos/editar.html', prestamo=prestamo)
 
 @prestamos.route('/eliminar-prestamo/<int:id>', methods=['POST','GET'])
-@admin_required
+@login_required
 def eliminar_prestamo(id):
     prestamo = Prestamo.query.get_or_404(id)
     libro = Libros.query.get_or_404(prestamo.id_libro)  # Obtener el libro asociado al préstamo
