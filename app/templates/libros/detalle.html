@@ -6,6 +6,7 @@
     <img src="{{ url_for('static', filename='img/' ~ libro.img) }}" alt="{{ libro.titulo }}" class="detalle-img">
     <p><strong>Autor:</strong> {{ libro.autor }}</p>
     <p><strong>Descripción:</strong> {{ libro.descripcion }}</p>
+    <p><strong>Genero:</strong> ${{ libro.genero }}</p>
     <p><strong>Fecha de Emisión:</strong> {{ libro.fecha_emision }}</p>
     <p><strong>Stock:</strong> {{ libro.stock }}</p>
     <p><strong>Precio:</strong> ${{ libro.precio }}</p>

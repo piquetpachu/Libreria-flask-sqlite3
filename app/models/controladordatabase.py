@@ -8,6 +8,7 @@ class Libros(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String(100), nullable=False)
     autor = db.Column(db.String(100), nullable=False)
+    genero = db.Column(db.String(100), nullable=False)
     descripcion = db.Column(db.Text, nullable=True)
     fecha_emision = db.Column(db.Text, nullable=False, default=date.today)
     stock = db.Column(db.Integer, nullable=False)
@@ -16,9 +17,10 @@ class Libros(db.Model):
 
     prestamos = db.relationship('Prestamo', backref='libro', lazy=True)
 
-    def __init__(self, titulo, autor, descripcion, fecha_emision, stock, precio, img):
+    def __init__(self, titulo, autor, genero, descripcion, fecha_emision, stock, precio, img):
         self.titulo = titulo
         self.autor = autor
+        self.genero = genero
         self.descripcion = descripcion
         self.fecha_emision = fecha_emision
         self.stock = stock

@@ -29,6 +29,7 @@ def index():
 def agregarlibro():
     titulo = request.form['nombre_libro']
     autor = request.form['autor']
+    genero = request.form['genero']
     descripcion = request.form['descripcion']
     fecha_emision = request.form['fecha_creacion']
     stock = int(request.form['stock'])
@@ -51,6 +52,7 @@ def agregarlibro():
         nuevolibro = Libros(
             titulo=titulo,
             autor=autor,
+            genero=genero,
             descripcion=descripcion,
             fecha_emision=fecha_emision,
             stock=stock,
@@ -88,6 +90,7 @@ def editarlibro(id):
     if request.method == "POST":
         libro.titulo = request.form['nombre_libro']
         libro.autor = request.form['autor']
+        libro.genero = request.form['genero']
         libro.descripcion = request.form['descripcion']
         libro.fecha_emision = request.form['fecha_creacion']
         libro.stock = request.form['stock']

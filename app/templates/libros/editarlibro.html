@@ -5,6 +5,7 @@
     <form action="{{ url_for('libros.editarlibro', id=libro.id) }}" method="post" enctype="multipart/form-data">
         <input type="text" name="nombre_libro" value="{{ libro.titulo }}" placeholder="Nombre del libro"><br>
         <input type="text" name="autor" value="{{ libro.autor }}" placeholder="Autor"><br>
+        <input type="text" name="genero" value="{{ libro.genero }}" placeholder="Genero"><br>
         <input type="date" name="fecha_creacion" value="{{ libro.fecha_emision }}"><br>
         <input type="number" name="stock" value="{{ libro.stock }}" placeholder="Stock"><br>
         <input type="number" name="precio" value="{{ libro.precio }}" placeholder="Precio"><br>
