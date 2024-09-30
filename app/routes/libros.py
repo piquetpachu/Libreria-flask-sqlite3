@@ -17,7 +17,8 @@ def stringAleatorio():
 
 @libros.route('/')
 def bienvenida():
-    return render_template('bienvenida.html')
+    libros_destacados = Libros.query.filter(Libros.precio < 15.0 ).all()
+    return render_template('bienvenida.html', libros_destacados=libros_destacados)
 
 @libros.route('/formulariolibros')
 @admin_required
@@ -134,7 +135,29 @@ def editarlibro(id):
 def verlibro():
     page = request.args.get('page', 1, type=int)
     per_page = 10
-    pagination = Libros.query.paginate(page=page, per_page=per_page)    
+
+    # Obtener los filtros enviados por el formulario
+    titulo = request.args.get('titulo', '', type=str)
+    autor = request.args.get('autor', '', type=str)
+    genero = request.args.get('genero', '', type=str)
+    anio = request.args.get('anio', type=int)
+
+    # Construir la consulta base
+    query = Libros.query
+
+    # Aplicar filtros según los parámetros proporcionados
+    if titulo:
+        query = query.filter(Libros.titulo.ilike(f"%{titulo}%"))
+    if autor:
+        query = query.filter(Libros.autor.ilike(f"%{autor}%"))
+    if genero:
+        query = query.filter(Libros.genero.ilike(f"%{genero}%"))
+    if anio:
+        query = query.filter(db.extract('year', Libros.fecha_emision) == anio)
+
+    # Paginación
+    pagination = query.paginate(page=page, per_page=per_page)
+
     return render_template('libros/verlibros.html', pagination=pagination)
 
 
@@ -142,12 +165,31 @@ def verlibro():
 def libross():
     page = request.args.get('page', 1, type=int)
     per_page = 8
-    pagination = Libros.query.paginate(page=page, per_page=per_page)
+    # Obtener los filtros enviados por el formulario
+    titulo = request.args.get('titulo', '', type=str)
+    autor = request.args.get('autor', '', type=str)
+    genero = request.args.get('genero', '', type=str)
+    anio = request.args.get('anio', type=int)
+
+    # Construir la consulta base
+    query = Libros.query
+
+    # Aplicar filtros según los parámetros proporcionados
+    if titulo:
+        query = query.filter(Libros.titulo.ilike(f"%{titulo}%"))
+    if autor:
+        query = query.filter(Libros.autor.ilike(f"%{autor}%"))
+    if genero:
+        query = query.filter(Libros.genero.ilike(f"%{genero}%"))
+    if anio:
+        query = query.filter(db.extract('year', Libros.fecha_emision) == anio)
+    pagination = query.paginate(page=page, per_page=per_page)
     return render_template('libros/libros.html', pagination=pagination)
 
 @libros.route('/libros/<int:libro_id>')
 def detalle(libro_id):
     libro = Libros.query.get_or_404(libro_id)
     return render_template('libros/detalle.html', libro=libro)
+
 
 

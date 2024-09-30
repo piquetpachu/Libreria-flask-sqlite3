@@ -2,9 +2,18 @@
 
 {% block content %}
 <body>
+    
     <main id="main" class="flexbox-col">
 
     <h1>Todos los Préstamos</h1>
+
+    <!-- Formulario para filtrar por nombre de usuario -->
+    <form action="{{ url_for('prestamos.ver_todos_prestamos') }}" method="GET">
+        <label for="usuario">Buscar por nombre de usuario:</label>
+        <input type="text" id="usuario" name="usuario" placeholder="Nombre de usuario">
+        <button type="submit">Buscar</button>
+    </form>
+
     <table>
         <thead>
             <tr>
@@ -18,24 +27,23 @@
         <tbody>
             {% for prestamo, libro, usuario in prestamos %}
                 <tr>
-                    <td>{{ usuario.nombre }}</td>
-                    <td>{{ libro.titulo }}</td>
-                    <td>{{ prestamo.fecha_prestamo }}</td>
-                    <td>{{ prestamo.fecha_devolucion }}</td>
-                        <!-- Botón para confirmar la devolución -->
-                        <td>
-                            <a href="{{ url_for('prestamos.eliminar_prestamo', id=prestamo.id) }}">Eliminar</a>
-                            <a href="{{ url_for('prestamos.editar_prestamo', id=prestamo.id) }}">Editar</a>
-                        </td>
-
-                    
+                    <td data-label="Usuario">{{ usuario.nombre }}</td>
+                    <td data-label="Libro">{{ libro.titulo }}</td>
+                    <td data-label="Fecha Préstamo">{{ prestamo.fecha_prestamo }}</td>
+                    <td data-label="Fecha Devolución">{{ prestamo.fecha_devolucion if prestamo.fecha_devolucion else 'Pendiente' }}</td>
+                    <!-- Botones para eliminar y editar el préstamo -->
+                    <td data-label="Acciones">
+                        <a style="color: red;" href="{{ url_for('prestamos.eliminar_prestamo', id=prestamo.id) }}">Eliminar</a>
+                        <a style="color: rgb(144, 144, 211);" href="{{ url_for('prestamos.editar_prestamo', id=prestamo.id) }}">Editar</a>
+                    </td>
                 </tr>
-            
             {% endfor %}
         </tbody>
     </table>
+
     <a href="{{ url_for('libros.bienvenida') }}">Volver a la página principal</a>
     </main>
-    {% endblock %}
+
+{% endblock %}
 </body>
 </html>

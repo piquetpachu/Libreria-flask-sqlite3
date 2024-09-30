@@ -47,3 +47,11 @@
     display: block;
 }
 
+@media all and (max-width: 768px) {
+    .flex-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* Espacio entre las tarjetas */
+        justify-content: center; /* Centrar las tarjetas */
+    }
+}

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Libros</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Lista de Libros</h1>
+        <table class="book-table">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Género</th>
+                    <th>Descripción</th>
+                    <th>Fecha de Emisión</th>
+                    <th>Stock</th>
+                    <th>Precio</th>
+                    <th>Imagen</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Ejemplo de un libro -->
+                <tr>
+                    <td data-label="Título">El señor de los anillos</td>
+                    <td data-label="Autor">J.R.R. Tolkien</td>
+                    <td data-label="Género">Fantasía</td>
+                    <td data-label="Descripción">Aventura épica en la Tierra Media</td>
+                    <td data-label="Fecha de Emisión">29/07/1954</td>
+                    <td data-label="Stock">12</td>
+                    <td data-label="Precio">$49.99</td>
+                    <td data-label="Imagen"><img src="img/libro1.jpg" alt="El señor de los anillos"></td>
+                    <td data-label="Acciones">
+                        <a href="#" class="btn edit-btn">Editar</a>
+                        <a href="#" class="btn delete-btn">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav class="pagination">
+            <a href="#">Anterior</a>
+            <a href="#">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">Siguiente</a>
+        </nav>
+        <a href="#" class="logout-btn">Cerrar sesión</a>
+    </main>
+</body>
+<style>
+/* Estilo global */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #1e1e2f;
+    color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    text-align: center;
+}
+
+.container {
+    max-width: 90%;
+    padding: 2rem;
+    margin: 2rem auto;
+    background-color: #292942;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
+
+/* Tabla de libros */
+table.book-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #292942;
+}
+
+table.book-table thead th {
+    text-align: left;
+    padding: 1rem;
+    background-color: #333355;
+    color: #ffffff;
+    font-size: 1rem;
+    border-bottom: 2px solid #444466;
+}
+
+table.book-table tbody td {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #444466;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+table.book-table tbody tr:hover {
+    background-color: #444466;
+}
+
+table.book-table img {
+    width: 6rem;
+    height: auto;
+    border-radius: 0.5rem;
+    display: block;
+    margin: 0 auto;
+}
+
+table.book-table tbody .btn {
+    padding: 0.5rem 1rem;
+    color: #ffffff;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-size: 0.8rem;
+    margin-right: 1rem;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.edit-btn {
+    background-color: #3498db;
+    margin-right: 0.5rem;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+}
+
+.edit-btn:hover {
+    background-color: #2980b9;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Estilos de la paginación */
+.pagination {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.pagination a {
+    padding: 0.5rem 1rem;
+    background-color: #3498db;
+    color: white;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #2980b9;
+}
+
+.logout-btn {
+    display: block;
+    text-align: center;
+    margin-top: 2rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Estilos Responsivos */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    table.book-table thead {
+        display: none;
+    }
+
+    table.book-table, 
+    table.book-table tbody, 
+    table.book-table tr, 
+    table.book-table td {
+        display: block;
+        width: 100%;
+    }
+
+    table.book-table tbody tr {
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid #444466;
+        padding-bottom: 1rem;
+    }
+
+    table.book-table tbody td {
+        padding-left: 1rem;
+        position: relative;
+        font-size: 0.9rem;
+        padding-bottom: 1rem;
+        text-align: left;
+    }
+
+    table.book-table tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        top: 0;
+        padding: 0.5rem;
+        font-weight: bold;
+        color: #a6a6a6;
+    }
+
+    table.book-table tbody td img {
+        display: block;
+        margin: 1rem auto;
+        width: 5rem;
+    }
+
+    .logout-btn {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
+</style>
+</html>

@@ -50,6 +50,7 @@ a {
 }
 .menu li.subitem a {
   padding: 15px;
+  
 }
 .toggle {
   order: 1;
@@ -86,7 +87,6 @@ a {
   font-size: 12px;
   line-height: 16px;
   font-weight: 900;
-  content: "\f078";
   color: white;
   padding-left: 5px;
 }
@@ -96,6 +96,10 @@ a {
 .submenu-active {
   background-color: #111;
   border-radius: 3px;
+}
+
+.flashes{
+  color: #ccc;
 }
 
 /* Tablet menu */

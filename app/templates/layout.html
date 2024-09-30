@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/paginacion.css' ) }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cards.css' ) }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/carousel.css' ) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/filtro.css' ) }}">
     <title>Libreria Flask</title>
 </head>
 <body>
@@ -21,7 +22,7 @@
     <li class="item"><a href="{{url_for('libros.libross')}}">ver libros</a></li>
     <li class="item has-submenu">
       {% if session.get('rol') == 'admin' %}
-      <a tabindex="0">admin</a>
+      <a tabindex="0">admin <i class="fas fa-bars">▼</i></a>
       <ul class="submenu">
         <li class="subitem"><a href="{{url_for('libros.verlibro')}}">manejar libros</a></li>
         <li class="subitem"><a href="{{url_for('prestamos.ver_todos_prestamos')}}">manejar ventas</a></li>
@@ -29,20 +30,27 @@
       </ul>
       {% endif %}
     </li>
-    <li class="item has-submenu">
+    <!-- <li class="item has-submenu">
       <a tabindex="0">Plans</a>
       <ul class="submenu">
         <li class="subitem"><a href="#">Freelancer</a></li>
         <li class="subitem"><a href="#">Startup</a></li>
         <li class="subitem"><a href="#">Enterprise</a></li>
-      </ul>
+      </ul> -->
     </li>
+    {% if "nombre" in session %}
     <li class="item"><a href="{{url_for('prestamos.listar_prestamos')}}">Carrito</a></li>
-    <li class="item"><a href="{{url_for('user.logout')}}">cerrar sesion</a>
+    {% endif %}
+
+    {% if "nombre" in session %}
+    <li class="item button"><a href="{{url_for('user.logout')}}">cerrar sesion</a>
+    {% endif %}
     </li>
-    <li class="item button"><a href="{{url_for('user.index_login')}}">Log In</a></li>
-    <li class="item button secondary"><a href="{{url_for('user.register')}}">Sign Up</a></li>
-    <li class="toggle"><a href="#"><i class="fas fa-bars"></i></a></li>
+    {% if "nombre" not in session %}
+    <li class="item button"><a href="{{url_for('user.index_login')}}">iniciar sesion</a></li>
+    {% endif %}
+    <li class="item button secondary"><a href="{{url_for('user.register')}}">Registrarse</a></li>
+    <li class="toggle"><a href="#"><i class="fas fa-bars">▼</i></a></li>
   </ul>
 </nav>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>

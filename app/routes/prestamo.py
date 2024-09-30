@@ -9,8 +9,18 @@ prestamos = Blueprint('prestamos', __name__)
 @prestamos.route('/todos-los-prestamos')
 @admin_required
 def ver_todos_prestamos():
-    # Obtener todos los préstamos junto con los detalles del libro y del usuario
-    prestamos = db.session.query(Prestamo, Libros, Usuario).join(Libros, Prestamo.id_libro == Libros.id).join(Usuario, Prestamo.id_usuario == Usuario.id).all()
+    # Obtener el valor de búsqueda del nombre de usuario del formulario
+    nombre_usuario = request.args.get('usuario')
+
+    # Consultar todos los préstamos, libros y usuarios
+    query = db.session.query(Prestamo, Libros, Usuario).join(Libros, Prestamo.id_libro == Libros.id).join(Usuario, Prestamo.id_usuario == Usuario.id)
+
+    # Si se ha ingresado un nombre de usuario, filtrar los resultados
+    if nombre_usuario:
+        query = query.filter(Usuario.nombre.ilike(f"%{nombre_usuario}%"))
+
+    prestamos = query.all()
+
     return render_template('prestamos/todos.html', prestamos=prestamos)
 
 from datetime import datetime
@@ -45,7 +55,6 @@ def eliminar_prestamo(id):
     libro = Libros.query.get_or_404(prestamo.id_libro)  # Obtener el libro asociado al préstamo
     
     try:
-        # Aumentar el stock solo si el préstamo no tiene fecha de devolución
         libro.stock += 1  # Incrementar el stock del libro
 
         # Eliminar el préstamo

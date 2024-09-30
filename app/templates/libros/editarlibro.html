@@ -3,22 +3,22 @@
 {% block content %}
 <main  class="login-container flexbox-col">
     <form action="{{ url_for('libros.editarlibro', id=libro.id) }}" method="post" enctype="multipart/form-data">
-        <input type="text" name="nombre_libro" value="{{ libro.titulo }}" placeholder="Nombre del libro"><br>
-        <input type="text" name="autor" value="{{ libro.autor }}" placeholder="Autor"><br>
-        <input type="text" name="genero" value="{{ libro.genero }}" placeholder="Genero"><br>
-        <input type="date" name="fecha_creacion" value="{{ libro.fecha_emision }}"><br>
-        <input type="number" name="stock" value="{{ libro.stock }}" placeholder="Stock"><br>
-        <input type="number" name="precio" value="{{ libro.precio }}" placeholder="Precio"><br>
-        <textarea name="descripcion">{{ libro.descripcion }}</textarea><br>
+        <input type="text" name="nombre_libro" value="{{ libro.titulo }}" placeholder="Nombre del libro"class="input_field">><br>
+        <input type="text" name="autor" value="{{ libro.autor }}" placeholder="Autor"class="input_field">><br>
+        <input type="text" name="genero" value="{{ libro.genero }}" placeholder="Genero"class="input_field">><br>
+        <input type="date" name="fecha_creacion" value="{{ libro.fecha_emision }}"class="input_field">><br>
+        <input type="number" name="stock" value="{{ libro.stock }}" placeholder="Stock"class="input_field">><br>
+        <input type="number" name="precio" value="{{ libro.precio }}" placeholder="Precio"class="input_field">><br>
+        <textarea name="descripcion" style="border-radius: 8px;">{{ libro.descripcion }}</textarea>
         
         <!-- Mostrar la imagen actual -->
         <p>Imagen actual:</p>
         <img src="{{ url_for('static', filename='img/' ~ libro.img) }}" alt="{{ libro.titulo }}" width="150px"><br>
     
         <!-- Input para cargar nueva imagen -->
-        <input type="file" name="imagen"><br>
+        <input type="file" name="imagen"class="input_field">><br>
         
-        <button type="submit">Actualizar Libro</button>
+        <button type="submit"class="btm_log">Actualizar Libro</button>
     </form>
     
 </main>

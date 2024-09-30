@@ -13,7 +13,7 @@
 
 .pagination a {
     text-decoration: none; /* Elimina el subrayado de los enlaces */
-    color: #007bff; /* Color azul para los enlaces */
+    color: #000c1a; /* Color azul para los enlaces */
     padding: 8px 12px; /* Espacio interno para los enlaces */
     border: 1px solid #ddd; /* Borde gris claro */
     border-radius: 5px; /* Bordes redondeados */

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Libros</title>
+</head>
+<body>
+    <h1>Buscar Libros</h1>
+    
+    <form action="{{ url_for('libros.buscar_libros') }}" method="get">
+        <label for="autor">Autor:</label>
+        <input type="text" id="autor" name="autor" placeholder="Escribe el autor">
+
+        <label for="anio">Año de Emisión:</label>
+        <input type="text" id="anio" name="anio" placeholder="Escribe el año">
+
+        <label for="genero">Género:</label>
+        <input type="text" id="genero" name="genero" placeholder="Escribe el género">
+
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if libros %}
+        <h2>Resultados de la Búsqueda</h2>
+        <ul>
+            {% for libro in libros %}
+            <li>{{ libro.titulo }} - {{ libro.autor }} - {{ libro.genero }} - {{ libro.fecha_emision }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se encontraron libros que coincidan con la búsqueda.</p>
+    {% endif %}
+</body>
+</html>

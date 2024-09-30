@@ -1,0 +1,21 @@
+.carrusel {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+.carrusel::-webkit-scrollbar {
+    display: none;
+}
+.card {
+    flex: 0 0 auto;
+    width: 200px;
+    margin: 10px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+.card img {
+    width: 100%;
+    height: auto;
+}
