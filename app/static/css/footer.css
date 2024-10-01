@@ -1,0 +1,85 @@
+/* Footer general styling */
+.footer {
+    background-color: #333355;
+    box-shadow: 0 0.5rem 1.5rem #000000be ;
+    color: #fff;
+    padding: 2em 0;
+    font-size: 0.9em;
+    width: 100%;
+}
+
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 1em;
+    margin: 2px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 1em 0;
+}
+
+.footer-section h4 {
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
+}
+
+.footer-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 0.5em 0;
+}
+
+.footer-section ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+    text-decoration: underline;
+}
+
+.social-icons a {
+    display: inline-block;
+    margin-right: 0.5em;
+}
+
+.social-icons img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Footer bottom */
+.footer-bottom {
+    text-align: center;
+    padding-top: 1em;
+    border-top: 1px solid #444;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-section {
+        text-align: center;
+        margin: 1em 0;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+}

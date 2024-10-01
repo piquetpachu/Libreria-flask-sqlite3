@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cards.css' ) }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/carousel.css' ) }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/filtro.css' ) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css' ) }}">
     <title>Libreria Flask</title>
 </head>
 <body>
@@ -23,7 +24,7 @@
     <li class="item has-submenu">
       {% if session.get('rol') == 'admin' %}
       <a tabindex="0">admin <i class="fas fa-bars">▼</i></a>
-      <ul class="submenu">
+      <ul class="submenu" style="z-index: 3;">
         <li class="subitem"><a href="{{url_for('libros.verlibro')}}">manejar libros</a></li>
         <li class="subitem"><a href="{{url_for('prestamos.ver_todos_prestamos')}}">manejar ventas</a></li>
        
@@ -48,8 +49,8 @@
     </li>
     {% if "nombre" not in session %}
     <li class="item button"><a href="{{url_for('user.index_login')}}">iniciar sesion</a></li>
-    {% endif %}
     <li class="item button secondary"><a href="{{url_for('user.register')}}">Registrarse</a></li>
+    {% endif %}
     <li class="toggle"><a href="#"><i class="fas fa-bars">▼</i></a></li>
   </ul>
 </nav>
@@ -68,7 +69,37 @@
   {% endwith %}
     {% block content %}
     {% endblock %}
-    <h1>Footer</h1>
+    <footer class="footer">
+      <div class="footer-container">
+          <div class="footer-section">
+              <h4>Información</h4>
+              <p>Esta es una librería online realizada con la unica intencion de aprender. <br> ninguno de los libros esta a la venta.</p>
+              <p>Contáctanos: Libreria@example.com</p>
+          </div>
+          <div class="footer-section">
+              <h4>Enlaces útiles</h4>
+              <ul>
+                  <li><a href="#">Inicio</a></li>
+                  <li><a href="#">Libros</a></li>
+                  <li><a href="#">Contacto</a></li>
+                  <li><a href="#">Términos y condiciones</a></li>
+              </ul>
+          </div>
+          <div class="footer-section">
+              <h4>Redes sociales</h4>
+              <div class="social-icons">
+                  <a href="#"><img src="{{ url_for('static', filename='imagen/twitter-alt.svg') }}" alt="Facebook"></a>
+                  <a href="#"><img src="{{ url_for('static', filename='imagen/facebook.svg') }}" alt="Twitter"></a>
+                  <a href="#"><img src="{{ url_for('static', filename='imagen/Instagram.svg') }}" alt="Instagram"></a>
+                  
+              </div>
+          </div>
+      </div>
+      <div class="footer-bottom">
+          <p>&copy; 2024 Librería. Todos los derechos reservados.</p>
+      </div>
+  </footer>
+  
   </main>
 </body>
 </html>

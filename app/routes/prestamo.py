@@ -80,8 +80,8 @@ def listar_prestamos():
     # Obtener todos los préstamos del usuario
     prestamos = db.session.query(Prestamo, Libros).join(Libros, Prestamo.id_libro == Libros.id).filter(Prestamo.id_usuario == usuario_id).all()
     
-    # Calcular el total de los precios de los libros en los préstamos
-    total_precios = sum([libro.precio for _, libro in prestamos])
+    # Calcular el total de los precios ajustados de los libros en los préstamos
+    total_precios = sum([prestamo.precio_final for prestamo, _ in prestamos])
 
     return render_template('prestamos/listar.html', prestamos=prestamos, total_precios=total_precios)
 
@@ -102,13 +102,20 @@ def solicitar_prestamo(libro_id):
     duracion_dias = int(request.form['duracion'])
     fecha_prestamo = date.today()
     fecha_devolucion = fecha_prestamo + timedelta(days=duracion_dias)
+
+    # Ajustar el precio en función de la duración (si es 30 días, x2 en el precio)
+    if duracion_dias == 30:
+        precio_final = libro.precio * 2
+    else:
+        precio_final = libro.precio
     
-    
+    # Crear el nuevo préstamo, incluyendo el precio ajustado
     nuevo_prestamo = Prestamo(
         id_libro=libro.id,
         id_usuario=usuario_id,
         fecha_prestamo=fecha_prestamo,
-        fecha_devolucion=fecha_devolucion
+        fecha_devolucion=fecha_devolucion,
+        precio_final=precio_final  # Guardar el precio ajustado
     )
     
     libro.stock -= 1  # Reducir el stock del libro
@@ -116,7 +123,7 @@ def solicitar_prestamo(libro_id):
     try:
         db.session.add(nuevo_prestamo)
         db.session.commit()
-        flash(f'Préstamo del libro "{libro.titulo}" realizado con éxito.', 'success')
+        flash(f'Préstamo del libro "{libro.titulo}" realizado con éxito. Precio final: ${precio_final}', 'success')
     except Exception as e:
         db.session.rollback()
         flash(f'Error al realizar el préstamo: {str(e)}', 'error')

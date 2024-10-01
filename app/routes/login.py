@@ -66,7 +66,7 @@ def register():
             db.session.add(nuevo_usuario)
             db.session.commit()
             session['nombre'] = nombre 
-            return redirect(url_for('libros.index'))
+            return redirect(url_for('libros.bienvenida'))
     return render_template("usuarios/register.html")
 
 @user.route("/logout")

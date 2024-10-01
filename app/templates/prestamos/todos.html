@@ -9,9 +9,10 @@
 
     <!-- Formulario para filtrar por nombre de usuario -->
     <form action="{{ url_for('prestamos.ver_todos_prestamos') }}" method="GET">
-        <label for="usuario">Buscar por nombre de usuario:</label>
-        <input type="text" id="usuario" name="usuario" placeholder="Nombre de usuario">
-        <button type="submit">Buscar</button>
+        <div class="filter-group">
+        <input type="text" id="usuario" name="usuario" placeholder="Buscar por nombre de usuario">
+    </div>
+        <button class="filter-button" type="submit">Buscar</button>
     </form>
 
     <table>

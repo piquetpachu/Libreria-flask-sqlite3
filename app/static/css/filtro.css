@@ -33,7 +33,7 @@
 
 .filter-button {
     padding: 10px;
-    background-color: #2c7a7b;
+    background-color: var(--color-naranja-oscuro);
     color: white;
     border: none;
     border-radius: 5px;
@@ -45,6 +45,8 @@
 .filter-button:hover {
     background-color: #285e61;
 }
+
+
 
 /* Estilos responsivos para dispositivos móviles */
 @media (max-width: 768px) {

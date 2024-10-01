@@ -12,6 +12,7 @@ main#main {
     gap: 20px;
     max-width: 1350px;
     margin: 0 auto;
+    background-color: var(--color-azul);
     
 }
 
@@ -43,7 +44,7 @@ main#main p {
 }
 
 main#main p strong {
-    color: #4a90e2; /* Color para los títulos */
+    color: #ffffff; /* Color para los títulos */
     margin-right: 5px;
 }
 

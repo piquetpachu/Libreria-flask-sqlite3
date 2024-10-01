@@ -22,7 +22,7 @@
         </select>
     </div>
     
-    <button type="submit" class="filter-button">Aplicar Filtros</button>
+    <button type="submit" class="filter-button">Filtrar</button>
 </div>
 </form>
   
@@ -34,7 +34,7 @@
         <div class="container">
             <header>
                 <h1>Lista de Libros</h1>
-                <a href="{{url_for('libros.index')}}" class="btn edit-btn">Agregar Libro</a>
+                <a href="{{url_for('libros.index')}}" class="btn agregar-btn">Agregar Libro</a>
             </header>
             <section class="book-list">
                 {% for libro in pagination %}
@@ -85,7 +85,7 @@
                 <!-- Paginación aquí -->
             
 
-    {% endblock %}
-</main>
+            </main>
+            {% endblock %}
 </body>
 </html>

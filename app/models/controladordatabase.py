@@ -35,6 +35,7 @@ class Prestamo(db.Model):
     id_usuario = db.Column(db.Integer, db.ForeignKey('Usuario.id'), nullable=False)
     fecha_prestamo = db.Column(db.Date, nullable=False, default=date.today)
     fecha_devolucion = db.Column(db.Date, nullable=True)
+    precio_final = db.Column(db.Float, nullable=False)
 
 class Usuario(db.Model):
     __tablename__ = 'Usuario'

@@ -1,4 +1,12 @@
 :root {
+    --color-azul: #075580;
+    --color-azul-marino: #1C2541;
+    --color-gris-claro: #E0E0E0;
+    --color-blanco: #FFFFFF;
+    --color-gris-oscuro: #333333;
+    --color-naranja: #F4A261;
+    --color-naranja-oscuro: #cf6f37;
+
     --primary: 237, 94%, 81%;
     --background: 266, 16%, 92%;
     --background-secondary: 256, 12%, 12%;
@@ -28,7 +36,7 @@
     max-width: 360px;
     margin: 2rem auto; /* Centramos el contenedor verticalmente y horizontalmente */
     padding: 2rem;
-    background-color: hsl(var(--background-secondary));
+    background-color: var(--color-azul-marino);
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -70,7 +78,7 @@
     padding: 0.75em;
     border: none;
     border-radius: 8px;
-    background-color: hsl(var(--primary));
+    background-color: var(--color-naranja-oscuro);
     color: hsl(var(--white));
     font-size: var(--paragraph);
     cursor: pointer;
@@ -107,7 +115,7 @@
     max-width: 400px;
     margin: 2rem auto; /* Centramos el contenedor verticalmente y horizontalmente */
     padding: 2rem;
-    background-color: hsl(var(--background-secondary));
+    background-color: var(--color-azul-marino);
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -149,7 +157,7 @@
     padding: 0.75em;
     border: none;
     border-radius: 8px;
-    background-color: hsl(var(--primary));
+    background-color: var(--color-naranja-oscuro);
     color: hsl(var(--white));
     font-size: var(--paragraph);
     cursor: pointer;

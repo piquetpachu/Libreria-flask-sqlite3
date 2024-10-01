@@ -11,10 +11,11 @@
 .flex-container .card {
     flex: 1 1 calc(25% - 20px); /* Ajuste automático al tamaño del contenedor */
     max-width: 250px; /* Tamaño máximo de las tarjetas */
-    border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
-    background-color: #f9f9f9;
+    background-color: var(--color-azul-marino);
+    box-shadow: 0 0.5rem 1.5rem #d9d9d965 ;
+
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -32,6 +33,7 @@
 .flex-container .card h2 {
     font-size: 1.2em;
     margin: 10px 0;
+    color: white;
 }
 
 .flex-container .card p {
