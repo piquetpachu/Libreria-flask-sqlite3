@@ -1,7 +1,9 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<main id="main" class="flexbox-col">
+<div class="book-card">
+
+<main id="main" class="flexbox-col" style="background-color: var(--color-azul-marino);">
     <h1>{{ libro.titulo }}</h1>
     <img src="{{ url_for('static', filename='img/' ~ libro.img) }}" alt="{{ libro.titulo }}" class="detalle-img">
     <p><strong>Autor:</strong> {{ libro.autor }}</p>
@@ -10,21 +12,24 @@
     <p><strong>Fecha de Emisión:</strong> {{ libro.fecha_emision }}</p>
     <p><strong>Stock:</strong> {{ libro.stock }}</p>
     <p><strong>Precio:</strong> ${{ libro.precio }}</p>
-
+    
     <!-- Formulario para solicitar un préstamo -->
     {% if "nombre" in session %}
     <form action="{{ url_for('prestamos.solicitar_prestamo', libro_id=libro.id) }}" method="post">
         <label for="duracion">Duración del préstamo:</label>
+        <div class="filter-group">
         <select id="duracion" name="duracion">
             <option value="7">1 Semana</option>
             <option value="30">1 Mes</option>
+        </div>
         </select>
-        <button type="submit">Solicitar Préstamo</button>
+        <button class="btn agregar-btn" type="submit">Solicitar Préstamo</button>
     </form>
     {% endif %}
-
-    </form>
-
+    
+    
+</form>
 
 </main>
+</div>
 {% endblock %}

@@ -4,6 +4,10 @@ label{
     color: #ffffff;
     font-size: var(--heading-small);
 }
+body{
+    background-color: var(--color-azul);
+
+}
 main#main {
     display: flex;
     flex-direction: column;
@@ -44,7 +48,7 @@ main#main p {
 }
 
 main#main p strong {
-    color: #ffffff; /* Color para los títulos */
+    color: #0080ff; /* Color para los títulos */
     margin-right: 5px;
 }
 
@@ -72,5 +76,8 @@ main#main p:last-child {
 
     main#main p {
         font-size: 1em;
+    }
+    .filter-group{
+        width: 205px;
     }
 }

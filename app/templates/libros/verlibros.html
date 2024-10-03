@@ -14,7 +14,7 @@
     <div class="filter-group">
         <select id="genero" name="genero">
             <option value="">Todos</option>
-            {% for libro in pagination.items %}
+            {% for libro in query %}
             <option value="{{libro.genero}}">{{libro.genero}}</option>
             {% endfor %}
 

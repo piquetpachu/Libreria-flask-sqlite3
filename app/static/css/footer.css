@@ -1,6 +1,6 @@
 /* Footer general styling */
 .footer {
-    background-color: #333355;
+    background-color: #222;
     box-shadow: 0 0.5rem 1.5rem #000000be ;
     color: #fff;
     padding: 2em 0;
@@ -64,7 +64,7 @@
 }
 
 .footer-bottom p {
-    margin: 0;
+    margin: 0px 15px;
 }
 
 /* Responsive styles */

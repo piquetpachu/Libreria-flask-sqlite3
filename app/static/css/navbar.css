@@ -48,6 +48,7 @@ a {
 .menu li a {
   display: block;
   padding: 15px 5px;
+  cursor: pointer;
 }
 .menu li.subitem a {
   padding: 15px;
@@ -100,7 +101,11 @@ a {
 }
 
 .flashes{
+  background-color: green;
   color: #ccc;
+  list-style: none;
+  padding: 5px;
+  border-radius: 8px;
 }
 
 /* Tablet menu */

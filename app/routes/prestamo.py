@@ -9,8 +9,11 @@ prestamos = Blueprint('prestamos', __name__)
 @prestamos.route('/todos-los-prestamos')
 @admin_required
 def ver_todos_prestamos():
+    page = request.args.get('page', 1, type=int)
+    per_page = 20
     # Obtener el valor de búsqueda del nombre de usuario del formulario
     nombre_usuario = request.args.get('usuario')
+    titulo_libro = request.args.get('titulo_libro', '', type=str)
 
     # Consultar todos los préstamos, libros y usuarios
     query = db.session.query(Prestamo, Libros, Usuario).join(Libros, Prestamo.id_libro == Libros.id).join(Usuario, Prestamo.id_usuario == Usuario.id)
@@ -18,10 +21,13 @@ def ver_todos_prestamos():
     # Si se ha ingresado un nombre de usuario, filtrar los resultados
     if nombre_usuario:
         query = query.filter(Usuario.nombre.ilike(f"%{nombre_usuario}%"))
+    if titulo_libro:
+        query = query.filter(Libros.titulo.ilike(f"%{titulo_libro}%"))
 
     prestamos = query.all()
+    pagination = query.paginate(page=page, per_page=per_page)
 
-    return render_template('prestamos/todos.html', prestamos=prestamos)
+    return render_template('prestamos/todos.html', prestamos=prestamos,pagination=pagination)
 
 from datetime import datetime
 
@@ -74,6 +80,7 @@ def eliminar_prestamo(id):
 @prestamos.route('/mis-prestamos')
 @login_required
 def listar_prestamos():
+    
     # Obtener el ID del usuario desde la sesión
     usuario_id = Usuario.query.filter_by(nombre=session['nombre']).first().id
     
@@ -81,7 +88,7 @@ def listar_prestamos():
     prestamos = db.session.query(Prestamo, Libros).join(Libros, Prestamo.id_libro == Libros.id).filter(Prestamo.id_usuario == usuario_id).all()
     
     # Calcular el total de los precios ajustados de los libros en los préstamos
-    total_precios = sum([prestamo.precio_final for prestamo, _ in prestamos])
+    total_precios = round(sum([prestamo.precio_final for prestamo, _ in prestamos]))
 
     return render_template('prestamos/listar.html', prestamos=prestamos, total_precios=total_precios)
 

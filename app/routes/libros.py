@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, flash, jsonify, url_for
 from werkzeug.utils import secure_filename
-from models.controladordatabase import db, Libros
+from models.controladordatabase import db, Libros, Prestamo
 from routes.login import login_required, admin_required
 import os
 from random import sample
@@ -75,12 +75,20 @@ def agregarlibro():
 @admin_required
 def eliminarlibro(id):
     libro = Libros.query.get(id)
+
     if libro:
-        db.session.delete(libro)
-        db.session.commit()
-        flash(f'Libro {libro.titulo} eliminado con éxito', 'success')
+        # Verificar si el libro está prestado
+        prestamo_activo = Prestamo.query.filter_by(id_libro=id).first()
+
+        if prestamo_activo:
+            flash(f'El libro "{libro.titulo}" no puede ser eliminado porque está prestado.', 'error')
+        else:
+            db.session.delete(libro)
+            db.session.commit()
+            flash(f'Libro "{libro.titulo}" eliminado con éxito', 'success')
     else:
         flash('Libro no encontrado', 'error')
+
     return redirect(url_for('libros.verlibro'))
 
 @libros.route('/editarlibro/<int:id>', methods=['POST', 'GET'])
@@ -140,7 +148,6 @@ def verlibro():
     titulo = request.args.get('titulo', '', type=str)
     autor = request.args.get('autor', '', type=str)
     genero = request.args.get('genero', '', type=str)
-    anio = request.args.get('anio', type=int)
 
     # Construir la consulta base
     query = Libros.query
@@ -152,19 +159,19 @@ def verlibro():
         query = query.filter(Libros.autor.ilike(f"%{autor}%"))
     if genero:
         query = query.filter(Libros.genero.ilike(f"%{genero}%"))
-    if anio:
-        query = query.filter(db.extract('year', Libros.fecha_emision) == anio)
+
 
     # Paginación
     pagination = query.paginate(page=page, per_page=per_page)
 
-    return render_template('libros/verlibros.html', pagination=pagination)
+    return render_template('libros/verlibros.html', pagination=pagination, query=query)
 
 
 @libros.route('/libros')
 def libross():
     page = request.args.get('page', 1, type=int)
-    per_page = 8
+    per_page = 12
+
     # Obtener los filtros enviados por el formulario
     titulo = request.args.get('titulo', '', type=str)
     autor = request.args.get('autor', '', type=str)
@@ -184,7 +191,7 @@ def libross():
     if anio:
         query = query.filter(db.extract('year', Libros.fecha_emision) == anio)
     pagination = query.paginate(page=page, per_page=per_page)
-    return render_template('libros/libros.html', pagination=pagination)
+    return render_template('libros/libros.html', pagination=pagination, query=query)
 
 @libros.route('/libros/<int:libro_id>')
 def detalle(libro_id):

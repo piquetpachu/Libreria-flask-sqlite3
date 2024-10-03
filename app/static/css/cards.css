@@ -11,6 +11,7 @@
 .flex-container .card {
     flex: 1 1 calc(25% - 20px); /* Ajuste automático al tamaño del contenedor */
     max-width: 250px; /* Tamaño máximo de las tarjetas */
+    min-width: 250px; 
     border-radius: 8px;
     overflow: hidden;
     background-color: var(--color-azul-marino);

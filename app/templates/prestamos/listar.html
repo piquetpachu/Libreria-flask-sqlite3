@@ -17,10 +17,10 @@
         <tbody>
             {% for prestamo, libro in prestamos %}
             <tr>
-                <td>{{ prestamo.libro.titulo }}</td>
-                <td>{{ prestamo.fecha_prestamo }}</td>
-                <td>{{ prestamo.fecha_devolucion if prestamo.fecha_devolucion else 'Pendiente' }}</td>
-                <td>{{ prestamo.precio_final }}</td>
+                <td data-label="Libro">{{ prestamo.libro.titulo }}</td>
+                <td data-label="Fecha Prestamo">{{ prestamo.fecha_prestamo }}</td>
+                <td data-label="Fecha Devolucion">{{ prestamo.fecha_devolucion if prestamo.fecha_devolucion else 'Pendiente' }}</td>
+                <td data-label="Precio">{{ prestamo.precio_final }}</td>
                 <td><form action="{{ url_for('prestamos.eliminar_prestamo', id=prestamo.id) }}" method="post" style="display:inline;">
                     <button style="width: 100px; height: 40px; background-color: rgb(182, 114, 114);" type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este préstamo?');">Eliminar</button>
                 </form></td>
@@ -29,7 +29,7 @@
             
         </tbody>
     </table>
-    <p><strong>Total de precios de los préstamos: ${{ total_precios }}</strong></p>
+    <p><strong style="color: white;">Total de precios de los préstamos: ${{ total_precios }}</strong></p>
     </main>
     {% endblock %}
 </body>
