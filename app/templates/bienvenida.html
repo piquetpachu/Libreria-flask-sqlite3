@@ -3,7 +3,7 @@
 {% block content %}
 <header class="hero">
     <div class="hero-content">
-        <h1 class="hero-title">Bienvenido a la Biblioteca Online</h1>
+        <h1 class="hero-title">Hola <strong style="color: var(--color-naranja-oscuro);">{{session.nombre}}</strong><br>Bienvenido a la Biblioteca Online</h1>
         <p class="hero-description">Descubre, explora y disfruta de nuestra colección de libros. Todo al alcance de un clic.</p>
         <a href="{{ url_for('libros.libross') }}" class="hero-btn">Explorar Libros</a>
     </div>

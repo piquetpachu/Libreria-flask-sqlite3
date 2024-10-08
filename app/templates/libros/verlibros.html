@@ -4,7 +4,9 @@
 <!-- Formulario para filtrar libros -->
 <div class="filter-container">
     <div class="filter-group">
-        <form action="{{ url_for('libros.verlibro') }}" method="GET">
+    <form action="{{ url_for('libros.verlibro') }}" method="GET">
+    </div>
+            <div class="filter-group">
         <input type="text" id="titulo" name="titulo" placeholder="Buscar título...">
     </div>
     <div class="filter-group">

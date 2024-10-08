@@ -11,14 +11,11 @@ prestamos = Blueprint('prestamos', __name__)
 def ver_todos_prestamos():
     page = request.args.get('page', 1, type=int)
     per_page = 20
-    # Obtener el valor de búsqueda del nombre de usuario del formulario
     nombre_usuario = request.args.get('usuario')
     titulo_libro = request.args.get('titulo_libro', '', type=str)
 
-    # Consultar todos los préstamos, libros y usuarios
     query = db.session.query(Prestamo, Libros, Usuario).join(Libros, Prestamo.id_libro == Libros.id).join(Usuario, Prestamo.id_usuario == Usuario.id)
 
-    # Si se ha ingresado un nombre de usuario, filtrar los resultados
     if nombre_usuario:
         query = query.filter(Usuario.nombre.ilike(f"%{nombre_usuario}%"))
     if titulo_libro:
@@ -58,15 +55,13 @@ def editar_prestamo(id):
 @login_required
 def eliminar_prestamo(id):
     prestamo = Prestamo.query.get_or_404(id)
-    libro = Libros.query.get_or_404(prestamo.id_libro)  # Obtener el libro asociado al préstamo
+    libro = Libros.query.get_or_404(prestamo.id_libro)  
     
     try:
-        libro.stock += 1  # Incrementar el stock del libro
+        libro.stock += 1  
 
-        # Eliminar el préstamo
         db.session.delete(prestamo)
 
-        # Confirmar los cambios tanto en el libro como en el préstamo
         db.session.commit()
 
         flash('Préstamo eliminado y stock del libro actualizado con éxito.', 'success')
@@ -81,13 +76,11 @@ def eliminar_prestamo(id):
 @login_required
 def listar_prestamos():
     
-    # Obtener el ID del usuario desde la sesión
     usuario_id = Usuario.query.filter_by(nombre=session['nombre']).first().id
     
     # Obtener todos los préstamos del usuario
     prestamos = db.session.query(Prestamo, Libros).join(Libros, Prestamo.id_libro == Libros.id).filter(Prestamo.id_usuario == usuario_id).all()
     
-    # Calcular el total de los precios ajustados de los libros en los préstamos
     total_precios = round(sum([prestamo.precio_final for prestamo, _ in prestamos]))
 
     return render_template('prestamos/listar.html', prestamos=prestamos, total_precios=total_precios)
@@ -102,30 +95,26 @@ def solicitar_prestamo(libro_id):
         flash('No hay stock disponible para este libro.', 'error')
         return redirect(url_for('libros.detalle', libro_id=libro.id))
 
-    # Obtener el ID del usuario desde la sesión
     usuario_id = Usuario.query.filter_by(nombre=session['nombre']).first().id
 
-    # Obtener la duración del préstamo desde el formulario
     duracion_dias = int(request.form['duracion'])
     fecha_prestamo = date.today()
     fecha_devolucion = fecha_prestamo + timedelta(days=duracion_dias)
 
-    # Ajustar el precio en función de la duración (si es 30 días, x2 en el precio)
     if duracion_dias == 30:
         precio_final = libro.precio * 2
     else:
         precio_final = libro.precio
     
-    # Crear el nuevo préstamo, incluyendo el precio ajustado
     nuevo_prestamo = Prestamo(
         id_libro=libro.id,
         id_usuario=usuario_id,
         fecha_prestamo=fecha_prestamo,
         fecha_devolucion=fecha_devolucion,
-        precio_final=precio_final  # Guardar el precio ajustado
+        precio_final=precio_final  
     )
     
-    libro.stock -= 1  # Reducir el stock del libro
+    libro.stock -= 1  
     
     try:
         db.session.add(nuevo_prestamo)

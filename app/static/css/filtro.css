@@ -2,6 +2,7 @@
 .filter-container {
     display: flex;
     text-align: center;
+    gap: 10px;
     align-items: center;
     justify-content: center;
     padding: 15px;
@@ -18,8 +19,8 @@
     color: #333;
 }
 .select-container {
-    width: 200px; /* Tamaño fijo del contenedor */
-    max-width: 100%; /* Para hacerlo responsive */
+    width: 200px; 
+    max-width: 100%; 
 }
 
 .filter-group label {
@@ -34,23 +35,22 @@
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-/* Estilo del select */
 .custom-select {
-    width: 100%; /* Ancho del select */
+    width: 100%; 
     font-size: 1em;
     padding: 0.5em;
     border: 1px solid #ccc;
     background-color: #fff;
     color: #333;
-    appearance: none; /* Elimina la flecha de algunos navegadores, opcional */
+    appearance: none; 
 }
 
 
 
-/* Tamaño máximo para el desplegable */
+
 .custom-select:focus {
-    max-height: 8em; /* Altura máxima del menú desplegable */
-    overflow-y: auto;  /* Scroll si se exceden las opciones */
+    max-height: 8em; 
+    overflow-y: auto;  
 }
 
 
@@ -71,7 +71,7 @@
 
 
 
-/* Estilos responsivos para dispositivos móviles */
+
 @media (max-width: 768px) {
     .filter-container {
         flex-direction: column;

@@ -1,4 +1,3 @@
-/* Basic styling */
 * {
   box-sizing: border-box;
   padding: 0;
@@ -71,10 +70,8 @@ a {
   display: block;
 }
 .button.secondary {
-  /* divider between buttons and menu links */
   border-bottom: 1px #444 solid;
 }
-/* Submenu up from mobile screens */
 .submenu {
   display: none;
 }
@@ -108,7 +105,6 @@ a {
   border-radius: 8px;
 }
 
-/* Tablet menu */
 @media all and (min-width: 700px) {
   .menu {
     justify-content: center;
@@ -126,7 +122,6 @@ a {
     text-align: right;
     order: 2;
   }
-  /* Button up from tablet screen */
   .menu li.button a {
     padding: 10px 15px;
     margin: 5px 0;
@@ -150,7 +145,6 @@ a {
     border-color: darkblue;
   }
 }
-/* Desktop menu */
 @media all and (min-width: 960px) {
   .menu {
     align-items: flex-start;

@@ -1,16 +1,16 @@
 
 /*VISOR DE LIBROS*/
-/* Estilos para la lista de libros */
+
 .flex-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Espacio entre las tarjetas */
-    justify-content: center; /* Centrar las tarjetas */
+    gap: 20px; 
+    justify-content: center; 
 }
 
 .flex-container .card {
-    flex: 1 1 calc(25% - 20px); /* Ajuste automático al tamaño del contenedor */
-    max-width: 250px; /* Tamaño máximo de las tarjetas */
+    flex: 1 1 calc(25% - 20px); 
+    max-width: 250px; 
     min-width: 250px; 
     border-radius: 8px;
     overflow: hidden;
@@ -54,7 +54,7 @@
     .flex-container {
         display: flex;
         flex-direction: column;
-        gap: 20px; /* Espacio entre las tarjetas */
-        justify-content: center; /* Centrar las tarjetas */
+        gap: 10px; /* Espacio entre las tarjetas */
+        justify-content: center; 
     }
 }
