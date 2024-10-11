@@ -44,7 +44,7 @@
     {% endif %}
 
     {% if "nombre" in session %}
-    <li class="item button"><a href="{{url_for('user.logout')}}">cerrar sesion</a>
+    <li class="item button"><a href="{{url_for('user.logout')}}" onclick="return confirm('¿Estás seguro de que deseas cerrar sesion?');">cerrar sesion</a>
     {% endif %}
     </li>
     {% if "nombre" not in session %}
