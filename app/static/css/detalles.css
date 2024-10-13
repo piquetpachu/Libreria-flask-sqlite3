@@ -58,6 +58,43 @@ main#main p:last-child {
     color: #e63946;
 }
 
+/* estrellas */
+.rating {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+  }
+  
+  .rating input {
+    display: none;
+  }
+  
+  .rating label {
+    position: relative;
+    width: 1em;
+    font-size: 2rem;
+    color: #FFD700;
+    cursor: pointer;
+  }
+  
+  .rating label::before {
+    content: "★";
+    color: aliceblue;
+    position: absolute;
+    opacity: 1;
+  }
+  
+  .rating label:hover:before,
+  .rating label:hover ~ label:before {
+    opacity: 1 !important;
+    color: #FFD700;
+  }
+  
+  .rating input:checked ~ label:before {
+    opacity: 1;
+  }
+  
+
 @media (max-width: 600px) {
     main#main {
         padding: 10px;

@@ -2,14 +2,16 @@
 
 {% block content %}
 <body>
-    <main  class="login-container flexbox-col">
     <h1>Editar Préstamo</h1>
-    <form action="{{ url_for('prestamos.editar_prestamo', id=prestamo.id) }}" method="post">
-        <label for="fecha_devolucion" >Fecha de Devolución:</label>
-        <input type="date" id="fecha_devolucion" name="fecha_devolucion" value="{{ prestamo.fecha_devolucion }}" class="input_field">
-        <button class="btm_log" type="submit" >Actualizar Préstamo</button>
+
+    <form method="POST" action="{{ url_for('prestamos.editar_prestamo', id=prestamo.id) }}">
+        <label for="fecha_devolucion">Fecha de Devolución:</label>
+        <input type="date" id="fecha_devolucion" name="fecha_devolucion" value="{{ prestamo.fecha_devolucion }}">
+
+        <button type="submit">Guardar cambios</button>
     </form>
-</main>
+
+    <a href="{{ url_for('prestamos.ver_todos_prestamos') }}">Volver a la lista</a>
     {% endblock %}
 </body>
 </html>

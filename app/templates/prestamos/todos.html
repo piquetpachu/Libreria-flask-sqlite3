@@ -3,47 +3,53 @@
 {% block content %}
 <body>
     
-    <main id="main" class="flexbox-col">
+    <h1>Listado de todos los préstamos</h1>
 
-    <h1>Todos los Préstamos</h1>
-
-    <!-- Formulario para filtrar por nombre de usuario -->
-    <div class="filter-container">
-
-    <form action="{{ url_for('prestamos.ver_todos_prestamos') }}" method="GET">
-        <div class="filter-group">
-        <input type="text" id="usuario" name="usuario" placeholder="Buscar por nombre de usuario">
-        <input type="text" id="titulo_libro" name="titulo_libro" placeholder="Buscar por nombre del libro">
-        <button style="width: 200px;" class="filter-button" type="submit">Buscar</button>
-    </div>
+    <form method="GET" action="{{ url_for('prestamos.ver_todos_prestamos') }}">
+        <input type="text" name="usuario" placeholder="Nombre de usuario" value="{{ request.args.get('usuario', '') }}">
+        <input type="text" name="titulo_libro" placeholder="Título del libro" value="{{ request.args.get('titulo_libro', '') }}">
+        <button type="submit">Buscar</button>
     </form>
-</div>
 
-    <table>
+    <table border="1">
         <thead>
             <tr>
                 <th>Usuario</th>
                 <th>Libro</th>
                 <th>Fecha Préstamo</th>
                 <th>Fecha Devolución</th>
+                <th>Precio Final</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            {% for prestamo, libro, usuario in pagination.items %}
+            {% for prestamo, libro, usuario in prestamos %}
                 <tr>
-                    <td data-label="Usuario">{{ usuario.nombre }}</td>
-                    <td data-label="Libro">{{ libro.titulo }}</td>
-                    <td data-label="Fecha Préstamo">{{ prestamo.fecha_prestamo }}</td>
-                    <td data-label="Fecha Devolución">{{ prestamo.fecha_devolucion if prestamo.fecha_devolucion else 'Pendiente' }}</td>
-                    <!-- Botones para eliminar y editar el préstamo -->
-                    <td data-label="Acciones">
-                        <a style="color: red;" href="{{ url_for('prestamos.eliminar_prestamo', id=prestamo.id) }}">Eliminar</a>
-                        <a style="color: rgb(144, 144, 211);" href="{{ url_for('prestamos.editar_prestamo', id=prestamo.id) }}">Editar</a>
+                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ libro.titulo }}</td>
+                    <td>{{ prestamo.fecha_prestamo }}</td>
+                    <td>{{ prestamo.fecha_devolucion }}</td>
+                    <td>${{ prestamo.precio_final }}</td>
+                    <td>
+                        <a href="{{ url_for('prestamos.editar_prestamo', id=prestamo.id) }}">Editar</a>
+                        <form method="POST" action="{{ url_for('prestamos.eliminar_prestamo', id=prestamo.id) }}" style="display:inline;">
+                            <button type="submit">Eliminar</button>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <div>
+        {% if pagination.has_prev %}
+            <a href="{{ url_for('prestamos.ver_todos_prestamos', page=pagination.prev_num) }}">Anterior</a>
+        {% endif %}
+        {% if pagination.has_next %}
+            <a href="{{ url_for('prestamos.ver_todos_prestamos', page=pagination.next_num) }}">Siguiente</a>
+        {% endif %}
+    </div>
     </table>
 
 

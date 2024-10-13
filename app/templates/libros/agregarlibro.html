@@ -1,23 +1,141 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<main  class="login-container flexbox-col">
-    <h1>añadir libro</h1>
-    
+<main class="login-container flexbox-col">
+    <h1>Añadir libro</h1>
     
     <form action="/agregarlibro" method="post" enctype="multipart/form-data">
-        <label for=""></label>
-        <input type="text" name="nombre_libro" placeholder="nombre del libro"class="input_field"><br>
-        <input type="text" name="autor" placeholder="nombre del autor"class="input_field"><br>
-        <input type="text" name="genero" placeholder="Genero del libro"class="input_field"><br>
-        <input type="date" name="fecha_creacion" placeholder="fecha de salida"class="input_field"><br>
-        <input type="number" name="stock" placeholder="stock"class="input_field"><br>
-        <input type="number" name="precio" placeholder="precio"class="input_field"><br>
-        <textarea name="descripcion" placeholder="descripcion"class="input_field"></textarea><br>
-        <input type="file" name="imagen" placeholder="imagen"class="input_field" required><br>
-        <button type="submit"class="btm_log">enviar</button>
-    </form>
-    </form>
+        
+        <!-- Título del libro -->
+        <label for="titulo">Título del libro *</label>
+        <input type="text" name="titulo" placeholder="Título del libro" class="input_field" required><br>
+        
+        <!-- Autor (seleccionable con opción de agregar nuevo) -->
+        <label for="autor">Autor *</label>
+        <select name="autor" id="autor_select" class="input_field" required>
+            <option value="" disabled selected>Selecciona un autor...</option>
+            {% for autor in autores %}
+            <option value="{{ autor.id }}">{{ autor.nombre }} {{ autor.apellido }}</option>
+            {% endfor %}
+            <option value="agregar">Agregar nuevo autor</option>
+        </select><br>
+        
+        <!-- Género (seleccionable con opción de agregar nuevo) -->
+        <label for="genero">Género *</label>
+        <select name="genero" id="genero_select" class="input_field" required>
+            <option value="" disabled selected>Selecciona un género...</option>
+            {% for genero in generos %}
+            <option value="{{ genero.id }}">{{ genero.nombre }}</option>
+            {% endfor %}
+            <option value="agregar">Agregar nuevo género</option>
+        </select><br>
+        
+        <!-- Editorial (seleccionable con opción de agregar nuevo) -->
+        <label for="editorial">Editorial *</label>
+        <select name="editorial" id="editorial_select" class="input_field" required>
+            <option value="sin editorial" disabled selected>Selecciona una editorial...</option>
+            {% for editorial in editoriales %}
+            <option value="{{ editorial.id }}">{{ editorial.nombre }}</option>
+            {% endfor %}
+            <option value="agregar">Agregar nueva editorial</option>
+        </select><br>
+        
+        <!-- Fecha de publicación -->
+        <label for="fecha_publicacion">Fecha de publicación</label>
+        <input type="date" name="fecha_publicacion" class="input_field" ><br>
+        
+        <!-- Stock -->
+        <label for="stock">Stock</label>
+        <input type="number" name="stock" placeholder="Cantidad en stock" class="input_field" required><br>
+        
+        <!-- Precio -->
+        <label for="precio">Precio</label>
+        <input type="number" name="precio" placeholder="Precio de venta" class="input_field" required><br>
+        
+        <!-- Precio de alquiler (opcional) -->
+        <label for="precio_alquiler">Precio de alquiler (opcional)</label>
+        <input type="number" name="precio_alquiler" placeholder="Precio de alquiler" class="input_field"><br>
+        
+        <!-- Descripción -->
+        <label for="descripcion">Descripción</label>
+        <textarea name="descripcion" placeholder="Descripción del libro" class="input_field" ></textarea><br>
+        
+        <!-- ISBN -->
+        <label for="isbn">ISBN</label>
+        <input type="text" name="isbn" placeholder="ISBN del libro" class="input_field"><br>
+        
+        <!-- Idioma -->
+        <label for="idioma">Idioma</label>
+        <input type="text" name="idioma" placeholder="Idioma del libro" class="input_field"><br>
+        
+        <!-- Edición -->
+        <label for="edicion">Edición</label>
+        <input type="text" name="edicion" placeholder="Edición del libro" class="input_field"><br>
+        
+        <!-- Páginas -->
+         <!-- Formato (seleccionable) -->
+<label for="formato">Formato</label>
+<select name="formato" class="input_field" id="formato" onchange="mostrarNumeroPaginas()">
+    <option value="Tapa dura">Tapa dura</option>
+    <option value="Tapa blanda">Tapa blanda</option>
+    <option value="eBook">eBook</option>
+    <option value="Audiolibro">Audiolibro</option>
+    <option value="Otro">Otro</option>
+</select><br>
+
+<!-- Campo de Número de páginas, inicialmente oculto -->
+<div id="campo_paginas" style="display:block;">
+    <label for="paginas">Número de páginas</label>
+    <input type="number" name="paginas" placeholder="Número de páginas" class="input_field" value="0"> <br>
+</div>
+
+<!-- Incluir JavaScript -->
+<script>
+    function mostrarNumeroPaginas() {
+        // Obtener el valor seleccionado
+        var formato = document.getElementById('formato').value;
+
+        // Definir los formatos que requieren el campo de páginas
+        var formatosConPaginas = ["Tapa dura", "Tapa blanda","eBook", "Otro"];
+
+        // Mostrar u ocultar el campo según el formato seleccionado
+        if (formatosConPaginas.includes(formato)) {
+            document.getElementById('campo_paginas').style.display = 'block';
+        } else {
+            document.getElementById('campo_paginas').style.display = 'none';
+        }
+    }
+</script>
+
+        
+        <!-- Imagen (archivo) -->
+        <label for="imagen">Imagen</label>
+        <input type="file" name="imagen" class="input_field" required><br>
+        
+        <!-- Botón de enviar -->
+        <button type="submit" class="btn_log">Enviar</button>
     
+    </form>
 </main>
-    {% endblock %}
+
+<script>
+    // Redireccionar al agregar nuevo autor, género o editorial
+    document.getElementById('autor_select').addEventListener('change', function() {
+        if (this.value === 'agregar') {
+            window.location.href = '/agregarautor';  // Redirige a la ruta para agregar un autor
+        }
+    });
+
+    document.getElementById('genero_select').addEventListener('change', function() {
+        if (this.value === 'agregar') {
+            window.location.href = '/agregargenero';  // Redirige a la ruta para agregar un género
+        }
+    });
+
+    document.getElementById('editorial_select').addEventListener('change', function() {
+        if (this.value === 'agregar') {
+            window.location.href = '/agregareditorial';  // Redirige a la ruta para agregar una editorial
+        }
+    });
+</script>
+{% endblock %}

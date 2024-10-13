@@ -41,13 +41,21 @@ def index_login():
 def login():
     nombre = request.form['nombre']
     contrasena = request.form['contrasena']
+    
+    # Buscar al usuario en la base de datos por nombre
     user = Usuario.query.filter_by(nombre=nombre).first()
+    
+    # Verificar si el usuario existe y si la contraseña es correcta
     if user and user.check_password(contrasena):
+        # Guardar los datos del usuario en la sesión
         session['nombre'] = nombre
         session['rol'] = user.rol
+        session['usuario_id'] = user.id  # Asegúrate de guardar el id del usuario
+    
         return redirect(url_for('libros.bienvenida'))
     else:
-        return render_template("usuarios/login.html")
+        return render_template("usuarios/login.html", error="Credenciales incorrectas")
+
     
 @user.route("/register", methods=["GET", "POST"])
 def register():
@@ -73,4 +81,5 @@ def register():
 def logout():
     session.pop('nombre', None)
     session.pop('rol', None)
+    session.pop('usuario_id', None)
     return redirect(url_for('user.index_login'))

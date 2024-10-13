@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, flash, jsonify, url_for
 from werkzeug.utils import secure_filename
-from models.controladordatabase import db, Libros, Prestamo
+from models.controladordatabase import db, Libros, Prestamo,Autor,Genero,Editorial,Votacion
 from routes.login import login_required, admin_required
 import os
+from sqlalchemy import or_
 from random import sample
 
 
@@ -23,40 +24,60 @@ def bienvenida():
 @libros.route('/formulariolibros')
 @admin_required
 def index():
-    return render_template('libros/agregarlibro.html')
+    autores = Autor.query.all()
+    generos = Genero.query.all()
+    editoriales = Editorial.query.all()
+    return render_template('libros/agregarlibro.html',autores=autores, generos=generos, editoriales=editoriales)
+
+
 
 @libros.route('/agregarlibro', methods=['POST'])
 @admin_required
 def agregarlibro():
-    titulo = request.form['nombre_libro']
-    autor = request.form['autor']
-    genero = request.form['genero']
+    titulo = request.form['titulo']
+    id_autor = request.form['autor']
+    id_genero = request.form['genero']
+    id_editorial = request.form['editorial']
     descripcion = request.form['descripcion']
-    fecha_emision = request.form['fecha_creacion']
-    stock = int(request.form['stock'])
+    fecha_emision = request.form['fecha_publicacion']
+    stock = request.form['stock']
     precio = float(request.form['precio'])
+    precio_alquiler = request.form.get('precio_alquiler', None)  # Puede ser opcional
+    isbn = request.form.get('isbn') or None  # Si el campo está vacío, almacena None    
+    idioma = request.form['idioma']
+    edicion = request.form['edicion']
+    paginas = int(request.form['paginas'])
+    formato = request.form['formato']
     
     # Manejo de la imagen
     imagen = request.files['imagen']
     if imagen:
-        # Generar un nombre seguro y único para el archivo
         basepath = os.path.dirname(__file__)  # Ruta base del archivo actual
         filename = secure_filename(imagen.filename)  # Obtener el nombre original
-        extension = os.path.splitext(filename)[1]  # Obtener la extensión
-        nuevoNombreFile = stringAleatorio() + extension  # Generar nuevo nombre único
+        extension = os.path.splitext(filename)[1]  # Obtener la extensión del archivo
+        nuevoNombreFile = stringAleatorio() + extension  # Generar un nombre único para la imagen
 
+        # Guardar la imagen en la carpeta static/img
         upload_path = os.path.join(basepath, '../static/img', nuevoNombreFile) 
         imagen.save(upload_path)  
 
+        # Crear una nueva instancia del libro
         nuevolibro = Libros(
             titulo=titulo,
-            autor=autor,
-            genero=genero,
+            id_autor=id_autor,  # Relación con la tabla Autores
+            id_genero=id_genero,  # Relación con la tabla Géneros
+            id_editorial=id_editorial,  # Relación con la tabla Editoriales
             descripcion=descripcion,
             fecha_emision=fecha_emision,
             stock=stock,
             precio=precio,
-            img=nuevoNombreFile  
+            precio_alquiler=precio_alquiler if precio_alquiler else None,  # Campo opcional
+            isbn=isbn,
+            idioma=idioma,
+            edicion=edicion,
+            paginas=paginas,
+            formato=formato,
+            img=nuevoNombreFile  # Almacenar el nombre de la imagen
         )
 
         try:
@@ -66,8 +87,63 @@ def agregarlibro():
         except Exception as e:
             db.session.rollback()
             return jsonify({'error': str(e)}), 400
-    
+
     return redirect(url_for('libros.bienvenida'))
+
+@libros.route('/agregarautor', methods=['GET', 'POST'])
+@admin_required
+def agregar_autor():
+    if request.method == 'POST':
+        nombre_autor = request.form['nombre_autor']
+        apellido_autor = request.form['apellido_autor']
+        nuevo_autor = Autor(nombre=nombre_autor, apellido=apellido_autor)
+        try:
+            db.session.add(nuevo_autor)
+            db.session.commit()
+            flash('Autor agregado exitosamente', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al agregar autor: {str(e)}', 'danger')
+        return redirect(url_for('libros.index'))
+    
+    return render_template('libros/agregar_autor.html')
+
+@libros.route('/agregargenero', methods=['GET', 'POST'])
+@admin_required
+def agregar_genero():
+    if request.method == 'POST':
+        nombre_genero = request.form['nombre_genero']
+        nuevo_genero = Genero(nombre=nombre_genero)
+        try:
+            db.session.add(nuevo_genero)
+            db.session.commit()
+            flash('Género agregado exitosamente', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al agregar género: {str(e)}', 'danger')
+        return redirect(url_for('libros.index'))
+    
+    return render_template('libros/agregar_genero.html')
+
+@libros.route('/agregareditorial', methods=['GET', 'POST'])
+@admin_required
+def agregar_editorial():
+    if request.method == 'POST':
+        nombre_editorial = request.form['nombre_editorial']
+        nueva_editorial = Editorial(nombre=nombre_editorial)
+        try:
+            db.session.add(nueva_editorial)
+            db.session.commit()
+            flash('Editorial agregada exitosamente', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al agregar editorial: {str(e)}', 'danger')
+        return redirect(url_for('libros.index'))
+    
+    return render_template('libros/agregar_editorial.html')
+
+
+
 
 @libros.route('/eliminarlibro/<int:id>')
 @admin_required
@@ -91,16 +167,21 @@ def eliminarlibro(id):
 @libros.route('/editarlibro/<int:id>', methods=['POST', 'GET'])
 @admin_required
 def editarlibro(id):
-    libro = Libros.query.get(id)
+    libro = Libros.query.get_or_404(id)
+    autores = Autor.query.all()
+    generos = Genero.query.all()
+    editoriales = Editorial.query.all()
 
     if request.method == "POST":
-        libro.titulo = request.form['nombre_libro']
-        libro.autor = request.form['autor']
-        libro.genero = request.form['genero']
+        libro.titulo = request.form['titulo']
+        libro.autor_id = int(request.form['autor'])  # Actualizar la relación con el autor
+        libro.genero_id = int(request.form['genero'])  # Actualizar la relación con el género
+        libro.editorial_id = int(request.form['editorial']) if request.form['editorial'] else None
         libro.descripcion = request.form['descripcion']
-        libro.fecha_emision = request.form['fecha_creacion']
-        libro.stock = request.form['stock']
-        libro.precio = request.form['precio']
+        libro.fecha_emision = request.form['fecha_publicacion']
+        libro.stock = int(request.form['stock'])
+        libro.precio = float(request.form['precio'])
+        libro.precio_alquiler = float(request.form['precio_alquiler']) if request.form['precio_alquiler'] else None
 
         nueva_imagen = request.files.get('imagen')
         if nueva_imagen:
@@ -126,11 +207,12 @@ def editarlibro(id):
             flash('Libro actualizado exitosamente', 'success')
         except Exception as e:
             db.session.rollback()
-            flash(f'Error al actualizar el libro: {str(e)}', 'error')
+            flash(f'Error al actualizar el libro: {str(e)}', 'danger')
 
         return redirect(url_for('libros.verlibro'))
 
-    return render_template('libros/editarlibro.html', libro=libro)
+    return render_template('libros/editarlibro.html', libro=libro, autores=autores, generos=generos, editoriales=editoriales)
+
 
 @libros.route('/verlibro')
 @admin_required
@@ -140,50 +222,76 @@ def verlibro():
 
     titulo = request.args.get('titulo', '', type=str)
     autor = request.args.get('autor', '', type=str)
+    editorial = request.args.get('editorial', '', type=str)
     genero = request.args.get('genero', '', type=str)
 
+   # Consulta básica de libros
     query = Libros.query
 
+    # Aplicar filtros de búsqueda
     if titulo:
-        query = query.filter(Libros.titulo.ilike(f"%{titulo}%"))
+        query = query.filter(Libros.titulo.ilike(f'%{titulo}%'))
     if autor:
-        query = query.filter(Libros.autor.ilike(f"%{autor}%"))
+        query = query.join(Autor).filter(or_(Autor.nombre.ilike(f'%{autor}%'), Autor.apellido.ilike(f'%{autor}%')))
+    if editorial:
+        query = query.join(Editorial).filter(Editorial.nombre.ilike(f'%{editorial}%'))
     if genero:
-        query = query.filter(Libros.genero.ilike(f"%{genero}%"))
-
+        query = query.join(Genero).filter(Genero.nombre.ilike(f'%{genero}%'))
 
     pagination = query.paginate(page=page, per_page=per_page)
 
-    return render_template('libros/verlibros.html', pagination=pagination, query=query)
+
+    # Obtener todos los autores, editoriales y géneros para los menús desplegables
+    autores = Autor.query.all()
+    editoriales = Editorial.query.all()
+    generos = Genero.query.all()
+
+    return render_template('libros/verlibros.html', pagination=pagination, autores=autores, editoriales=editoriales, generos=generos)
 
 
-@libros.route('/libros')
+@libros.route('/libros', methods=['GET'])
 def libross():
-    page = request.args.get('page', 1, type=int)
-    per_page = 12
-
+    # Obtener los parámetros de filtro desde la URL
     titulo = request.args.get('titulo', '', type=str)
     autor = request.args.get('autor', '', type=str)
+    editorial = request.args.get('editorial', '', type=str)
     genero = request.args.get('genero', '', type=str)
-    anio = request.args.get('anio', type=int)
 
+    # Paginación
+    page = request.args.get('page', 1, type=int)
+    per_page = 10  # Número de libros por página
+
+    # Consulta básica de libros
     query = Libros.query
 
+    # Aplicar filtros de búsqueda
     if titulo:
-        query = query.filter(Libros.titulo.ilike(f"%{titulo}%"))
+        query = query.filter(Libros.titulo.ilike(f'%{titulo}%'))
     if autor:
-        query = query.filter(Libros.autor.ilike(f"%{autor}%"))
+        query = query.join(Autor).filter(or_(Autor.nombre.ilike(f'%{autor}%'), Autor.apellido.ilike(f'%{autor}%')))
+    if editorial:
+        query = query.join(Editorial).filter(Editorial.nombre.ilike(f'%{editorial}%'))
     if genero:
-        query = query.filter(Libros.genero.ilike(f"%{genero}%"))
-    if anio:
-        query = query.filter(db.extract('year', Libros.fecha_emision) == anio)
+        query = query.join(Genero).filter(Genero.nombre.ilike(f'%{genero}%'))
+
+    # Aplicar la paginación
     pagination = query.paginate(page=page, per_page=per_page)
-    return render_template('libros/libros.html', pagination=pagination, query=query)
+
+    # Obtener todos los autores, editoriales y géneros para los menús desplegables
+    autores = Autor.query.all()
+    editoriales = Editorial.query.all()
+    generos = Genero.query.all()
+
+    return render_template('libros/libros.html', pagination=pagination, autores=autores, editoriales=editoriales, generos=generos)
 
 @libros.route('/libros/<int:libro_id>')
 def detalle(libro_id):
     libro = Libros.query.get_or_404(libro_id)
-    return render_template('libros/detalle.html', libro=libro)
+    promedio_calificacion = db.session.query(db.func.avg(Votacion.calificacion)).filter(Votacion.id_libro == libro_id).scalar()
+    comentarios = libro.comentarios  # Recupera los comentarios asociados a este libro
+
+    return render_template('libros/detalle.html', libro=libro,promedio_calificacion=promedio_calificacion,comentarios=comentarios)
+
 
 @libros.route("/terminosycondiciones")
 def condiciones():

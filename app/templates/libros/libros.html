@@ -2,32 +2,52 @@
 
 {% block content %}
     <!-- Formulario para filtrar libros -->
-    <div class="filter-container">
+<div class="filter-container">
+    <form action="{{ url_for('libros.libross') }}" method="GET">
+        <!-- Filtro por Título -->
         <div class="filter-group">
-        <form action="{{ url_for('libros.libross') }}" method="GET">
-        </div>
-            <div class="filter-group">
-            <input type="text" id="titulo" name="titulo" placeholder="Buscar título...">
-        </div>
-        <div class="filter-group">
-            <input type="text" id="autor" name="autor" placeholder="Buscar autor...">
+            <input type="text" id="titulo" name="titulo" placeholder="Buscar título..." value="{{ request.args.get('titulo', '') }}">
         </div>
 
+        <!-- Filtro por Autor -->
         <div class="filter-group">
-            <select id="genero" name="genero">
-                <option value="">Todos</option>
-                {% for libro in query %}
-                <option value="{{libro.genero}}">{{libro.genero}}</option>
+            <select id="autor" name="autor">
+                <option value="">Todos los autores</option>
+                {% for autor in autores %}
+                    <option value="{{ autor.nombre }}" {% if request.args.get('autor') == autor.nombre %}selected{% endif %}>
+                        {{ autor.nombre }} {{ autor.apellido }}
+                    </option>
                 {% endfor %}
-
-                <!-- Opciones de géneros -->
             </select>
         </div>
-        
+
+        <!-- Filtro por Editorial -->
+        <div class="filter-group">
+            <select id="editorial" name="editorial">
+                <option value="">Todas las editoriales</option>
+                {% for editorial in editoriales %}
+                    <option value="{{ editorial.nombre }}" {% if request.args.get('editorial') == editorial.nombre %}selected{% endif %}>
+                        {{ editorial.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Filtro por Género -->
+        <div class="filter-group">
+            <select id="genero" name="genero">
+                <option value="">Todos los géneros</option>
+                {% for genero in generos %}
+                    <option value="{{ genero.nombre }}" {% if request.args.get('genero') == genero.nombre %}selected{% endif %}>
+                        {{ genero.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
         <button type="submit" class="filter-button">Filtrar</button>
-    </div>
     </form>
-    
+</div>
 
 <main id="main" class="flexbox-col">
     <h1>Libros</h1>

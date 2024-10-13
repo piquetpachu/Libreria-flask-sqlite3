@@ -1,0 +1,17 @@
+
+
+</form>
+{% extends 'layout.html' %}
+
+{% block content %}
+<main class="login-container flexbox-col">
+    <h1>Agregar nuevo autor</h1>
+    
+    <form action="/agregareditorial" method="post">
+        <label for="nombre_editorial">Nombre de la editorial</label>
+        <input type="text" name="nombre_editorial" class="input_field" required><br>
+        <button type="submit" class="btn_log">Agregar editorial</button>
+        
+    </form>
+</main>
+{% endblock %}
