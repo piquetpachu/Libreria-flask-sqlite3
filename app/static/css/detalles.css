@@ -63,6 +63,7 @@ main#main p:last-child {
     display: inline-flex;
     flex-direction: row-reverse;
     justify-content: center;
+    user-select: none;
   }
   
   .rating input {
@@ -92,8 +93,91 @@ main#main p:last-child {
   
   .rating input:checked ~ label:before {
     opacity: 1;
+    color: #FFD700;
+    
+
   }
-  
+/* comentarios */
+.comments-section {
+    max-width: 768px;
+    margin: 20px auto;
+    background-color: var(--color-azul);
+    border-radius: 8px;
+    padding: 20px;
+    width: 1200px;
+
+}
+
+
+.comments-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.comments-section li {
+    background-color: var(--color-azul-marino);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    min-height: 900px;
+    max-width: 100%;
+    min-height: 100px; 
+    word-wrap: break-word; /* Evitar que el texto largo se desborde */
+    overflow-wrap: break-word; /* Asegura que las palabras largas se dividan */
+}
+
+
+.comments-section li p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.comments-section li p strong {
+    color: #007BFF;
+}
+
+.comments-section li small {
+    font-size: 12px;
+    color: #777;
+    align-self: flex-end;
+}
+
+.comments-section li form button {
+    background-color: #FF4136;
+    border: none;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: flex-end;
+    margin-top: 10px;
+}
+
+.comments-section li form button:hover {
+    background-color: rgb(255, 94, 0);
+}
+
+.comments-section p {
+    text-align: center;
+    color: #555;
+    font-style: italic;
+}
+.comentariotextarea{
+    width: 800px;
+}
+@media (max-width: 768px) {
+    .comments-section {
+        padding: 15px;
+        max-width: 95%;
+    }
+    .comentariotextarea{
+        width: 30em;
+    }
+}
 
 @media (max-width: 600px) {
     main#main {

@@ -2,7 +2,6 @@ from datetime import date, datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from utils.db import db
 
-# Tabla de Autores
 class Autor(db.Model):
     __tablename__ = 'Autores'
     
@@ -18,7 +17,6 @@ class Autor(db.Model):
         self.apellido = apellido
         self.nacionalidad = nacionalidad
 
-# Tabla de Géneros
 class Genero(db.Model):
     __tablename__ = 'Generos'
     
@@ -30,13 +28,12 @@ class Genero(db.Model):
     def __init__(self, nombre):
         self.nombre = nombre
 
-# Tabla de Editorial
 class Editorial(db.Model):
     __tablename__ = 'Editorial'
 
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
-    pais = db.Column(db.String(100), nullable=True)  # País de la editorial
+    pais = db.Column(db.String(100), nullable=True)  
 
     libros = db.relationship('Libros', backref='editorial', lazy=True)
 
@@ -44,7 +41,6 @@ class Editorial(db.Model):
         self.nombre = nombre
         self.pais = pais
 
-# Tabla de Libros
 class Libros(db.Model):
     __tablename__ = 'Libros'
 
@@ -54,22 +50,20 @@ class Libros(db.Model):
     fecha_emision = db.Column(db.Text, nullable=False, default=date.today)
     stock = db.Column(db.Integer, nullable=False)
     precio = db.Column(db.Float, nullable=False)
-    precio_alquiler = db.Column(db.Float, nullable=True)  # Precio de alquiler
+    precio_alquiler = db.Column(db.Float, nullable=True) 
     img = db.Column(db.String(200), nullable=True, default="sinimagen.jpg")
 
-    # Relaciones foráneas
     id_autor = db.Column(db.Integer, db.ForeignKey('Autores.id'), nullable=False)
     id_genero = db.Column(db.Integer, db.ForeignKey('Generos.id'), nullable=False)
     id_editorial = db.Column(db.Integer, db.ForeignKey('Editorial.id'), nullable=True)
 
-    # Otros campos adicionales
-    isbn = db.Column(db.String(13), unique=True, nullable=True)  # ISBN
-    idioma = db.Column(db.String(50), nullable=True)  # Idioma
-    edicion = db.Column(db.String(50), nullable=True)  # Edición
-    paginas = db.Column(db.Integer, nullable=True)  # Páginas
-    fecha_publicacion = db.Column(db.Text, nullable=True,  default=date.today)  # Fecha de publicación
-    formato = db.Column(db.Enum('Tapa dura', 'Tapa blanda', 'eBook', 'Audiolibro', 'Otro'), nullable=True)  # Formato
-    calificacion_promedio = db.Column(db.Float, nullable=True, default=0.0)  # Calificación promedio
+    isbn = db.Column(db.String(13), unique=True, nullable=True) 
+    idioma = db.Column(db.String(50), nullable=True)  
+    edicion = db.Column(db.String(50), nullable=True)  
+    paginas = db.Column(db.Integer, nullable=True)  
+    fecha_publicacion = db.Column(db.Text, nullable=True,  default=date.today)  
+    formato = db.Column(db.Enum('Tapa dura', 'Tapa blanda', 'eBook', 'Audiolibro', 'Otro'), nullable=True) 
+    calificacion_promedio = db.Column(db.Float, nullable=True, default=0.0)  
 
     prestamos = db.relationship('Prestamo', backref='libro', lazy=True)
     comentarios = db.relationship('Comentario', backref='libro', lazy=True)
@@ -94,7 +88,6 @@ class Libros(db.Model):
         self.formato = formato
         self.calificacion_promedio = calificacion_promedio
 
-# Tabla de Usuarios
 class Usuario(db.Model):
     __tablename__ = 'Usuario'
 
@@ -113,7 +106,6 @@ class Usuario(db.Model):
     def check_password(self, contrasena):
         return check_password_hash(self.contrasena, contrasena)
 
-# Tabla de Préstamos
 class Prestamo(db.Model):
     __tablename__ = 'Prestamo'
 
@@ -136,7 +128,7 @@ class Votacion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_libro = db.Column(db.Integer, db.ForeignKey('Libros.id'), nullable=False)
     id_usuario = db.Column(db.Integer, db.ForeignKey('Usuario.id'), nullable=False)
-    calificacion = db.Column(db.Integer, nullable=False)  # La calificación (1-5 estrellas)
+    calificacion = db.Column(db.Integer, nullable=False)  
 
     # Unicidad: un usuario no puede votar más de una vez por libro
     __table_args__ = (db.UniqueConstraint('id_libro', 'id_usuario', name='unique_user_book_vote'),)

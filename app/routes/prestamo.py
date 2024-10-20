@@ -107,9 +107,11 @@ def solicitar_prestamo(libro_id):
     fecha_devolucion = fecha_prestamo + timedelta(days=duracion_dias)
 
     if duracion_dias == 30:
-        precio_final = libro.precio * 2
-    else:
+        precio_final = libro.precio_alquiler * 2
+    elif duracion_dias == 40:
         precio_final = libro.precio
+    else:
+        precio_final = libro.precio_alquiler
 
     nuevo_prestamo = Prestamo(
         id_libro=libro.id,
@@ -128,4 +130,4 @@ def solicitar_prestamo(libro_id):
         db.session.rollback()
         flash(f'Error al realizar el préstamo: {str(e)}', 'error')
 
-    return redirect(url_for('prestamos.listar_prestamos'))
+    return redirect(url_for('libros.detalle', libro_id=libro_id))

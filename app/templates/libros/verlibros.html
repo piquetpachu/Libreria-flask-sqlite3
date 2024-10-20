@@ -1,8 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<!-- Formulario para filtrar libros -->
-    <!-- Formulario para filtrar libros -->
+
     <!-- Formulario para filtrar libros -->
     <div class="filter-container">
         <form action="{{ url_for('libros.verlibro') }}" method="GET">
@@ -16,7 +15,7 @@
                 <select id="autor" name="autor">
                     <option value="">Todos los autores</option>
                     {% for autor in autores %}
-                        <option value="{{ autor.nombre }}" {% if request.args.get('autor') == autor.nombre %}selected{% endif %}>
+                        <option value="{{ autor.nombre }}" >
                             {{ autor.nombre }} {{ autor.apellido }}
                         </option>
                     {% endfor %}
@@ -28,7 +27,7 @@
                 <select id="editorial" name="editorial">
                     <option value="">Todas las editoriales</option>
                     {% for editorial in editoriales %}
-                        <option value="{{ editorial.nombre }}" {% if request.args.get('editorial') == editorial.nombre %}selected{% endif %}>
+                        <option value="{{ editorial.nombre }}" >
                             {{ editorial.nombre }}
                         </option>
                     {% endfor %}
@@ -40,7 +39,7 @@
                 <select id="genero" name="genero">
                     <option value="">Todos los géneros</option>
                     {% for genero in generos %}
-                        <option value="{{ genero.nombre }}" {% if request.args.get('genero') == genero.nombre %}selected{% endif %}>
+                        <option value="{{ genero.nombre }}" >
                             {{ genero.nombre }}
                         </option>
                     {% endfor %}
@@ -71,10 +70,10 @@
 
                         </div>
                         <div class="book-info">
-                            <h2>{{ libro.titulo }}</h2>
-                            <p>Autor: {{ libro.autor.nombre }} {{ libro.autor.apellido }}</p>
-                            <p>Género: {{ libro.genero.nombre }}</p>
-                            <p>Precio: ${{ libro.precio }}</p>
+                            <h2 style="color: aliceblue;">{{ libro.titulo }}</h2>
+                            <p><strong>Autor:</strong> {{ libro.autor.nombre }} {{ libro.autor.apellido }}</p>
+                            <p><strong>Género:</strong> {{ libro.genero.nombre }}</p>
+                            <p><strong>Precio:</strong>${{ libro.precio }}</p>
                             <p><a href="{{ url_for('libros.detalle', libro_id=libro.id) }}">Ver Detalles</a></p>
                         </div>
                     </div>

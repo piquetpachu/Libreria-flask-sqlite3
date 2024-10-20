@@ -14,7 +14,7 @@
             <select id="autor" name="autor">
                 <option value="">Todos los autores</option>
                 {% for autor in autores %}
-                    <option value="{{ autor.nombre }}" {% if request.args.get('autor') == autor.nombre %}selected{% endif %}>
+                    <option value="{{ autor.nombre }}">
                         {{ autor.nombre }} {{ autor.apellido }}
                     </option>
                 {% endfor %}
@@ -26,7 +26,7 @@
             <select id="editorial" name="editorial">
                 <option value="">Todas las editoriales</option>
                 {% for editorial in editoriales %}
-                    <option value="{{ editorial.nombre }}" {% if request.args.get('editorial') == editorial.nombre %}selected{% endif %}>
+                    <option value="{{ editorial.nombre }}">
                         {{ editorial.nombre }}
                     </option>
                 {% endfor %}
@@ -38,7 +38,7 @@
             <select id="genero" name="genero">
                 <option value="">Todos los géneros</option>
                 {% for genero in generos %}
-                    <option value="{{ genero.nombre }}" {% if request.args.get('genero') == genero.nombre %}selected{% endif %}>
+                    <option value="{{ genero.nombre }}">
                         {{ genero.nombre }}
                     </option>
                 {% endfor %}

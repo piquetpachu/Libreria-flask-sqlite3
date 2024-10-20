@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/carousel.css' ) }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/filtro.css' ) }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css' ) }}">
+    <!-- iconos -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=shopping_cart" />
     <title>Libreria Flask</title>
 </head>
 <body>
@@ -40,7 +42,9 @@
       </ul> -->
     </li>
     {% if "nombre" in session %}
-    <li class="item"><a href="{{url_for('prestamos.listar_prestamos')}}">Carrito</a></li>
+    <li class="item"><a href="{{url_for('prestamos.listar_prestamos')}}"><span class="material-symbols-outlined">
+      shopping_cart
+      </span></a></li>
     {% endif %}
 
     {% if "nombre" in session %}
@@ -60,7 +64,7 @@
 <main id="main">
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-      <ul class=flashes>
+      <ul class=flashes style="position: sticky;">
       {% for message in messages %}
         <li>{{ message }}</li>
       {% endfor %}
@@ -90,7 +94,7 @@
               <div class="social-icons">
                   <a href="https://i.pinimg.com/564x/25/bb/2a/25bb2a2c9c4f99cc3a23345d411c2766.jpg" target="_blank"><img src="{{ url_for('static', filename='imagen/twitter-alt.svg') }}" alt="Facebook"></a>
                   <a href="https://i.pinimg.com/564x/f7/21/d6/f721d64137a79d524ad8b5a5de788185.jpg" target="_blank"><img src="{{ url_for('static', filename='imagen/facebook.svg') }}" alt="Twitter"></a>
-                  <a href="https://www.instagram.com/p/C6GtncmNxbR/" target="_blank"><img src="{{ url_for('static', filename='imagen/Instagram.svg') }}" alt="Instagram"></a>
+                  <a href="https://www.instagram.com/piquetnacho/" target="_blank"><img src="{{ url_for('static', filename='imagen/Instagram.svg') }}" alt="Instagram"></a>
                   
               </div>
           </div>

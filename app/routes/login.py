@@ -42,15 +42,12 @@ def login():
     nombre = request.form['nombre']
     contrasena = request.form['contrasena']
     
-    # Buscar al usuario en la base de datos por nombre
     user = Usuario.query.filter_by(nombre=nombre).first()
     
-    # Verificar si el usuario existe y si la contraseña es correcta
     if user and user.check_password(contrasena):
-        # Guardar los datos del usuario en la sesión
         session['nombre'] = nombre
         session['rol'] = user.rol
-        session['usuario_id'] = user.id  # Asegúrate de guardar el id del usuario
+        session['usuario_id'] = user.id  
     
         return redirect(url_for('libros.bienvenida'))
     else:
@@ -73,9 +70,12 @@ def register():
             nuevo_usuario.set_password(contrasena)
             db.session.add(nuevo_usuario)
             db.session.commit()
-            session['nombre'] = nombre 
-            return redirect(url_for('libros.bienvenida'))
+            
+            flash("Registro exitoso. Por favor, inicia sesión.")
+            return redirect(url_for('user.index_login'))
+    
     return render_template("usuarios/register.html")
+
 
 @user.route("/logout")
 def logout():

@@ -2,68 +2,81 @@
 
 {% block content %}
 <body>
+    <main class="login-container flexbox-col">
     <h1>Editar Libro</h1>
     <form action="{{ url_for('libros.editarlibro', id=libro.id) }}" method="POST" enctype="multipart/form-data">
         <label for="titulo">Título:</label>
-        <input type="text" name="titulo" value="{{ libro.titulo }}" required><br>
+        <input type="text" name="titulo" value="{{ libro.titulo }}" class="input_field" required><br>
 
-        <label for="autor">Autor:</label>
-        <select name="autor" required>
-            {% for autor in autores %}
-                <option value="{{ autor.id }}" {% if autor.id == libro.autor_id %}selected{% endif %}>{{ autor.nombre }} {{ autor.apellido }}</option>
-            {% endfor %}
-        </select><br>
+     <!-- Autor (seleccionable con opción de agregar nuevo) -->
+     <label for="autor">Autor *</label>
+     <select name="autor" id="autor_select" class="input_field" required>
+         <option value="" disabled >Selecciona un autor...</option>
+         {% for autor in autores %}
+         <option value="{{ autor.id }}">{{ autor.nombre }} {{ autor.apellido }}</option>
+         {% endfor %}
+         <option value="agregar">Agregar nuevo autor</option>
+     </select><br>
 
-        <label for="genero">Género:</label>
-        <select name="genero" required>
-            {% for genero in generos %}
-                <option value="{{ genero.id }}" {% if genero.id == libro.genero_id %}selected{% endif %}>{{ genero.nombre }}</option>
-            {% endfor %}
-        </select><br>
+     <!-- Género (seleccionable con opción de agregar nuevo) -->
+     <label for="genero">Género *</label>
+     <select name="genero" id="genero_select" class="input_field" required>
+         <option value="" disabled >Selecciona un género...</option>
+         {% for genero in generos %}
+         <option value="{{ genero.id }}">{{ genero.nombre }}</option>
+         {% endfor %}
+         <option value="agregar">Agregar nuevo género</option>
+     </select><br>
 
-        <label for="editorial">Editorial:</label>
-        <select name="editorial">
-            <option value="">Ninguna</option>
-            {% for editorial in editoriales %}
-                <option value="{{ editorial.id }}" {% if editorial.id == libro.editorial_id %}selected{% endif %}>{{ editorial.nombre }}</option>
-            {% endfor %}
-        </select><br>
+     <!-- Editorial (seleccionable con opción de agregar nuevo) -->
+     <label for="editorial">Editorial *</label>
+     <select name="editorial" id="editorial_select" class="input_field" required>
+         <option value="sin editorial" disabled >Selecciona una editorial...</option>
+         {% for editorial in editoriales %}
+         <option value="{{ editorial.id }}">{{ editorial.nombre }}</option>
+         {% endfor %}
+         <option value="agregar">Agregar nueva editorial</option>
+     </select><br>
 
         <label for="descripcion">Descripción:</label>
-        <textarea name="descripcion" required>{{ libro.descripcion }}</textarea><br>
+        <textarea name="descripcion"  class="input_field"required>{{ libro.descripcion }}</textarea><br>
 
         <label for="fecha_publicacion">Fecha de Publicación:</label>
-        <input type="date" name="fecha_publicacion" value="{{ libro.fecha_emision if libro.fecha_emision else 'Fecha Desconocida'}}" ><br>
+        <input type="date" name="fecha_publicacion" class="input_field" value="{{ libro.fecha_emision if libro.fecha_emision else 'Fecha Desconocida'}}" ><br>
 
         <label for="stock">Stock:</label>
-        <input type="number" name="stock" value="{{ libro.stock }}" required><br>
+        <input class="input_field" type="number" name="stock" value="{{ libro.stock }}" required><br>
 
         <label for="precio">Precio:</label>
-        <input type="number" step="0.01" name="precio" value="{{ libro.precio }}" required><br>
+        <input class="input_field" type="number" step="0.01" name="precio" value="{{ libro.precio }}" class="input_field" required><br>
 
         <label for="precio_alquiler">Precio de Alquiler:</label>
-        <input type="number" step="0.01" name="precio_alquiler" value="{{ libro.precio_alquiler }}"><br>
+        <input class="input_field" type="number" step="0.01" name="precio_alquiler" value="{{ libro.precio_alquiler }}" class="input_field"><br>
 
         <label for="isbn">ISBN:</label>
-        <input type="text" name="isbn" value="{{ libro.isbn }}" required><br>
+        <input class="input_field" type="text" name="isbn" value="{{ libro.isbn }}" ><br>
 
         <label for="idioma">Idioma:</label>
-        <input type="text" name="idioma" value="{{ libro.idioma }}" required><br>
+        <input class="input_field" type="text" name="idioma" value="{{ libro.idioma }}" ><br>
 
         <label for="edicion">Edición:</label>
-        <input type="text" name="edicion" value="{{ libro.edicion }}" required><br>
+        <input class="input_field" type="text" name="edicion" value="{{ libro.edicion }}" ><br>
 
         <label for="paginas">Número de Páginas:</label>
-        <input type="number" name="paginas" value="{{ libro.paginas }}" required><br>
+        <input class="input_field" type="number" name="paginas" value="{{ libro.paginas }}" ><br>
 
         <label for="formato">Formato:</label>
-        <input type="text" name="formato" value="{{ libro.formato }}" required><br>
+        <input class="input_field" type="text" name="formato" value="{{ libro.formato }}" ><br>
 
-        <label for="imagen">Cambiar Imagen:</label>
-        <input type="file" name="imagen"><br>
+        <label for="imagen">Subir imagen:</label>
+        <input class="input_field" type="file" name="imagen" id="imagen">
+    
+        <label for="imagen_url">O ingresar URL de la imagen:</label>
+        <input type="url" name="imagen_url" id="imagen_url" placeholder="http://">
 
         <button type="submit">Actualizar Libro</button>
     </form>
+</main>
 </body>
 </html>
 
@@ -71,6 +84,25 @@
 </head>
 <body>
 
+<script>
+    // Redireccionar al agregar nuevo autor, género o editorial
+    document.getElementById('autor_select').addEventListener('change', function() {
+        if (this.value === 'agregar') {
+            window.location.href = '/agregarautor';  // Redirige a la ruta para agregar un autor
+        }
+    });
 
+    document.getElementById('genero_select').addEventListener('change', function() {
+        if (this.value === 'agregar') {
+            window.location.href = '/agregargenero';  // Redirige a la ruta para agregar un género
+        }
+    });
+
+    document.getElementById('editorial_select').addEventListener('change', function() {
+        if (this.value === 'agregar') {
+            window.location.href = '/agregareditorial';  // Redirige a la ruta para agregar una editorial
+        }
+    });
+</script>
         
 {% endblock %}

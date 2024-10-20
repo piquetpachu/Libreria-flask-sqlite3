@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="book-card">
+<div class="book-card" style="width: 90%;">
 
 <main id="main" class="flexbox-col" style="background-color: var(--color-azul-marino);">
     <h1>{{ libro.titulo }}</h1>
@@ -21,20 +21,37 @@
     <p><strong>Formato:</strong> {{ libro.formato }}</p>
     <p><strong>Calificación promedio:</strong> {{ promedio_calificacion or 'No calificado aún' }} / 5</p>
 
-    
+
             <!-- Sistema de votación con estrellas -->
             {% if "nombre" in session %}
-            <h2>Vota este libro:</h2>
-            <form method="POST" action="{{ url_for('votaciones.votar', libro_id=libro.id) }}">
+            <form method="POST" action="{{ url_for('votaciones.votar', libro_id=libro.id) }}" id="ratingForm">
                 <div class="rating">
-                    <input type="radio" id="star5" name="calificacion" value="5"><label for="star5" title="5 estrellas"></label>
-                    <input type="radio" id="star4" name="calificacion" value="4"><label for="star4" title="4 estrellas"></label>
-                    <input type="radio" id="star3" name="calificacion" value="3"><label for="star3" title="3 estrellas"></label>
-                    <input type="radio" id="star2" name="calificacion" value="2"><label for="star2" title="2 estrellas"></label>
-                    <input type="radio" id="star1" name="calificacion" value="1"><label for="star1" title="1 estrella"></label><br><br>
+                    <input type="radio" id="star5" name="calificacion" value="5" {% if votacion and votacion.calificacion == 5 %}checked{% endif %}>
+                    <label for="star5" title="5 estrellas"></label>
+            
+                    <input type="radio" id="star4" name="calificacion" value="4" {% if votacion and votacion.calificacion == 4 %}checked{% endif %}>
+                    <label for="star4" title="4 estrellas"></label>
+            
+                    <input type="radio" id="star3" name="calificacion" value="3" {% if votacion and votacion.calificacion == 3 %}checked{% endif %}>
+                    <label for="star3" title="3 estrellas"></label>
+            
+                    <input type="radio" id="star2" name="calificacion" value="2" {% if votacion and votacion.calificacion == 2 %}checked{% endif %}>
+                    <label for="star2" title="2 estrellas"></label>
+            
+                    <input type="radio" id="star1" name="calificacion" value="1" {% if votacion and votacion.calificacion == 1 %}checked{% endif %}>
+                    <label for="star1" title="1 estrella"></label>
                 </div>
-                <button type="submit">Enviar votación</button>
             </form>
+            
+            <script>
+                // Agregar un event listener a todos los inputs de radio
+                document.querySelectorAll('.rating input').forEach(function(radio) {
+                    radio.addEventListener('change', function() {
+                        // Enviar el formulario automáticamente cuando se selecciona una estrella
+                        document.getElementById('ratingForm').submit();
+                    });
+                });
+            </script>
         {% else %}
             <p>Debes estar registrado para votar.</p>
         {% endif %}
@@ -43,23 +60,27 @@
     <!-- Si hay stock disponible -->
     {% if libro.stock > 0 %}
         <form method="POST" action="{{ url_for('prestamos.solicitar_prestamo', libro_id=libro.id) }}">
-            <label for="duracion">Duración del préstamo:</label>
-            <select id="duracion" name="duracion">
+            <label for="duracion">Alquilar o Comprar:</label>
+            <select id="duracion" name="duracion" >
                 <option value="15">15 días (Precio normal)</option>
                 <option value="30">30 días (Doble precio)</option>
+                <option value="40">comprar</option>
             </select>
-            <button type="submit">Solicitar Préstamo</button>
+            <button type="submit">Enviar al Carrito</button>
         </form>
     {% else %}
         <p>No hay stock disponible para este libro.</p>
     {% endif %}
 
     {% endif %}
-    <h3>Comentarios</h3>
+</main>
+</div>
+
+    <h3 style="color: aliceblue;">Comentarios</h3>
 
 {% if "nombre" in session %}
     <form method="POST" action="{{ url_for('votaciones.agregar_comentario', libro_id=libro.id) }}">
-        <textarea name="comentario" placeholder="Escribe tu comentario aquí..." rows="4" required></textarea>
+        <textarea name="comentario" placeholder="Escribe tu comentario aquí..." rows="4" required class="comentariotextarea"></textarea>
         <button type="submit">Comentar</button>
     </form>
 {% else %}
@@ -70,32 +91,28 @@
     
 </form>
 
-</main>
+<div class="comments-section">
+    {% if libro.comentarios %}
+        <ul>
+        {% for comentario in libro.comentarios %}
+            <li>
+                <p><strong>{{ comentario.usuario.nombre }}:</strong> {{ comentario.comentario }}</p>
+                <small>{{ comentario.fecha.strftime('%Y-%m-%d %H:%M') }}</small>
+                {% if session.get('rol') == 'admin' or session.get('usuario_id') == comentario.id_usuario %}
+                    <form method="POST" action="{{ url_for('votaciones.eliminar_comentario', comentario_id=comentario.id) }}">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
+    {% endif %}
 </div>
-<h3>Comentarios</h3>
 
-{% if libro.comentarios %}
-    <ul>
-    {% for comentario in libro.comentarios %}
-        <li>
-            <p><strong>{{ comentario.usuario.nombre }}:</strong> {{ comentario.comentario }}</p>
-            <small>{{ comentario.fecha.strftime('%Y-%m-%d %H:%M') }}</small>
-            
-            <!-- Mostrar botón de eliminar si el usuario es el autor o un admin -->
+<style>
 
-            
-            {% if session.get('rol') == 'admin' or session.get('usuario_id') == comentario.id_usuario %}
-                <form method="POST" action="{{ url_for('votaciones.eliminar_comentario', comentario_id=comentario.id) }}">
-                    <button type="submit">Eliminar</button>
-                </form>
-            {% endif %}
-        </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
-{% endif %}
-
-
+    </style>
 
 {% endblock %}

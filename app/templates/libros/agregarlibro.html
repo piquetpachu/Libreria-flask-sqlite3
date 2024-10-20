@@ -66,7 +66,15 @@
         
         <!-- Idioma -->
         <label for="idioma">Idioma</label>
-        <input type="text" name="idioma" placeholder="Idioma del libro" class="input_field"><br>
+        <select name="idioma" class="input_field" id="idioma" onchange="mostrarNumeroPaginas()">
+            <option value="" disabled selected>Selecciona el idioma...</option>
+            <option value="Español">Español</option>
+            <option value="Inglés">Inglés</option>
+            <option value="Italiano">Italiano</option>
+            <option value="Alemán">Alemán</option>
+            <option value="Francés">Francés</option>
+            
+        </select><br>
         
         <!-- Edición -->
         <label for="edicion">Edición</label>
@@ -109,15 +117,18 @@
 
         
         <!-- Imagen (archivo) -->
-        <label for="imagen">Imagen</label>
-        <input type="file" name="imagen" class="input_field" required><br>
+        <label for="imagen">Subir imagen:</label>
+        <input type="file" name="imagen" id="imagen" class="input_field">
+    
+        <label for="imagen_url">O ingresar URL de la imagen:</label>
+        <input type="url" name="imagen_url" id="imagen_url" placeholder="http://" class="input_field">
         
         <!-- Botón de enviar -->
         <button type="submit" class="btn_log">Enviar</button>
     
     </form>
 </main>
-
+<!-- ------------------------------ -->
 <script>
     // Redireccionar al agregar nuevo autor, género o editorial
     document.getElementById('autor_select').addEventListener('change', function() {
