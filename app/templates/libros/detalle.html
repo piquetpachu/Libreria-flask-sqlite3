@@ -1,11 +1,21 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+
 <div class="book-card" style="width: 90%;">
 
 <main id="main" class="flexbox-col" style="background-color: var(--color-azul-marino);">
     <h1>{{ libro.titulo }}</h1>
-    <img src="{{ url_for('static', filename='img/' ~ libro.img) }}" alt="{{ libro.titulo }}" style="width:150px;height:200px;">
+    <p style="text-align: center;"><strong>Calificación promedio</strong></p>
+    <div class="rating">
+        
+        <span class="estrella" data-calificacion="5">&#9733;</span>
+        <span class="estrella" data-calificacion="4">&#9733;</span>
+        <span class="estrella" data-calificacion="3">&#9733;</span>
+        <span class="estrella" data-calificacion="2">&#9733;</span>
+        <span class="estrella" data-calificacion="1">&#9733;</span>
+    </div>
+    <img class="detalle-img" src="{{ url_for('static', filename='img/' ~ libro.img) }}" alt="{{ libro.titulo }}" style="width:350px;height:560px;">
     <p><strong>Autor:</strong> {{ libro.autor.nombre }} {{ libro.autor.apellido }}</p>
     <p><strong>Género:</strong> {{ libro.genero.nombre }}</p>
     <p><strong>Editorial:</strong> {{ libro.editorial.nombre if libro.editorial else 'Sin editorial' }}</p>
@@ -19,11 +29,14 @@
     <p><strong>stock:</strong> {{ libro.stock }}</p>
     <p><strong>Número de Páginas:</strong> {{ libro.paginas }}</p>
     <p><strong>Formato:</strong> {{ libro.formato }}</p>
-    <p><strong>Calificación promedio:</strong> {{ promedio_calificacion or 'No calificado aún' }} / 5</p>
+    
+    
+    
 
 
             <!-- Sistema de votación con estrellas -->
             {% if "nombre" in session %}
+            <h2 style="color: aliceblue;">Puntuar libro</h2>
             <form method="POST" action="{{ url_for('votaciones.votar', libro_id=libro.id) }}" id="ratingForm">
                 <div class="rating">
                     <input type="radio" id="star5" name="calificacion" value="5" {% if votacion and votacion.calificacion == 5 %}checked{% endif %}>
@@ -84,7 +97,7 @@
         <button type="submit">Comentar</button>
     </form>
 {% else %}
-    <p><a href="{{ url_for('user.login') }}">Inicia sesión</a> para dejar un comentario.</p>
+    <p><strong>Inicia sesión para dejar un comentario.</strong></p>
 {% endif %}
 
     
@@ -114,5 +127,25 @@
 <style>
 
     </style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var calificacionPromedio = parseFloat('{{ promedio_calificacion | round(1) }}'); // Asegúrate de que estés usando 'promedio_calificacion'
+        
+        var estrellas = document.querySelectorAll('.estrella');
+        estrellas.forEach(function(estrella) {
+            var valor = parseInt(estrella.getAttribute('data-calificacion'));
+            
+            if (valor <= Math.floor(calificacionPromedio)) {
+                estrella.classList.add('llenar');
+            }
+            if (valor === Math.ceil(calificacionPromedio) && calificacionPromedio % 1 !== 0) {
+                estrella.classList.add('mitad');
+            }
+        });
+    });
+</script>
+
+
+
 
 {% endblock %}

@@ -56,17 +56,33 @@
         <label for="isbn">ISBN:</label>
         <input class="input_field" type="text" name="isbn" value="{{ libro.isbn }}" ><br>
 
-        <label for="idioma">Idioma:</label>
-        <input class="input_field" type="text" name="idioma" value="{{ libro.idioma }}" ><br>
+        <label for="idioma">Idioma</label>
+        <select name="idioma" class="input_field" id="idioma" onchange="mostrarNumeroPaginas()">
+            <option value="" disabled selected>Selecciona el idioma...</option>
+            <option value="Español">Español</option>
+            <option value="Inglés">Inglés</option>
+            <option value="Italiano">Italiano</option>
+            <option value="Alemán">Alemán</option>
+            <option value="Francés">Francés</option>
+            </select><br>
 
         <label for="edicion">Edición:</label>
         <input class="input_field" type="text" name="edicion" value="{{ libro.edicion }}" ><br>
 
-        <label for="paginas">Número de Páginas:</label>
-        <input class="input_field" type="number" name="paginas" value="{{ libro.paginas }}" ><br>
+        <div id="campo_paginas" style="display:block;">
+            <label for="paginas">Número de páginas</label>
+            <input type="number" name="paginas" placeholder="Número de páginas" class="input_field" value="0"> <br>
+        </div>
 
-        <label for="formato">Formato:</label>
-        <input class="input_field" type="text" name="formato" value="{{ libro.formato }}" ><br>
+         <!-- Formato (seleccionable) -->
+         <label for="formato">Formato</label>
+         <select name="formato" class="input_field" id="formato" onchange="mostrarNumeroPaginas()">
+             <option value="Tapa dura">Tapa dura</option>
+             <option value="Tapa blanda">Tapa blanda</option>
+             <option value="eBook">eBook</option>
+             <option value="Audiolibro">Audiolibro</option>
+             <option value="Otro">Otro</option>
+         </select><br>
 
         <label for="imagen">Subir imagen:</label>
         <input class="input_field" type="file" name="imagen" id="imagen">
@@ -83,7 +99,22 @@
 
 </head>
 <body>
+<script>
+    function mostrarNumeroPaginas() {
+        // Obtener el valor seleccionado
+        var formato = document.getElementById('formato').value;
 
+        // Definir los formatos que requieren el campo de páginas
+        var formatosConPaginas = ["Tapa dura", "Tapa blanda","eBook", "Otro"];
+
+        // Mostrar u ocultar el campo según el formato seleccionado
+        if (formatosConPaginas.includes(formato)) {
+            document.getElementById('campo_paginas').style.display = 'block';
+        } else {
+            document.getElementById('campo_paginas').style.display = 'none';
+        }
+    }
+</script>
 <script>
     // Redireccionar al agregar nuevo autor, género o editorial
     document.getElementById('autor_select').addEventListener('change', function() {

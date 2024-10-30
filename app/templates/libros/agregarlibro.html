@@ -7,11 +7,11 @@
     <form action="/agregarlibro" method="post" enctype="multipart/form-data">
         
         <!-- Título del libro -->
-        <label for="titulo">Título del libro *</label>
+        <label for="titulo">Título del libro <strong style="color: orange;">*</strong></label>
         <input type="text" name="titulo" placeholder="Título del libro" class="input_field" required><br>
         
         <!-- Autor (seleccionable con opción de agregar nuevo) -->
-        <label for="autor">Autor *</label>
+        <label for="autor">Autor <strong style="color: orange;">*</strong></label>
         <select name="autor" id="autor_select" class="input_field" required>
             <option value="" disabled selected>Selecciona un autor...</option>
             {% for autor in autores %}
@@ -21,7 +21,7 @@
         </select><br>
         
         <!-- Género (seleccionable con opción de agregar nuevo) -->
-        <label for="genero">Género *</label>
+        <label for="genero">Género <strong style="color: orange;">*</strong></label>
         <select name="genero" id="genero_select" class="input_field" required>
             <option value="" disabled selected>Selecciona un género...</option>
             {% for genero in generos %}
@@ -31,7 +31,7 @@
         </select><br>
         
         <!-- Editorial (seleccionable con opción de agregar nuevo) -->
-        <label for="editorial">Editorial *</label>
+        <label for="editorial">Editorial <strong style="color: orange;">*</strong></label>
         <select name="editorial" id="editorial_select" class="input_field" required>
             <option value="sin editorial" disabled selected>Selecciona una editorial...</option>
             {% for editorial in editoriales %}
@@ -45,11 +45,11 @@
         <input type="date" name="fecha_publicacion" class="input_field" ><br>
         
         <!-- Stock -->
-        <label for="stock">Stock</label>
+        <label for="stock">Stock <strong style="color: orange;">*</strong></label>
         <input type="number" name="stock" placeholder="Cantidad en stock" class="input_field" required><br>
         
         <!-- Precio -->
-        <label for="precio">Precio</label>
+        <label for="precio">Precio <strong style="color: orange;">*</strong></label>
         <input type="number" name="precio" placeholder="Precio de venta" class="input_field" required><br>
         
         <!-- Precio de alquiler (opcional) -->

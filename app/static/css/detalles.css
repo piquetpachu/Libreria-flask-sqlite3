@@ -1,3 +1,8 @@
+a {
+    user-select: none;  /* Previene la selección de texto */
+    outline: none;      /* Elimina el contorno al hacer click */
+  }
+  
 label{
     color: #ffffff;
     font-size: var(--heading-small);
@@ -169,7 +174,41 @@ main#main p:last-child {
 .comentariotextarea{
     width: 800px;
 }
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+.estrella {
+    font-size: 2rem;
+    color: lightgray;
+    cursor: pointer;
+    position: relative;
+}
+
+.estrella.llenar {
+    color: gold;
+}
+
+.estrella.mitad::before {
+    content: '\2605'; /* La estrella dorada */
+    color: gold;
+    position: absolute;
+    left: 0;
+    width: 50%; /* Mostrar solo la mitad izquierda */
+    overflow: hidden;
+}
+
 @media (max-width: 768px) {
+    .linkedit{
+        color: aliceblue;
+        background-color: #28a745;
+        border-radius: 30%;
+        padding: 5px;
+        
+    }
     .comments-section {
         padding: 15px;
         max-width: 95%;
@@ -197,5 +236,9 @@ main#main p:last-child {
     }
     .filter-group{
         width: 205px;
+    }
+    .detalle-img{
+        width: 150px;
+        height: 200px;
     }
 }

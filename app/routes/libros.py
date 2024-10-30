@@ -225,6 +225,11 @@ def editarlibro(id):
         libro.stock = int(request.form['stock'])
         libro.precio = float(request.form['precio'])
         libro.precio_alquiler = float(request.form['precio_alquiler']) if request.form['precio_alquiler'] else None
+        libro.isbn = request.form['isbn']
+        libro.idioma = request.form.get('idioma','')
+        libro.edicion = request.form['edicion']
+        libro.paginas = request.form['paginas']
+        libro.formato = request.form['formato']
 
         imagen_url = request.form.get('imagen_url') 
         nueva_imagen = request.files.get('imagen')
@@ -352,19 +357,25 @@ def libross():
 @libros.route('/libros/<int:libro_id>')
 def detalle(libro_id):
     libro = Libros.query.get_or_404(libro_id)
+    
+    # Calcular el promedio de las calificaciones del libro
     promedio_calificacion = db.session.query(db.func.avg(Votacion.calificacion)).filter(Votacion.id_libro == libro_id).scalar()
     
+    # Si no hay calificaciones, el promedio sería None, así que lo manejamos
+    if promedio_calificacion is None:
+        promedio_calificacion = 0  # Asigna 0 si no hay calificaciones aún
+    
+    # Si el usuario no ha iniciado sesión
     if "nombre" not in session:
-            return render_template('libros/detalle.html', libro=libro,promedio_calificacion=promedio_calificacion)
-
-    else:
-        comentarios = libro.comentarios  
-        usuario_id = Usuario.query.filter_by(nombre=session['nombre']).first().id
-
+        return render_template('libros/detalle.html', libro=libro, promedio_calificacion=promedio_calificacion)
+    
+    # Si el usuario ha iniciado sesión
+    usuario_id = Usuario.query.filter_by(nombre=session['nombre']).first().id
+    comentarios = libro.comentarios  # Obtener los comentarios del libro
     votacion = Votacion.query.filter_by(id_libro=libro_id, id_usuario=usuario_id).first()
 
-
-    return render_template('libros/detalle.html', libro=libro,promedio_calificacion=promedio_calificacion,comentarios=comentarios,votacion=votacion)
+    # Renderizamos la plantilla con todos los datos necesarios
+    return render_template('libros/detalle.html', libro=libro, promedio_calificacion=promedio_calificacion, comentarios=comentarios, votacion=votacion)
 
 
 @libros.route("/terminosycondiciones")
