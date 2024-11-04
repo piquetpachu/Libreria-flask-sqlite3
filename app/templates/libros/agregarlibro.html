@@ -35,7 +35,7 @@
         <select name="editorial" id="editorial_select" class="input_field" required>
             <option value="sin editorial" disabled selected>Selecciona una editorial...</option>
             {% for editorial in editoriales %}
-            <option value="{{ editorial.id }}">{{ editorial.nombre }}</option>
+            <option value="{{ editorial.id }}">{{ editorial.nombre }} </option>
             {% endfor %}
             <option value="agregar">Agregar nueva editorial</option>
         </select><br>
@@ -65,14 +65,15 @@
         <input type="text" name="isbn" placeholder="ISBN del libro" class="input_field"><br>
         
         <!-- Idioma -->
-        <label for="idioma">Idioma</label>
-        <select name="idioma" class="input_field" id="idioma" onchange="mostrarNumeroPaginas()">
+        <label for="idioma">Idioma <strong style="color: orange;">*</strong></label>
+        <select name="idioma" class="input_field" id="idioma" onchange="mostrarNumeroPaginas()" required>
             <option value="" disabled selected>Selecciona el idioma...</option>
             <option value="Español">Español</option>
             <option value="Inglés">Inglés</option>
             <option value="Italiano">Italiano</option>
             <option value="Alemán">Alemán</option>
             <option value="Francés">Francés</option>
+            <option value="otro">otro</option>
             
         </select><br>
         

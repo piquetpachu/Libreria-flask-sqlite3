@@ -2,10 +2,12 @@
 
 {% block content %}
 
-<div class="book-card" style="width: 90%;">
 
-<main id="main" class="flexbox-col" style="background-color: var(--color-azul-marino);">
-    <h1>{{ libro.titulo }}</h1>
+<main id="main" class="flexbox-col" style="background-color: var(--color-azul-marino); width: 100%; border-radius: 30px;">
+
+    <div class="detallesbook">
+    <div class="img-det">
+            <h1>{{ libro.titulo }}</h1>
     <p style="text-align: center;"><strong>Calificación promedio</strong></p>
     <div class="rating">
         
@@ -15,7 +17,9 @@
         <span class="estrella" data-calificacion="2">&#9733;</span>
         <span class="estrella" data-calificacion="1">&#9733;</span>
     </div>
-    <img class="detalle-img" src="{{ url_for('static', filename='img/' ~ libro.img) }}" alt="{{ libro.titulo }}" style="width:350px;height:560px;">
+    <img  src="{{ url_for('static', filename='img/' ~ libro.img) }}" alt="{{ libro.titulo }}" style="width:200px;height:350px; border-radius: 20px;">
+    </div>
+    <div class="info-lib">
     <p><strong>Autor:</strong> {{ libro.autor.nombre }} {{ libro.autor.apellido }}</p>
     <p><strong>Género:</strong> {{ libro.genero.nombre }}</p>
     <p><strong>Editorial:</strong> {{ libro.editorial.nombre if libro.editorial else 'Sin editorial' }}</p>
@@ -29,14 +33,17 @@
     <p><strong>stock:</strong> {{ libro.stock }}</p>
     <p><strong>Número de Páginas:</strong> {{ libro.paginas }}</p>
     <p><strong>Formato:</strong> {{ libro.formato }}</p>
+    </div>
+
     
     
     
 
 
+<div class="cont-compra-voto">
             <!-- Sistema de votación con estrellas -->
             {% if "nombre" in session %}
-            <h2 style="color: aliceblue;">Puntuar libro</h2>
+            <h2 style="color: aliceblue; text-align: center;">Calificar libro</h2>
             <form method="POST" action="{{ url_for('votaciones.votar', libro_id=libro.id) }}" id="ratingForm">
                 <div class="rating">
                     <input type="radio" id="star5" name="calificacion" value="5" {% if votacion and votacion.calificacion == 5 %}checked{% endif %}>
@@ -54,7 +61,7 @@
                     <input type="radio" id="star1" name="calificacion" value="1" {% if votacion and votacion.calificacion == 1 %}checked{% endif %}>
                     <label for="star1" title="1 estrella"></label>
                 </div>
-            </form>
+            </form><br><br>
             
             <script>
                 // Agregar un event listener a todos los inputs de radio
@@ -73,22 +80,26 @@
     <!-- Si hay stock disponible -->
     {% if libro.stock > 0 %}
         <form method="POST" action="{{ url_for('prestamos.solicitar_prestamo', libro_id=libro.id) }}">
-            <label for="duracion">Alquilar o Comprar:</label>
-            <select id="duracion" name="duracion" >
+            <label for="duracion" style="text-align: center;">Alquilar o Comprar:</label>
+            
+            <div class="filter-group" style="text-align: center;">
+            <select  id="duracion" name="duracion" >
                 <option value="15">15 días (Precio normal)</option>
                 <option value="30">30 días (Doble precio)</option>
                 <option value="40">comprar</option>
             </select>
+            </div>
             <button type="submit">Enviar al Carrito</button>
         </form>
-    {% else %}
+        {% else %}
         <p>No hay stock disponible para este libro.</p>
-    {% endif %}
-
-    {% endif %}
-</main>
+        {% endif %}
+        
+        {% endif %}
+    </main>
 </div>
-
+</div>
+</div>
     <h3 style="color: aliceblue;">Comentarios</h3>
 
 {% if "nombre" in session %}

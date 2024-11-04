@@ -32,8 +32,6 @@ def index():
     editoriales = Editorial.query.all()
     return render_template('libros/agregarlibro.html',autores=autores, generos=generos, editoriales=editoriales)
 
-
-
 @libros.route('/agregarlibro', methods=['POST'])
 @admin_required
 def agregarlibro():
@@ -62,14 +60,12 @@ def agregarlibro():
         extension = os.path.splitext(filename)[1]  # Obtener la extensión del archivo
         nuevoNombreFile = stringAleatorio() + extension  # Generar un nombre único para la imagen
 
-        
         upload_path = os.path.join(basepath, '../static/img', nuevoNombreFile) 
         imagen.save(upload_path)  
         img_name = nuevoNombreFile  
 
     elif imagen_url:  
         try:
-            
             response = requests.get(imagen_url)
             if response.status_code == 200:
                 basepath = os.path.dirname(__file__)
@@ -171,19 +167,21 @@ def agregar_editorial():
 @libros.route('/eliminareditorial/<int:id>')
 @admin_required
 def eliminareditorial(id):
-    nombre_editorial = request.form['nombre_editorial']
-    nueva_editorial = Editorial(nombre=nombre_editorial)
-    if nueva_editorial:
-        prestamo_activo = Prestamo.query.filter_by(id_libro=id).first()
+    # Buscar la editorial por su ID
+    editorial = Editorial.query.get(id)
 
-        if prestamo_activo:
-            flash(f'El libro  no puede ser eliminado porque está prestado.', 'error')
+    if editorial:
+        # Comprobar si hay algún libro asociado a la editorial
+        libro_vinculado = Libro.query.filter_by(editorial_id=id).first()
+
+        if libro_vinculado:
+            flash(f'La editorial "{editorial.nombre}" no puede ser eliminada porque tiene libros asociados.', 'error')
         else:
-            db.session.delete(prestamo_activo)
+            db.session.delete(editorial)
             db.session.commit()
-            flash(f'Libro  eliminado con éxito', 'success')
+            flash(f'Editorial "{editorial.nombre}" eliminada con éxito.', 'success')
     else:
-        flash('Libro no encontrado', 'error')
+        flash('Editorial no encontrada.', 'error')
 
     return redirect(url_for('libros.verlibro'))
 
@@ -313,11 +311,13 @@ def verlibro():
     pagination = query.paginate(page=page, per_page=per_page)
 
 
-    autores = Autor.query.order_by(Autor.nombre.asc(), Autor.apellido.asc()).all()
+    autores = db.session.query(Autor).join(Libros).filter(Libros.id_autor == Autor.id).distinct().all()
 
-    generos = Genero.query.order_by(Genero.nombre.asc()).all()
+    
+    generos = db.session.query(Genero).join(Libros).filter(Libros.id_genero == Genero.id).distinct().all()
 
-    editoriales = Editorial.query.order_by(Editorial.nombre.asc()).all()
+    
+    editoriales = db.session.query(Editorial).join(Libros).filter(Libros.id_editorial == Editorial.id).distinct().all()
 
     return render_template('libros/verlibros.html', pagination=pagination, autores=autores, editoriales=editoriales, generos=generos)
 
@@ -346,11 +346,13 @@ def libross():
     pagination = query.paginate(page=page, per_page=per_page)
 
        
-    autores = Autor.query.order_by(Autor.nombre.asc(), Autor.apellido.asc()).all()
+    autores = db.session.query(Autor).join(Libros).filter(Libros.id_autor == Autor.id).distinct().all()
+
     
-    generos = Genero.query.order_by(Genero.nombre.asc()).all()
+    generos = db.session.query(Genero).join(Libros).filter(Libros.id_genero == Genero.id).distinct().all()
+
     
-    editoriales = Editorial.query.order_by(Editorial.nombre.asc()).all()
+    editoriales = db.session.query(Editorial).join(Libros).filter(Libros.id_editorial == Editorial.id).distinct().all()
 
     return render_template('libros/libros.html', pagination=pagination, autores=autores, editoriales=editoriales, generos=generos)
 
@@ -358,23 +360,18 @@ def libross():
 def detalle(libro_id):
     libro = Libros.query.get_or_404(libro_id)
     
-    # Calcular el promedio de las calificaciones del libro
     promedio_calificacion = db.session.query(db.func.avg(Votacion.calificacion)).filter(Votacion.id_libro == libro_id).scalar()
     
-    # Si no hay calificaciones, el promedio sería None, así que lo manejamos
     if promedio_calificacion is None:
-        promedio_calificacion = 0  # Asigna 0 si no hay calificaciones aún
+        promedio_calificacion = 0  
     
-    # Si el usuario no ha iniciado sesión
     if "nombre" not in session:
         return render_template('libros/detalle.html', libro=libro, promedio_calificacion=promedio_calificacion)
     
-    # Si el usuario ha iniciado sesión
     usuario_id = Usuario.query.filter_by(nombre=session['nombre']).first().id
-    comentarios = libro.comentarios  # Obtener los comentarios del libro
+    comentarios = libro.comentarios  
     votacion = Votacion.query.filter_by(id_libro=libro_id, id_usuario=usuario_id).first()
 
-    # Renderizamos la plantilla con todos los datos necesarios
     return render_template('libros/detalle.html', libro=libro, promedio_calificacion=promedio_calificacion, comentarios=comentarios, votacion=votacion)
 
 

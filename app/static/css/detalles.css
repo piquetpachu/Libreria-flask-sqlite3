@@ -1,8 +1,54 @@
+
+
 a {
     user-select: none;  /* Previene la selección de texto */
     outline: none;      /* Elimina el contorno al hacer click */
   }
-  
+
+.detallesbook{
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    margin: 5px;
+}
+.img-det{
+    margin: 5px;
+    padding: 0;
+    overflow: auto;
+    flex: 1;
+    float: left;
+    width: 400px;
+    height: 600px;
+    text-align: center;
+    
+}
+.info-lib{
+    margin: 5px;
+    padding: 0;
+    overflow: auto;
+    flex: 1;
+    float: left;
+    width: 400px;
+    height: 600px;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    word-wrap: break-word; /* Evitar que el texto largo se desborde */
+    overflow-wrap: break-word; /* Asegura que las palabras largas se dividan */
+    
+}
+.cont-compra-voto{
+    margin: 5px;
+    padding: 0;
+    overflow: auto;
+    flex: 1;
+    float: left;
+    width: 400px;
+    height: 600px;
+    align-items: center;
+    align-content: center;
+
+}
 label{
     color: #ffffff;
     font-size: var(--heading-small);
@@ -216,7 +262,49 @@ main#main p:last-child {
     .comentariotextarea{
         width: 30em;
     }
+    .detallesbook{
+        display: flex;
+        align-items: flex-end;
+    }
+    .img-det{
+        margin: 5;
+        padding: 0;
+        overflow: auto;
+        flex: 1;
+        float: left;
+        margin: 5px;
+        width: 400px;
+        height: 600px;
+    }
+    .info-lib{
+        margin: 5;
+        padding: 0;
+        overflow: auto;
+        flex: 1;
+        float: left;
+        width: 400px;
+        height: 600px;
+        margin: 5px;
+        word-wrap: break-word; /* Evitar que el texto largo se desborde */
+        overflow-wrap: break-word; /* Asegura que las palabras largas se dividan */
+        
+    }
+    .cont-compra-voto{
+        margin: 5;
+        padding: 0;
+        overflow: auto;
+        flex: 1;
+        float: left;
+        width: 400px;
+        height: 600px;
+        margin: px;
+        align-items: center;
+        align-content: center;
+    
+    }
+    
 }
+
 
 @media (max-width: 600px) {
     main#main {
@@ -240,5 +328,45 @@ main#main p:last-child {
     .detalle-img{
         width: 150px;
         height: 200px;
+    }
+    .detallesbook{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        max-width: 100%;
+    }
+    .img-det{
+            margin: 5;
+            padding: 0;
+            overflow: auto;
+            flex: 1;
+            text-align: center;
+            align-items: center;
+            max-width: 95%;
+
+    }
+    .info-lib{
+        margin: 5;
+        padding: 0;
+        overflow: auto;
+        flex: 1;
+        max-width: 95%;
+        align-items: center;
+        align-content: center;
+        text-align: center;
+        
+    }
+    .cont-compra-voto{
+        margin: 5;
+        padding: 0;
+        overflow: auto;
+        flex: 1;
+        text-align: center;
+        max-width: 95%;
+
+    }
+    .filter-group {
+        text-align: center;
+        width: 100%;
     }
 }
