@@ -9,6 +9,7 @@
     border-radius: 10px;
     max-width: 300px;
     margin: 20px;
+    flex-direction: row;
     
 }
 
@@ -26,6 +27,7 @@
 .filter-group label {
     font-size: 0.9em;
     color: #555;
+    
 }
 
 .filter-group input, .filter-group select {

@@ -1,42 +1,16 @@
 
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 a {
     user-select: none;  /* Previene la selección de texto */
     outline: none;      /* Elimina el contorno al hacer click */
   }
 
-.detallesbook{
-    display: flex;
-    align-items: flex-end;
-    width: 100%;
-    margin: 5px;
-}
-.img-det{
-    margin: 5px;
-    padding: 0;
-    overflow: auto;
-    flex: 1;
-    float: left;
-    width: 400px;
-    height: 600px;
-    text-align: center;
-    
-}
-.info-lib{
-    margin: 5px;
-    padding: 0;
-    overflow: auto;
-    flex: 1;
-    float: left;
-    width: 400px;
-    height: 600px;
-    text-align: center;
-    align-items: center;
-    align-content: center;
-    word-wrap: break-word; /* Evitar que el texto largo se desborde */
-    overflow-wrap: break-word; /* Asegura que las palabras largas se dividan */
-    
-}
+
 .cont-compra-voto{
     margin: 5px;
     padding: 0;
@@ -148,6 +122,117 @@ main#main p:last-child {
     
 
   }
+
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  #main {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: var(--color-azul-marino);
+    width: 100%;
+    border-radius: 30px;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  /* Div contenedor de los detalles */
+  .detallesbook {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+  }
+  
+  /* Columna izquierda (imagen y calificación) */
+  .img-det {
+    flex: 1;
+    text-align: center;
+    background-color: #1f3a52;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+  }
+  
+  /* Columna central (información del libro) */
+  .padre-info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .info-lib {
+    display: flex;
+    flex-direction: column;
+    background-color: #2a4b66;
+    padding: 20px;
+    border-radius: 20px;
+    color: white;
+    gap: 1em;
+    flex: 1;
+    width: 35em;
+    word-wrap: break-word; /* Evitar que el texto largo se desborde */
+    overflow-wrap: break-word; /* Asegura que las palabras largas se dividan */
+  }
+  
+  /* Descripción en la parte inferior */
+  .desc {
+    background-color: #2a4b66;
+    padding: 20px;
+    border-radius: 20px;
+    color: white;
+    width: 35em;
+
+    word-wrap: break-word; /* Evitar que el texto largo se desborde */
+    overflow-wrap: break-word; /* Asegura que las palabras largas se dividan */
+  }
+  
+  /* Columna derecha (compra y votación) */
+  .cont-compra-voto {
+    flex: 1;
+    background-color: #1f3a52;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    color: white;
+  }
+  
+
+  
+  button {
+    background-color: #4c00ff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+  }
+  
+  button:hover {
+    background-color: #e07b00;
+  }
+  
+  select {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #2a4b66;
+    color: white;
+    border: none;
+  }
+  
+
 /* comentarios */
 .comments-section {
     max-width: 768px;
@@ -260,52 +345,112 @@ main#main p:last-child {
         max-width: 95%;
     }
     .comentariotextarea{
-        width: 30em;
+        width: 25em;
     }
-    .detallesbook{
-        display: flex;
-        align-items: flex-end;
-    }
-    .img-det{
-        margin: 5;
-        padding: 0;
-        overflow: auto;
-        flex: 1;
-        float: left;
-        margin: 5px;
-        width: 400px;
-        height: 600px;
-    }
-    .info-lib{
-        margin: 5;
-        padding: 0;
-        overflow: auto;
-        flex: 1;
-        float: left;
-        width: 400px;
-        height: 600px;
-        margin: 5px;
-        word-wrap: break-word; /* Evitar que el texto largo se desborde */
-        overflow-wrap: break-word; /* Asegura que las palabras largas se dividan */
-        
-    }
-    .cont-compra-voto{
-        margin: 5;
-        padding: 0;
-        overflow: auto;
-        flex: 1;
-        float: left;
-        width: 400px;
-        height: 600px;
-        margin: px;
-        align-items: center;
-        align-content: center;
-    
-    }
-    
+  /* Configuración general */
+  #main {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+  }
+
+  /* Ajuste del contenedor principal */
+  .detallesbook {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+  }
+
+  /* Imagen y calificación */
+  .img-det {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    background-color: transparent; /* Fondo transparente */
+  }
+
+  .img-det img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+  }
+
+  .rating {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  /* Información del libro */
+  .padre-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .info-lib {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    background-color: transparent; /* Fondo transparente */
+  }
+
+  .desc {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    background-color: transparent; /* Fondo transparente */
+  }
+
+  /* Sección de compra y votación */
+  .cont-compra-voto {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background-color: transparent; /* Fondo transparente */
+  }
+
+  .rating input {
+    display: none;
+  }
+
+  .rating label {
+    cursor: pointer;
+    font-size: 24px;
+    color: gold;
+  }
+
+  .rating input:checked ~ label {
+    color: #ff8c00;
+  }
+
+  select, button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 10px;
+    background-color: #2a4b66;;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #e07b00;
+  }
 }
-
-
 @media (max-width: 600px) {
     main#main {
         padding: 10px;

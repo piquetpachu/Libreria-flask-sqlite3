@@ -19,22 +19,25 @@
     </div>
     <img  src="{{ url_for('static', filename='img/' ~ libro.img) }}" alt="{{ libro.titulo }}" style="width:200px;height:350px; border-radius: 20px;">
     </div>
+<div class="padre-info lib">
+
     <div class="info-lib">
     <p><strong>Autor:</strong> {{ libro.autor.nombre }} {{ libro.autor.apellido }}</p>
     <p><strong>Género:</strong> {{ libro.genero.nombre }}</p>
     <p><strong>Editorial:</strong> {{ libro.editorial.nombre if libro.editorial else 'Sin editorial' }}</p>
-    <p><strong>Descripción:</strong> {{ libro.descripcion }}</p>
     <p><strong>fecha:</strong> {{ libro.fecha_emision if libro.fecha_emision else 'Fecha Desconocida' }}</p>
-    <p><strong>Precio:</strong> ${{ libro.precio }}</p>
-    <p><strong>Precio de Alquiler:</strong> ${{ libro.precio_alquiler if libro.precio_alquiler else 'N/A' }}</p>
+  
     <p><strong>ISBN:</strong> {{ libro.isbn if libro.isbn else 'Deconocido'}}</p>
     <p><strong>Idioma:</strong> {{ libro.idioma }}</p>
     <p><strong>Edición:</strong> {{ libro.edicion }}</p>
     <p><strong>stock:</strong> {{ libro.stock }}</p>
     <p><strong>Número de Páginas:</strong> {{ libro.paginas }}</p>
-    <p><strong>Formato:</strong> {{ libro.formato }}</p>
+    <p style="color: aliceblue; font-weight: normal; font-size: 17.6px;"><strong>Formato:</strong> {{ libro.formato }}</p>
     </div>
-
+    <div class="desc">
+    <p style="color: aliceblue; font-weight: normal; font-size: 17.6px;"><strong>Descripción:</strong> {{ libro.descripcion }}</p>
+    </div>
+</div>
     
     
     
@@ -76,6 +79,8 @@
             <p>Debes estar registrado para votar.</p>
         {% endif %}
     <!-- Formulario para solicitar un préstamo -->
+    <p style="text-align: center;"><strong>Precio de venta:</strong> ${{ libro.precio }}</p>
+    <p style="text-align: center;"><strong>Precio de Alquiler:</strong> ${{ libro.precio_alquiler if libro.precio_alquiler else 'N/A' }}</p>
     {% if "nombre" in session %}
     <!-- Si hay stock disponible -->
     {% if libro.stock > 0 %}
@@ -96,7 +101,6 @@
         {% endif %}
         
         {% endif %}
-    </main>
 </div>
 </div>
 </div>
@@ -114,6 +118,7 @@
     
     
 </form>
+</main>
 
 <div class="comments-section">
     {% if libro.comentarios %}
@@ -155,7 +160,7 @@
         });
     });
 </script>
-
+y
 
 
 

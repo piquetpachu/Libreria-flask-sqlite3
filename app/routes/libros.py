@@ -172,7 +172,7 @@ def eliminareditorial(id):
 
     if editorial:
         # Comprobar si hay algún libro asociado a la editorial
-        libro_vinculado = Libro.query.filter_by(editorial_id=id).first()
+        libro_vinculado = Libros.query.filter_by(editorial_id=id).first()
 
         if libro_vinculado:
             flash(f'La editorial "{editorial.nombre}" no puede ser eliminada porque tiene libros asociados.', 'error')

@@ -5,7 +5,6 @@ from routes.login import login_required, admin_required
 
 prestamos = Blueprint('prestamos', __name__)
 
-# 1. Ver todos los préstamos (actualizado para la nueva base de datos)
 @prestamos.route('/todos-los-prestamos')
 @admin_required
 def ver_todos_prestamos():
@@ -16,7 +15,6 @@ def ver_todos_prestamos():
 
     query = db.session.query(Prestamo, Libros, Usuario).join(Libros, Prestamo.id_libro == Libros.id).join(Usuario, Prestamo.id_usuario == Usuario.id)
 
-    # Filtros de búsqueda
     if nombre_usuario:
         query = query.filter(Usuario.nombre.ilike(f"%{nombre_usuario}%"))
     if titulo_libro:
@@ -26,7 +24,6 @@ def ver_todos_prestamos():
 
     return render_template('prestamos/todos.html', prestamos=pagination.items, pagination=pagination)
 
-# 2. Editar préstamo (no hay cambios significativos, pero mantengo la lógica)
 @prestamos.route('/editar-prestamo/<int:id>', methods=['GET', 'POST'])
 @admin_required
 def editar_prestamo(id):
@@ -49,7 +46,6 @@ def editar_prestamo(id):
     
     return render_template('prestamos/editar.html', prestamo=prestamo)
 
-# 3. Eliminar préstamo (lógica similar, con la actualización del stock)
 @prestamos.route('/eliminar-prestamo/<int:id>', methods=['POST', 'GET'])
 @login_required
 def eliminar_prestamo(id):
@@ -67,20 +63,17 @@ def eliminar_prestamo(id):
     
     return redirect(request.referrer)
 
-# 4. Listar préstamos del usuario (adaptado para reflejar nuevos campos)
 @prestamos.route('/mis-prestamos')
 @login_required
 def listar_prestamos():
     usuario_id = Usuario.query.filter_by(nombre=session['nombre']).first().id
     
-    # Obtener todos los préstamos del usuario
     prestamos = db.session.query(Prestamo, Libros).join(Libros, Prestamo.id_libro == Libros.id).filter(Prestamo.id_usuario == usuario_id).all()
     
     total_precios = round(sum([prestamo.precio_final for prestamo, _ in prestamos]))
 
     return render_template('prestamos/listar.html', prestamos=prestamos, total_precios=total_precios)
 
-# 5. Solicitar préstamo (adaptación para manejar stock y calcular el precio final)
 @prestamos.route('/solicitar-prestamo/<int:libro_id>', methods=['POST'])
 @login_required
 def solicitar_prestamo(libro_id):
