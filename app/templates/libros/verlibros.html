@@ -2,15 +2,12 @@
 
 {% block content %}
 
-    <!-- Formulario para filtrar libros -->
     <div class="filter-container animate-on-scroll">
         <form action="{{ url_for('libros.verlibro') }}" method="GET">
-            <!-- Filtro por Título -->
             <div class="filter-group">
                 <input type="text" id="titulo" name="titulo" placeholder="Buscar título..." value="{{ request.args.get('titulo', '') }}">
             </div>
     
-            <!-- Filtro por Autor -->
             <div class="filter-group">
                 <select id="autor" name="autor">
                     <option value="">Todos los autores</option>
@@ -22,7 +19,6 @@
                 </select>
             </div>
     
-            <!-- Filtro por Editorial -->
             <div class="filter-group">
                 <select id="editorial" name="editorial">
                     <option value="">Todas las editoriales</option>
@@ -34,7 +30,6 @@
                 </select>
             </div>
     
-            <!-- Filtro por Género -->
             <div class="filter-group">
                 <select id="genero" name="genero">
                     <option value="">Todos los géneros</option>

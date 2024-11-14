@@ -65,7 +65,6 @@
         {% endfor %}
     </div>
 
-    <!-- Navegación de la paginación -->
         <ul class="pagination animate-on-scroll ">
             {% if pagination.has_prev %}
             <li><a href="{{ url_for('libros.libross', page=pagination.prev_num) }}">Anterior</a></li>
