@@ -1,5 +1,4 @@
 
-/* Estilos generales para pantallas grandes */
 table {
     margin: 0 0 0 0;
     width: 100%;
@@ -17,33 +16,32 @@ th {
     background-color: var(--color-azul-marino);
 }
 
-/* Media query para pantallas pequeñas (celulares) */
 @media (max-width: 768px) {
     body {
         margin: 0;
         padding: 0;
-        font-size: 14px; /* Ajustar el tamaño del texto */
+        font-size: 14px;
     }
 
     table {
         margin: 0;
         width: 100%;
-        display: block; /* Hace que la tabla sea scrollable en pantallas pequeñas */
-        overflow-x: auto; /* Añade scroll horizontal si es necesario */
+        display: block; 
+        overflow-x: auto; 
     }
 
     thead {
-        display: none; /* Oculta la cabecera de la tabla en pantallas pequeñas */
+        display: none;
     }
 
     tbody, tr, td {
-        display: block; /* Muestra las filas como bloques */
+        display: block; 
         width: 100%;
         box-sizing: border-box;
     }
 
     tr {
-        margin-bottom: 1em; /* Espacio entre filas */
+        margin-bottom: 1em; 
     }
 
     td {
@@ -53,7 +51,7 @@ th {
     }
 
     td::before {
-        content: attr(data-label); /* Añadir los nombres de las columnas */
+        content: attr(data-label); 
         position: absolute;
         left: 0;
         width: 50%;
@@ -62,7 +60,6 @@ th {
         text-align: left;
     }
 
-    /* Botón de eliminar adaptado para móviles */
     button {
         width: 100%;
         font-size: 1em;
@@ -188,7 +185,8 @@ button.add-book:hover {
     background-color: #c0392b;
 }
 
-/* Paginación */
+
+
 .pagination {
     display: flex;
     justify-content: center;
@@ -209,7 +207,7 @@ button.add-book:hover {
     background-color: #2980b9;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .book-card {
         flex-direction: column;
@@ -232,7 +230,7 @@ button.add-book:hover {
         padding: 0.6rem 1rem;
     }
     .tabla{
-        justify-content: center; /* Centrar las tarjetas */
+        justify-content: center; 
     }
     
 }

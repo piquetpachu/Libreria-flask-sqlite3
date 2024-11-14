@@ -4,11 +4,11 @@
 
     <!-- Formulario para filtrar libros -->
      
-<div class="filter-container" >
+<div class="filter-container animate-on-scroll" >
     <form action="{{ url_for('libros.libross') }}" method="GET">
         <!-- Filtro por Título -->
         <div class="filter-group">
-            <input type="text" id="titulo" name="titulo" placeholder="Buscar título..." value="{{ request.args.get('titulo', '') }}">
+            <input type="search" id="titulo" name="titulo" placeholder="Buscar título..." value="{{ request.args.get('titulo', '') }}">
         </div>
 
         <!-- Filtro por Autor -->
@@ -51,7 +51,7 @@
     </form>
 </div>
 
-<main id="main" class="flexbox-col">
+<main id="main" class="flexbox-col animate-on-scroll">
     <h1>Libros</h1>
     <div class="flex-container">
         {% for libro in pagination.items %}
@@ -66,7 +66,7 @@
     </div>
 
     <!-- Navegación de la paginación -->
-        <ul class="pagination">
+        <ul class="pagination animate-on-scroll ">
             {% if pagination.has_prev %}
             <li><a href="{{ url_for('libros.libross', page=pagination.prev_num) }}">Anterior</a></li>
             {% endif %}

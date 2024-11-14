@@ -5,11 +5,11 @@
 
 <main id="main" class="flexbox-col" style="background-color: var(--color-azul-marino); width: 100%; border-radius: 30px;">
 
-    <div class="detallesbook">
-    <div class="img-det">
+    <div class="detallesbook animate-on-scroll">
+    <div class="img-det animate-on-scroll">
             <h1>{{ libro.titulo }}</h1>
     <p style="text-align: center;"><strong>Calificación promedio</strong></p>
-    <div class="rating">
+    <div class="rating animate-on-scroll">
         
         <span class="estrella" data-calificacion="5">&#9733;</span>
         <span class="estrella" data-calificacion="4">&#9733;</span>
@@ -19,7 +19,7 @@
     </div>
     <img  src="{{ url_for('static', filename='img/' ~ libro.img) }}" alt="{{ libro.titulo }}" style="width:200px;height:350px; border-radius: 20px;">
     </div>
-<div class="padre-info lib">
+<div class="padre-info lib ">
 
     <div class="info-lib">
     <p><strong>Autor:</strong> {{ libro.autor.nombre }} {{ libro.autor.apellido }}</p>
@@ -43,7 +43,7 @@
     
 
 
-<div class="cont-compra-voto">
+<div class="cont-compra-voto ">
             <!-- Sistema de votación con estrellas -->
             {% if "nombre" in session %}
             <h2 style="color: aliceblue; text-align: center;">Calificar libro</h2>
@@ -120,11 +120,11 @@
 </form>
 </main>
 
-<div class="comments-section">
+<div class="comments-section animate-on-scroll">
     {% if libro.comentarios %}
         <ul>
         {% for comentario in libro.comentarios %}
-            <li>
+            <li class="animate-on-scroll">
                 <p><strong>{{ comentario.usuario.nombre }}:</strong> {{ comentario.comentario }}</p>
                 <small>{{ comentario.fecha.strftime('%Y-%m-%d %H:%M') }}</small>
                 {% if session.get('rol') == 'admin' or session.get('usuario_id') == comentario.id_usuario %}
@@ -160,7 +160,7 @@
         });
     });
 </script>
-y
+
 
 
 

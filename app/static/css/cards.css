@@ -1,5 +1,4 @@
 
-/*VISOR DE LIBROS*/
 
 .flex-container {
     display: flex;
@@ -83,7 +82,7 @@
     .flex-container {
         display: flex;
         flex-direction: column;
-        gap: 10px; /* Espacio entre las tarjetas */
+        gap: 10px;
         justify-content: center; 
     }
 }

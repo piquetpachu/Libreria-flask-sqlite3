@@ -3,7 +3,7 @@
 {% block content %}
 
     <!-- Formulario para filtrar libros -->
-    <div class="filter-container">
+    <div class="filter-container animate-on-scroll">
         <form action="{{ url_for('libros.verlibro') }}" method="GET">
             <!-- Filtro por Título -->
             <div class="filter-group">
@@ -56,14 +56,14 @@
     <main id="main" class="flexbox-col">
         <h1>Lista de Libros</h1>
         
-        <div class="container">
+        <div class="container animate-on-scroll">
             <header>
                 <h1>Lista de Libros</h1>
                 <a href="{{url_for('libros.index')}}" class="btn agregar-btn">Agregar Libro</a>
             </header>
             <section class="book-list">
                 {% for libro in pagination %}
-                <div class="book-card">
+                <div class="book-card" style="background-color: #2a4b66; box-shadow: none;">
                     <div class="book-details">
                         <div class="book-image">
                             <img src="{{ url_for('static', filename='img/' ~ libro.img) }}" alt="{{ libro.titulo }}" style="width:150px;height:200px;">
@@ -84,7 +84,7 @@
                 </div>
                 {% endfor %}
             </section>
-                <ul class="pagination">
+                <ul class="pagination animate-on-scroll">
                     {% if pagination.has_prev %}
                     <li><a href="{{ url_for('libros.verlibro', page=pagination.prev_num) }}">Anterior</a></li>
                     {% endif %}

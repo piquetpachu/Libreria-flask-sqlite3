@@ -47,3 +47,23 @@ for (let item of items) {
 }
 document.addEventListener("click", closeSubmenu, false);
 
+document.addEventListener('DOMContentLoaded', function () {
+  const elements = document.querySelectorAll('.animate-on-scroll');
+
+  function handleScroll() {
+      elements.forEach(element => {
+          const rect = element.getBoundingClientRect();
+
+          // Si el elemento está en la vista, agregar la clase 'visible'
+          if (rect.top < window.innerHeight * 0.8 && rect.bottom > 0) {
+              element.classList.add('visible');
+          } else {
+              // Si el elemento está fuera de la vista, quitar la clase 'visible'
+              element.classList.remove('visible');
+          }
+      });
+  }
+
+  window.addEventListener('scroll', handleScroll);
+  handleScroll(); // Llama a la función al cargar la página para los elementos visibles inicialmente
+});

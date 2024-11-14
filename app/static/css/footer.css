@@ -55,7 +55,6 @@
     height: 24px;
 }
 
-/* Footer bottom */
 .footer-bottom {
     text-align: center;
     padding-top: 1em;
@@ -66,7 +65,6 @@
     margin: 0px 15px;
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
     .footer-container {
         flex-direction: column;

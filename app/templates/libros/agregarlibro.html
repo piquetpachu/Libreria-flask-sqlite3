@@ -1,8 +1,8 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <h1>Añadir libro</h1>
-    
+<div class="container"> 
+       <h1>Añadir libro</h1>
     <form action="/agregarlibro" method="post" enctype="multipart/form-data">
         
         <!-- Título del libro -->
@@ -16,7 +16,7 @@
             {% for autor in autores %}
             <option value="{{ autor.id }}">{{ autor.nombre }} {{ autor.apellido }}</option>
             {% endfor %}
-            <option value="agregar">Agregar nuevo autor</option>
+            <option style="background-color: rgb(26, 151, 57);" value="agregar">Agregar nuevo autor</option>
         </select><br>
         
         <!-- Género (seleccionable con opción de agregar nuevo) -->
@@ -26,7 +26,7 @@
             {% for genero in generos %}
             <option value="{{ genero.id }}">{{ genero.nombre }}</option>
             {% endfor %}
-            <option value="agregar">Agregar nuevo género</option>
+            <option style="background-color: rgb(26, 151, 57);" value="agregar">Agregar nuevo género</option>
         </select><br>
         
         <!-- Editorial (seleccionable con opción de agregar nuevo) -->
@@ -36,7 +36,7 @@
             {% for editorial in editoriales %}
             <option value="{{ editorial.id }}">{{ editorial.nombre }} </option>
             {% endfor %}
-            <option value="agregar">Agregar nueva editorial</option>
+            <option style="background-color: rgb(26, 151, 57);" value="agregar">Agregar nueva editorial</option>
         </select><br>
         
         <!-- Fecha de publicación -->
@@ -118,7 +118,7 @@
         
         <!-- Imagen (archivo) -->
         <label for="imagen">Subir imagen:</label>
-        <input type="file" name="imagen" id="imagen" class="input_field">
+        <input type="file" name="imagen" id="imagen" class="input_field" style="background-color: aliceblue;">
     
         <label for="imagen_url">O ingresar URL de la imagen:</label>
         <input type="url" name="imagen_url" id="imagen_url" placeholder="http://" class="input_field">
@@ -127,7 +127,7 @@
         <button type="submit" class="btn_log">Enviar</button>
     
     </form>
-</main>
+</div>
 <!-- ------------------------------ -->
 <script>
     // Redireccionar al agregar nuevo autor, género o editorial

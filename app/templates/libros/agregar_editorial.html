@@ -1,17 +1,43 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<main class="login-container flexbox-col">
-    <h1>Agregar nuevo autor</h1>
-    
-    <form action="/agregareditorial" method="post">
+<button onclick="window.history.back()">volver</button>
+
+<div class="container">
+    <h1>Administrar Editoriales</h1>
+
+    <!-- Formulario para agregar una nueva editorial -->
+    <form action="{{ url_for('libros.agregar_editorial') }}" method="post">
         <label for="nombre_editorial">Nombre de la editorial</label>
-        <input type="text" name="nombre_editorial" class="input_field" required><br>
+        <input type="text" name="nombre_editorial" class="input_field" required>
         <button type="submit" class="btn_log">Agregar editorial</button>
-        
-    </form>
-</main>
+    </form><br>
+    <hr>
 
-
-
+    <!-- Tabla para mostrar, editar y eliminar editoriales existentes -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for editorial in editoriales %}
+            <tr>
+                <!-- Formulario para editar una editorial -->
+                <form action="{{ url_for('libros.editar_editorial', id=editorial.id) }}" method="post">
+                    <td>
+                        <input style="border-radius: 30px; width: 100%; height: 100%; background-color: #2a4b66; color: aliceblue;" type="text" name="nombre_editorial" value="{{ editorial.nombre }}" class="input_field" required>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn_log">Guardar</button>
+                        <a href="{{ url_for('libros.eliminar_editorial', id=editorial.id) }}" class="btn_delete" onclick="return confirm('¿Estás seguro de eliminar esta editorial?');">Eliminar</a>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

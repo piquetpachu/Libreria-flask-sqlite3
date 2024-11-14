@@ -37,7 +37,6 @@ a {
 .item a:hover::after {
   color: #ccc;
 }
-/* Mobile menu */
 .menu {
   display: flex;
   flex-wrap: wrap;

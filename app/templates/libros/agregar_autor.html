@@ -1,17 +1,51 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<main class="login-container flexbox-col">
-    <h1>Agregar nuevo autor</h1>
-    
-    <form action="/agregarautor" method="post">
+<button onclick="window.history.back()">volver</button>
+
+    <h1>Administrar Autores</h1>
+
+    <!-- Formulario para agregar un nuevo autor -->
+    <form action="{{ url_for('libros.agregar_autor') }}" method="post">
+        
         <label for="nombre_autor">Nombre del autor</label>
-        <input type="text" name="nombre_autor" placeholder="Nombre" class="input_field" required><br>
+        <input type="text" name="nombre_autor" placeholder="Nombre" class="input_field" required>
         
         <label for="apellido_autor">Apellido del autor</label>
-        <input type="text" name="apellido_autor" placeholder="Apellido" class="input_field"><br>
+        <input type="text" name="apellido_autor" placeholder="Apellido" class="input_field">
         
         <button type="submit" class="btn_log">Agregar autor</button>
-    </form>
-</main>
+    </form><br>
+    <hr>
+
+    <!-- Tabla para mostrar, editar y eliminar autores existentes -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for autor in autores %}
+            <tr>
+                <!-- Formulario para editar un autor -->
+                <form action="{{ url_for('libros.editar_autor', id=autor.id) }}" method="post">
+                    <td>
+                        <input style="border-radius: 30px; width: 100%; height: 100%; background-color: #2a4b66; color: aliceblue;" type="text" name="nombre_autor" value="{{ autor.nombre }}" class="input_field" required>
+                    </td>
+                    <td>
+                        <input style="border-radius: 30px; width: 100%; height: 100%; background-color: #2a4b66; color: aliceblue;" type="text" name="apellido_autor" value="{{ autor.apellido }}" class="input_field">
+                    </td>
+                    <td>
+                        <button type="submit" class="btn_log">Guardar</button>
+                        <a href="{{ url_for('libros.eliminar_autor', id=autor.id) }}" class="btn_delete" onclick="return confirm('¿Estás seguro de eliminar este autor?');">Eliminar</a>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

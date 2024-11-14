@@ -1,13 +1,14 @@
 
 
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
 a {
-    user-select: none;  /* Previene la selección de texto */
-    outline: none;      /* Elimina el contorno al hacer click */
+    user-select: none;  
+    outline: none;     
   }
 
 
@@ -123,13 +124,6 @@ main#main p:last-child {
 
   }
 
-/* Estilos generales */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
   #main {
     display: flex;
     justify-content: space-between;
@@ -141,7 +135,6 @@ main#main p:last-child {
     gap: 20px;
   }
   
-  /* Div contenedor de los detalles */
   .detallesbook {
     display: flex;
     justify-content: space-between;
@@ -179,7 +172,7 @@ main#main p:last-child {
     color: white;
     gap: 1em;
     flex: 1;
-    width: 35em;
+    width: 28em;
     word-wrap: break-word; /* Evitar que el texto largo se desborde */
     overflow-wrap: break-word; /* Asegura que las palabras largas se dividan */
   }
@@ -190,7 +183,7 @@ main#main p:last-child {
     padding: 20px;
     border-radius: 20px;
     color: white;
-    width: 35em;
+    width: 28em;
 
     word-wrap: break-word; /* Evitar que el texto largo se desborde */
     overflow-wrap: break-word; /* Asegura que las palabras largas se dividan */
@@ -209,6 +202,8 @@ main#main p:last-child {
     color: white;
   }
   
+
+
 
   
   button {
@@ -233,7 +228,6 @@ main#main p:last-child {
   }
   
 
-/* comentarios */
 .comments-section {
     max-width: 768px;
     margin: 20px auto;
@@ -328,11 +322,11 @@ main#main p:last-child {
     color: gold;
     position: absolute;
     left: 0;
-    width: 50%; /* Mostrar solo la mitad izquierda */
+    width: 50%; 
     overflow: hidden;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 885px) {
     .linkedit{
         color: aliceblue;
         background-color: #28a745;
@@ -347,7 +341,6 @@ main#main p:last-child {
     .comentariotextarea{
         width: 25em;
     }
-  /* Configuración general */
   #main {
     flex-direction: column;
     align-items: center;
@@ -355,7 +348,6 @@ main#main p:last-child {
     padding: 10px;
   }
 
-  /* Ajuste del contenedor principal */
   .detallesbook {
     flex-direction: column;
     align-items: center;
@@ -363,14 +355,13 @@ main#main p:last-child {
     gap: 20px;
   }
 
-  /* Imagen y calificación */
   .img-det {
     width: 100%;
     text-align: center;
     padding: 10px;
     border-radius: 15px;
     margin-bottom: 20px;
-    background-color: transparent; /* Fondo transparente */
+    background-color: transparent; 
   }
 
   .img-det img {
@@ -386,7 +377,6 @@ main#main p:last-child {
     margin-top: 10px;
   }
 
-  /* Información del libro */
   .padre-info {
     width: 100%;
     display: flex;
@@ -399,7 +389,7 @@ main#main p:last-child {
     padding: 10px;
     border-radius: 10px;
     color: white;
-    background-color: transparent; /* Fondo transparente */
+    background-color: transparent; 
   }
 
   .desc {
@@ -407,10 +397,9 @@ main#main p:last-child {
     padding: 10px;
     border-radius: 10px;
     color: white;
-    background-color: transparent; /* Fondo transparente */
+    background-color: transparent; 
   }
 
-  /* Sección de compra y votación */
   .cont-compra-voto {
     width: 100%;
     padding: 10px;
@@ -419,7 +408,7 @@ main#main p:last-child {
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    background-color: transparent; /* Fondo transparente */
+    background-color: transparent; 
   }
 
   .rating input {

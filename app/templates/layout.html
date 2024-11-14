@@ -27,6 +27,10 @@
       {% if session.get('rol') == 'admin' %}
       
       <a style="overflow: hidden;" tabindex="-1" >admin <i class="fas fa-bars">▼</i></a>
+      
+      <style>
+        
+      </style>
       <ul class="submenu" style="z-index: 3;">
         <li class="subitem"><a href="{{url_for('libros.verlibro')}}">manejar libros</a></li>
         <li class="subitem"><a href="{{url_for('prestamos.ver_todos_prestamos')}}">manejar ventas</a></li>
@@ -56,7 +60,13 @@
     <li class="item button"><a href="{{url_for('user.index_login')}}">iniciar sesion</a></li>
     <li class="item button secondary"><a href="{{url_for('user.register')}}">Registrarse</a></li>
     {% endif %}
-    <li class="toggle"><a href="#"><i class="fas fa-bars">▼</i></a></li>
+    <!-- <li class="toggle"><a href="#"><i class="fas fa-bars">▼</i></a></li> -->
+    <li  class="toggle"><button id="boton-menu" class="fas fa-bars">
+      <div></div>
+      <div></div>
+      <div></div>
+    </button></li>
+      
   </ul>
 </nav>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>

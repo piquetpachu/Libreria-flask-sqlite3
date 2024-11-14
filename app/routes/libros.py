@@ -6,7 +6,7 @@ import os
 import requests
 from io import BytesIO
 from PIL import Image
-from sqlalchemy import or_
+from sqlalchemy import or_, func, desc
 from random import sample
 
 
@@ -21,8 +21,21 @@ def stringAleatorio():
 
 @libros.route('/')
 def bienvenida():
-    libros_destacados = Libros.query.filter(Libros.precio < 15.0 ).all()
-    return render_template('bienvenida.html', libros_destacados=libros_destacados)
+    libros_mas_valorados = db.session.query(
+        Libros.id,
+        Libros.titulo,
+        Libros.descripcion,
+        Libros.img,
+        Libros.precio,
+        Libros.precio_alquiler,
+        func.avg(Votacion.calificacion).label('promedio_estrellas')
+    ).join(Votacion, Libros.id == Votacion.id_libro, isouter=True) \
+    .group_by(Libros.id) \
+    .order_by(desc('promedio_estrellas')) \
+    .limit(6) \
+    .all()
+
+    return render_template('bienvenida.html', libros_mas_valorados=libros_mas_valorados)
 
 @libros.route('/formulariolibros')
 @admin_required
@@ -44,7 +57,7 @@ def agregarlibro():
     stock = request.form['stock']
     precio = float(request.form['precio'])
     precio_alquiler = request.form.get('precio_alquiler', None)  
-    isbn = request.form.get('isbn') or None     
+    isbn = request.form['isbn'] if request.form['isbn'] else None
     idioma = request.form['idioma']
     edicion = request.form['edicion']
     paginas = int(request.form['paginas'])
@@ -86,7 +99,7 @@ def agregarlibro():
 
     nuevolibro = Libros(
         titulo=titulo,
-        id_autor=id_autor,  # Relación con la tabla Autores
+        id_autor=id_autor, 
         id_genero=id_genero, 
         id_editorial=id_editorial,  
         descripcion=descripcion,
@@ -94,7 +107,7 @@ def agregarlibro():
         stock=stock,
         precio=precio,
         precio_alquiler=precio_alquiler if precio_alquiler else None,  
-        isbn=isbn,
+        isbn=isbn if isbn else None,
         idioma=idioma,
         edicion=edicion,
         paginas=paginas,
@@ -126,9 +139,52 @@ def agregar_autor():
         except Exception as e:
             db.session.rollback()
             flash(f'Error al agregar autor: {str(e)}', 'danger')
-        return redirect(url_for('libros.index'))
-    
-    return render_template('libros/agregar_autor.html')
+        return redirect(url_for('libros.agregar_autor'))
+
+    autores = Autor.query.all()
+    return render_template('libros/agregar_autor.html', autores=autores)
+
+
+@libros.route('/editar_autor/<int:id>', methods=['POST'])
+@admin_required
+def editar_autor(id):
+    autor = Autor.query.get_or_404(id)
+    nuevo_nombre = request.form['nombre_autor']
+    nuevo_apellido = request.form['apellido_autor']
+
+    if autor.nombre != nuevo_nombre or autor.apellido != nuevo_apellido:
+        autor.nombre = nuevo_nombre
+        autor.apellido = nuevo_apellido
+        try:
+            db.session.commit()
+            flash('Autor editado exitosamente', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al editar autor: {str(e)}', 'danger')
+
+    return redirect(url_for('libros.agregar_autor'))
+
+
+@libros.route('/eliminar_autor/<int:id>', methods=['GET'])
+@admin_required
+def eliminar_autor(id):
+    autor = Autor.query.get_or_404(id)
+
+    libro_vinculado = Libros.query.filter_by(id_autor=id).first()
+
+    if libro_vinculado:
+        flash(f'El autor "{autor.nombre} {autor.apellido}" no puede ser eliminado porque tiene libros asociados.', 'danger')
+    else:
+        try:
+            db.session.delete(autor)
+            db.session.commit()
+            flash('Autor eliminado exitosamente', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al eliminar autor: {str(e)}', 'danger')
+
+    return redirect(url_for('libros.agregar_autor'))
+
 
 @libros.route('/agregargenero', methods=['GET', 'POST'])
 @admin_required
@@ -143,9 +199,50 @@ def agregar_genero():
         except Exception as e:
             db.session.rollback()
             flash(f'Error al agregar género: {str(e)}', 'danger')
-        return redirect(url_for('libros.index'))
+        return redirect(url_for('libros.agregar_genero'))
+
+    generos = Genero.query.all()
+    return render_template('libros/agregar_genero.html', generos=generos)
+
+
+@libros.route('/editar_genero/<int:id>', methods=['POST'])
+@admin_required
+def editar_genero(id):
+    genero = Genero.query.get_or_404(id)
+    nuevo_nombre = request.form['nombre_genero']
     
-    return render_template('libros/agregar_genero.html')
+    if genero.nombre != nuevo_nombre:
+        genero.nombre = nuevo_nombre
+        try:
+            db.session.commit()
+            flash('Género editado exitosamente', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al editar género: {str(e)}', 'danger')
+
+    return redirect(url_for('libros.agregar_genero'))
+
+
+@libros.route('/eliminar_genero/<int:id>', methods=['GET'])
+@admin_required
+def eliminar_genero(id):
+    genero = Genero.query.get_or_404(id)
+
+    libro_vinculado = Libros.query.filter_by(id_genero=id).first()
+
+    if libro_vinculado:
+        flash(f'El género "{genero.nombre}" no puede ser eliminado porque tiene libros asociados.', 'danger')
+    else:
+        try:
+            db.session.delete(genero)
+            db.session.commit()
+            flash('Género eliminado exitosamente', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al eliminar género: {str(e)}', 'danger')
+
+    return redirect(url_for('libros.agregar_genero'))
+
 
 @libros.route('/agregareditorial', methods=['GET', 'POST'])
 @admin_required
@@ -160,30 +257,50 @@ def agregar_editorial():
         except Exception as e:
             db.session.rollback()
             flash(f'Error al agregar editorial: {str(e)}', 'danger')
-        return redirect(url_for('libros.index'))
-    
-    return render_template('libros/agregar_editorial.html')
+        return redirect(url_for('libros.agregar_editorial'))
 
-@libros.route('/eliminareditorial/<int:id>')
+    editoriales = Editorial.query.all()
+    return render_template('libros/agregar_editorial.html', editoriales=editoriales)
+
+
+@libros.route('/editar_editorial/<int:id>', methods=['POST'])
 @admin_required
-def eliminareditorial(id):
-    # Buscar la editorial por su ID
-    editorial = Editorial.query.get(id)
+def editar_editorial(id):
+    editorial = Editorial.query.get_or_404(id)
+    nuevo_nombre = request.form['nombre_editorial']
 
-    if editorial:
-        # Comprobar si hay algún libro asociado a la editorial
-        libro_vinculado = Libros.query.filter_by(editorial_id=id).first()
+    if editorial.nombre != nuevo_nombre:
+        editorial.nombre = nuevo_nombre
+        try:
+            db.session.commit()
+            flash('Editorial editada exitosamente', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al editar editorial: {str(e)}', 'danger')
 
-        if libro_vinculado:
-            flash(f'La editorial "{editorial.nombre}" no puede ser eliminada porque tiene libros asociados.', 'error')
-        else:
+    return redirect(url_for('libros.agregar_editorial'))
+
+
+@libros.route('/eliminar_editorial/<int:id>', methods=['GET'])
+@admin_required
+def eliminar_editorial(id):
+    editorial = Editorial.query.get_or_404(id)
+
+    libro_vinculado = Libros.query.filter_by(id_editorial=id).first()
+
+    if libro_vinculado:
+        flash(f'La editorial "{editorial.nombre}" no puede ser eliminada porque tiene libros asociados.', 'danger')
+    else:
+        try:
             db.session.delete(editorial)
             db.session.commit()
-            flash(f'Editorial "{editorial.nombre}" eliminada con éxito.', 'success')
-    else:
-        flash('Editorial no encontrada.', 'error')
+            flash('Editorial eliminada exitosamente', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al eliminar editorial: {str(e)}', 'danger')
 
-    return redirect(url_for('libros.verlibro'))
+    return redirect(url_for('libros.agregar_editorial'))
+
 
 
 @libros.route('/eliminarlibro/<int:id>')
@@ -215,25 +332,35 @@ def editarlibro(id):
 
     if request.method == "POST":
         libro.titulo = request.form['titulo']
-        libro.id_autor = int(request.form['autor'])  
-        libro.id_genero = int(request.form['genero'])  
+        libro.id_autor = int(request.form['autor'])
+        libro.id_genero = int(request.form['genero'])
         libro.id_editorial = int(request.form['editorial']) if request.form['editorial'] else None
         libro.descripcion = request.form['descripcion']
         libro.fecha_emision = request.form['fecha_publicacion']
         libro.stock = int(request.form['stock'])
         libro.precio = float(request.form['precio'])
         libro.precio_alquiler = float(request.form['precio_alquiler']) if request.form['precio_alquiler'] else None
-        libro.isbn = request.form['isbn']
-        libro.idioma = request.form.get('idioma','')
+
+        nuevo_isbn = request.form['isbn'] if request.form['isbn'] else None
+
+        # Comprobar si el ISBN ha cambiado y si ya está en uso por otro libro
+        if nuevo_isbn != libro.isbn:
+            isbn_existente = Libros.query.filter(Libros.isbn == nuevo_isbn, Libros.id != id).first()
+            if isbn_existente:
+                flash('Error: El ISBN ingresado ya está en uso por otro libro.', 'danger')
+                return redirect(url_for('libros.editarlibro', id=id))
+            else:
+                libro.isbn = nuevo_isbn
+
+        libro.idioma = request.form.get('idioma', '')
         libro.edicion = request.form['edicion']
         libro.paginas = request.form['paginas']
         libro.formato = request.form['formato']
 
-        imagen_url = request.form.get('imagen_url') 
+        imagen_url = request.form.get('imagen_url')
         nueva_imagen = request.files.get('imagen')
         basepath = os.path.dirname(__file__)
 
-        # Comprobar si se subió una nueva imagen o se proporcionó una URL
         if nueva_imagen:
             filename = secure_filename(nueva_imagen.filename)
             extension = os.path.splitext(filename)[1]
@@ -253,7 +380,7 @@ def editarlibro(id):
         elif imagen_url:
             try:
                 response = requests.get(imagen_url)
-                response.raise_for_status()  # Verificar si la URL es válida
+                response.raise_for_status()
                 img_bytes = BytesIO(response.content)
                 img = Image.open(img_bytes)
 
@@ -284,7 +411,6 @@ def editarlibro(id):
         return redirect(url_for('libros.verlibro'))
 
     return render_template('libros/editarlibro.html', libro=libro, autores=autores, generos=generos, editoriales=editoriales)
-
 
 @libros.route('/verlibro')
 @admin_required

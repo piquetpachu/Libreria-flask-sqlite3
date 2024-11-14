@@ -2,59 +2,59 @@
 
 {% block content %}
 <body>
-    <main class="login-container flexbox-col">
+    <div class="container">
     <h1>Editar Libro</h1>
     <form action="{{ url_for('libros.editarlibro', id=libro.id) }}" method="POST" enctype="multipart/form-data">
         <label for="titulo">Título:</label>
-        <input type="text" name="titulo" value="{{ libro.titulo }}" class="input_field" required><br>
+        <input type="search" name="titulo" value="{{ libro.titulo }}" class="input_field" required><br>
 
      <!-- Autor (seleccionable con opción de agregar nuevo) -->
-     <label for="autor">Autor *</label>
+     <label for="autor">Autor <strong style="color: orange;">*</strong></label>
      <select name="autor" id="autor_select" class="input_field" required>
          <option value="" disabled >Selecciona un autor...</option>
          {% for autor in autores %}
          <option value="{{ autor.id }}">{{ autor.nombre }} {{ autor.apellido }}</option>
          {% endfor %}
-         <option value="agregar">Agregar nuevo autor</option>
+         <option style="background-color: rgb(26, 151, 57);" value="agregar">Agregar nuevo autor</option>
      </select><br>
 
      <!-- Género (seleccionable con opción de agregar nuevo) -->
-     <label for="genero">Género *</label>
+     <label for="genero">Género <strong style="color: orange;">*</strong></label>
      <select name="genero" id="genero_select" class="input_field" required>
          <option value="" disabled >Selecciona un género...</option>
          {% for genero in generos %}
          <option value="{{ genero.id }}">{{ genero.nombre }}</option>
          {% endfor %}
-         <option value="agregar">Agregar nuevo género</option>
+         <option style="background-color: rgb(26, 151, 57);" value="agregar">Agregar nuevo género</option>
      </select><br>
 
      <!-- Editorial (seleccionable con opción de agregar nuevo) -->
-     <label for="editorial">Editorial *</label>
+     <label for="editorial">Editorial <strong style="color: orange;">*</strong></label>
      <select name="editorial" id="editorial_select" class="input_field" required>
          <option value="sin editorial" disabled >Selecciona una editorial...</option>
          {% for editorial in editoriales %}
          <option value="{{ editorial.id }}">{{ editorial.nombre }}</option>
          {% endfor %}
-         <option value="agregar">Agregar nueva editorial</option>
+         <option style="background-color: rgb(26, 151, 57);" value="agregar">Agregar nueva editorial</option>
      </select><br>
 
         <label for="descripcion">Descripción:</label>
-        <textarea name="descripcion"  class="input_field"required>{{ libro.descripcion }}</textarea><br>
+        <textarea name="descripcion"  class="input_field">{{ libro.descripcion }}</textarea><br>
 
         <label for="fecha_publicacion">Fecha de Publicación:</label>
         <input type="date" name="fecha_publicacion" class="input_field" value="{{ libro.fecha_emision if libro.fecha_emision else 'Fecha Desconocida'}}" ><br>
 
         <label for="stock">Stock:</label>
-        <input class="input_field" type="number" name="stock" value="{{ libro.stock }}" required><br>
+        <input class="input_field" type="number" name="stock" value="{{ libro.stock if libro.stock else 'Desconocido'}}" required><br>
 
         <label for="precio">Precio:</label>
         <input class="input_field" type="number" step="0.01" name="precio" value="{{ libro.precio }}" class="input_field" required><br>
 
         <label for="precio_alquiler">Precio de Alquiler:</label>
-        <input class="input_field" type="number" step="0.01" name="precio_alquiler" value="{{ libro.precio_alquiler }}" class="input_field"><br>
+        <input class="input_field" type="number" step="0.01" name="precio_alquiler" value="{{ libro.precio_alquiler if libro.precio_alquiler else '0' }}" class="input_field"><br>
 
         <label for="isbn">ISBN:</label>
-        <input class="input_field" type="text" name="isbn" value="{{ libro.isbn }}" ><br>
+        <input class="input_field" type="text" name="isbn" value="{{ libro.isbn if libro.isbn else '' }}" ><br>
 
         <label for="idioma">Idioma</label>
         <select name="idioma" class="input_field" id="idioma" onchange="mostrarNumeroPaginas()">
@@ -67,7 +67,7 @@
             </select><br>
 
         <label for="edicion">Edición:</label>
-        <input class="input_field" type="text" name="edicion" value="{{ libro.edicion }}" ><br>
+        <input class="input_field" type="text" name="edicion" value="{{ libro.edicion if libro.edicion else 'Desconocido' }}" ><br>
 
         <div id="campo_paginas" style="display:block;">
             <label for="paginas">Número de páginas</label>
@@ -85,14 +85,14 @@
          </select><br>
 
         <label for="imagen">Subir imagen:</label>
-        <input class="input_field" type="file" name="imagen" id="imagen">
+        <input class="input_field" type="file" name="imagen" id="imagen" style="background-color: aliceblue;">
     
         <label for="imagen_url">O ingresar URL de la imagen:</label>
         <input type="url" name="imagen_url" id="imagen_url" placeholder="http://">
 
         <button type="submit">Actualizar Libro</button>
     </form>
-</main>
+</div>
 </body>
 </html>
 
