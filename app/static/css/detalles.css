@@ -172,7 +172,7 @@ main#main p:last-child {
     color: white;
     gap: 1em;
     flex: 1;
-    width: 28em;
+    width: 100%;
     word-wrap: break-word; /* Evitar que el texto largo se desborde */
     overflow-wrap: break-word; /* Asegura que las palabras largas se dividan */
   }
@@ -183,10 +183,9 @@ main#main p:last-child {
     padding: 20px;
     border-radius: 20px;
     color: white;
-    width: 28em;
-
-    word-wrap: break-word; /* Evitar que el texto largo se desborde */
-    overflow-wrap: break-word; /* Asegura que las palabras largas se dividan */
+    width: 600px;
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
   }
   
   /* Columna derecha (compra y votación) */

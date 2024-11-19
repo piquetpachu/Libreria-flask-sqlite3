@@ -343,7 +343,6 @@ def editarlibro(id):
 
         nuevo_isbn = request.form['isbn'] if request.form['isbn'] else None
 
-        # Comprobar si el ISBN ha cambiado y si ya está en uso por otro libro
         if nuevo_isbn != libro.isbn:
             isbn_existente = Libros.query.filter(Libros.isbn == nuevo_isbn, Libros.id != id).first()
             if isbn_existente:

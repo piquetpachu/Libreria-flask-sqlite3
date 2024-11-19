@@ -103,7 +103,6 @@ button.add-book:hover {
     background-color: #2980b9;
 }
 
-/* Estilo para la Lista de Libros */
 .book-list {
     display: flex;
     flex-direction: column;

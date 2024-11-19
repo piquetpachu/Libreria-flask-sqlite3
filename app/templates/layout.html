@@ -38,13 +38,7 @@
       </ul>
       {% endif %}
     </li>
-    <!-- <li class="item has-submenu">
-      <a tabindex="0">Plans</a>
-      <ul class="submenu">
-        <li class="subitem"><a href="#">Freelancer</a></li>
-        <li class="subitem"><a href="#">Startup</a></li>
-        <li class="subitem"><a href="#">Enterprise</a></li>
-      </ul> -->
+
     </li>
     {% if "nombre" in session %}
     <li class="item"><a href="{{url_for('prestamos.listar_prestamos')}}"><span class="material-symbols-outlined">
@@ -60,7 +54,6 @@
     <li class="item button"><a href="{{url_for('user.index_login')}}">iniciar sesion</a></li>
     <li class="item button secondary"><a href="{{url_for('user.register')}}">Registrarse</a></li>
     {% endif %}
-    <!-- <li class="toggle"><a href="#"><i class="fas fa-bars">▼</i></a></li> -->
     <li  class="toggle"><button id="boton-menu" class="fas fa-bars">
       <div></div>
       <div></div>

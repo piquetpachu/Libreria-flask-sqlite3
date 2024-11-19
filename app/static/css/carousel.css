@@ -37,7 +37,7 @@ button {
     .hero {
         width: 100%;
         height: 80vh;
-        background-image: url('/static/imagen/hero-biblioteca.jpg'); /* Asegúrate de tener una imagen de fondo adecuada */
+        background-image: url('/static/imagen/hero-biblioteca.jpg'); 
         background-size: cover;
         background-position: center;
         display: flex;
@@ -90,7 +90,6 @@ button {
         background-color: #285e61;
     }
     
-    /* Responsivo */
     @media (max-width: 768px) {
         .hero-title {
             font-size: 2.5rem;
@@ -215,7 +214,6 @@ button {
             background-color: #FF4C3B;
         }
         
-        /* Responsividad */
         @media (max-width: 768px) {
             .libro-blog-card {
                 flex-direction: column;
