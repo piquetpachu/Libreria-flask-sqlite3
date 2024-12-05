@@ -1,0 +1,9 @@
+opcional:
+crear un entorno virtual con: virtualenv
+
+Obligatorio:
+instalar los paquetes con el comando:
+pip install -r requirements.txt
+
+La aplicacion arranca desde:
+index.py 

@@ -145,7 +145,7 @@
     </style>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var calificacionPromedio = parseFloat('{{ promedio_calificacion | round(1) }}'); // Asegúrate de que estés usando 'promedio_calificacion'
+        var calificacionPromedio = parseFloat('{{ promedio_calificacion | round(1) }}'); 
         
         var estrellas = document.querySelectorAll('.estrella');
         estrellas.forEach(function(estrella) {
